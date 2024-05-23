@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f3d958dcb7cf8554992da94c393c5aae
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Alert_Finish: {fileID: 3273984361737514537, guid: 97bf4f1bfbcd0634eaf44c48a0a803f7, type: 3}
+  - Alert_40Line: {fileID: 235859543717234367, guid: fd7e4877bc60b5b4ba205df1fda0b31b, type: 3}
+  - Target_40Line: {fileID: 8463249337064219821, guid: 347945db5b9776f41b0b679903c8c85d, type: 3}
+  - Alert_Blitz: {fileID: 235859543717234367, guid: 8f532d6b8267c6b429e5db0fd9f205a7, type: 3}
+  - Alert_Marathon: {fileID: 235859543717234367, guid: c82af3e6292a7974087aab73c0cb9a31, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

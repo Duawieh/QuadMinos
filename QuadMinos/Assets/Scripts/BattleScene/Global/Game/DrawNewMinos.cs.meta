@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5648889a1b6aac94b98a6e2439d2e8bf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mino_Forbidden: {fileID: 3881960375943554830, guid: 41dbcf93d93c30745abb17df5a20df3d, type: 3}
+  - mino_Garbage: {fileID: 7758718782558798542, guid: d27e8545477101b48b6f8efa70753672, type: 3}
+  - mino_Shade: {fileID: 166374950812805191, guid: 87544b9b06915044bb321f98b0620f1b, type: 3}
+  executionOrder: 120
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

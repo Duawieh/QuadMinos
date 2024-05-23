@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 1f192e3208226e24b98337c64c0ca8d8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - UI_LockStar: {fileID: 926106971956579967, guid: fd61f8c8c15d22b478f4a3771cc2a40e, type: 3}
+  - UI_ClearStar: {fileID: 4437959771431119074, guid: 4ffd82fa962dcf341b939a0eb92b501c, type: 3}
+  executionOrder: 500
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

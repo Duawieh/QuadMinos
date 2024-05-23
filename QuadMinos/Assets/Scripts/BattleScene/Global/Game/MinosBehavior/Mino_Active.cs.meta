@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: cbe8b2641e7886749b9d1fae5e25b8df
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - shadowMino: {fileID: 166374950812805191, guid: 87544b9b06915044bb321f98b0620f1b, type: 3}
+  - UI_Note: {fileID: 8346869003013386339, guid: 3f3452f6d75cae340afdbfca1d9f1a39, type: 3}
+  - UI_SpinStar: {fileID: 4193348955595689597, guid: f17c64616ba98d34f8bd186a9f29a565, type: 3}
+  - UI_XSpinStar: {fileID: 308865529544323506, guid: 889eb7040c1efb248a734a9e3a352ce3, type: 3}
+  - UI_ThunderRing: {fileID: 1804983258636965628, guid: 1da4e042b357466488d41d58cc1c8888, type: 3}
+  - Clip_Hold: {fileID: 8300000, guid: 4f5772b98f622cc47b44392d7da82b17, type: 3}
+  - Clip_Thunder: {fileID: 8300000, guid: 85283b428ce47b847bd46b0dece7011e, type: 3}
+  executionOrder: 150
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

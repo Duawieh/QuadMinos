@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8ef49047c59c02f4cb46e2286bdc1f9a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - UI_StartDownTimer: {fileID: 8194224040944990486, guid: 2a64798a0df085041a508741ff4ca9fa, type: 3}
+  - UI_PlayerButtons: {fileID: 5429670556152388609, guid: 884721bd4392c4d4980be8fbc476cc27, type: 3}
+  executionOrder: 50
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
