@@ -2,7 +2,9 @@
 /Pre_ps
 /Legacy
 /QuadMinos/Library
+/QuadMinos/Logs
 /QuadMinos/obj
+/QuadMinos/Temp
 
 *.zip
 *.rar
