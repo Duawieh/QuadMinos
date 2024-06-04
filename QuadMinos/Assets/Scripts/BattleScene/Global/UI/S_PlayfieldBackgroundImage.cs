@@ -19,26 +19,26 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
     void Start()
     {
         InitBackground();
-        CopyDefaultBackgroundImageFiles(13);
+        CopyDefaultBackgroundImageFiles(11);
         StartCoroutine(GetBackgroundImage());
         return;
     }
 
-    // ³õÊ¼»¯±³¾°ÎªºÚÉ«£¬ÔÚ±³¾°¼ÓÔØÎ´Íê³É»ò¼ÓÔØÊ§°ÜÊ±Õ¹Ê¾Îª´¿ºÚ
+    // åˆå§‹åŒ–èƒŒæ™¯ä¸ºé»‘è‰²ï¼Œåœ¨èƒŒæ™¯åŠ è½½æœªå®Œæˆæˆ–åŠ è½½å¤±è´¥æ—¶å±•ç¤ºä¸ºçº¯é»‘
     private void InitBackground()
     {
-        comp_image= GetComponent<Image>();
+        comp_image = GetComponent<Image>();
         comp_image.color = Color.black;
         return;
     }
 
-    // ½« StreamingAssets ÎÄ¼ş¼ĞÄÚµÄ _tot ¸öÎÄ¼ş¸´ÖÆµ½ PersistentData
+    // å°† StreamingAssets æ–‡ä»¶å¤¹å†…çš„ _tot ä¸ªæ–‡ä»¶å¤åˆ¶åˆ° PersistentData
     private void CopyDefaultBackgroundImageFiles(int _tot)
     {
         for (int i = 0; i < _tot; i++)
         {
             string _path = "/BackgroundImages/";
-            string _name = "bkg_" + i + ".jpg";
+            string _name = "bkg_" + i.ToString() + ".jpg";
             GetComponent<StreamingAssetsFiles>().CopyFileToPersistentDataPath(_path, _name);
         }
     }
@@ -74,7 +74,7 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         int tgt = Random.Range(0, filesInfo.Length);
         for (int i = 0, j = 0; i <= filesInfo.Length; i++)
         {
-            if (i == filesInfo.Length) i = 0;   // Îª·ÀÖ¹Ô½½ç·ÃÎÊ£¬»·ĞÎ±éÀú
+            if (i == filesInfo.Length) i = 0;   // ä¸ºé˜²æ­¢è¶Šç•Œè®¿é—®ï¼Œç¯å½¢éå†
             if (filesInfo[i].Name.EndsWith(".meta")) continue;
             if (j == tgt)
             {
@@ -86,10 +86,10 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         return null;
     }
 
-    // ÉèÖÃ±³¾°Í¼Ïñ
+    // è®¾ç½®èƒŒæ™¯å›¾åƒ
     private IEnumerator SetImage()
     {
-        // ¶¯Ì¬µ÷ÕûÍ¼Ïñ³ß´ç
+        // åŠ¨æ€è°ƒæ•´å›¾åƒå°ºå¯¸
         ratio = 1.0f * backgroundImage.texture.width / backgroundImage.texture.height;
         comp_image = GetComponent<Image>();
         comp_ARF = GetComponent<AspectRatioFitter>();
@@ -97,7 +97,7 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         comp_image.sprite = backgroundImage;
         comp_ARF.aspectRatio = ratio;
 
-        // ÉèÖÃÍ¼Ïñµ­ÈëĞ§¹û
+        // è®¾ç½®å›¾åƒæ·¡å…¥æ•ˆæœ
         float _alpha = 0.0f;
         while (_alpha < 0.65f)
         {

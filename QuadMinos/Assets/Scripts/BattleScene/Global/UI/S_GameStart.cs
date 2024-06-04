@@ -6,31 +6,31 @@ using UnityEngine.UI;
 public class ScaleInScreen
 {
     /// <summary>
-    /// ¸ù¾İ´«ÈëµÄ _h ¼ÆËãÓ¦Ñ¡È¡µÄ LocalScale£¬ÆäÖĞ _h ·¶Î§ÔÚ [0.0f,1.0f] ±íÊ¾¿í¶ÈÕ¼ÆÁÄ»µÄ¸ß¶È
+    /// æ ¹æ®ä¼ å…¥çš„ _h è®¡ç®—åº”é€‰å–çš„ LocalScaleï¼Œå…¶ä¸­ _h èŒƒå›´åœ¨ [0.0f,1.0f] è¡¨ç¤ºå®½åº¦å å±å¹•çš„é«˜åº¦
     /// </summary>
-    /// <param name="_h">±íÊ¾Õ¼ÆÁÄ»µÄ¸ß¶È£¬¸ÃÖµÓ¦ÔÚ [0.0f, 1.0f] ÄÚ</param>
-    /// <param name="_gobj">±íÊ¾Òª¼ÆËãËõ·ÅÖµµÄ¶ÔÏó£¬¸Ã¶ÔÏóÓ¦±£Ö¤Ğı×ªÎªÁã</param>
+    /// <param name="_h">è¡¨ç¤ºå å±å¹•çš„é«˜åº¦ï¼Œè¯¥å€¼åº”åœ¨ [0.0f, 1.0f] å†…</param>
+    /// <param name="_gobj">è¡¨ç¤ºè¦è®¡ç®—ç¼©æ”¾å€¼çš„å¯¹è±¡ï¼Œè¯¥å¯¹è±¡åº”ä¿è¯æ—‹è½¬ä¸ºé›¶</param>
     /// <returns></returns>
     public static float Get_Scale(float _h, GameObject _gobj)
     {
-        Vector3[] corners = new Vector3[4]; // »ñÈ¡ËÄ¸ö½ÇµÄÆÁÄ»×ø±ê£¬Ë³Ğò£º×óÏÂ¡¢×óÉÏ¡¢ÓÒÉÏ¡¢ÓÒÏÂ
+        Vector3[] corners = new Vector3[4]; // è·å–å››ä¸ªè§’çš„å±å¹•åæ ‡ï¼Œé¡ºåºï¼šå·¦ä¸‹ã€å·¦ä¸Šã€å³ä¸Šã€å³ä¸‹
         Vector3 originScale = _gobj.transform.localScale;
         _gobj.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         _gobj.GetComponent<RectTransform>().GetWorldCorners(corners);
         float ScreenHeight = Screen.height;
         float y_d = Camera.main.WorldToScreenPoint(corners[0]).y;
         float y_u = Camera.main.WorldToScreenPoint(corners[1]).y;
-        float h = y_u - y_d;    // ÓÃ×óÉÏ½Ç×İ×ø±ê¼õ×óÏÂ½Ç×İ×ø±êµÃ¸ß¶È£¨Ğè±£Ö¤Ğı×ªÎªÁã£©
+        float h = y_u - y_d;    // ç”¨å·¦ä¸Šè§’çºµåæ ‡å‡å·¦ä¸‹è§’çºµåæ ‡å¾—é«˜åº¦ï¼ˆéœ€ä¿è¯æ—‹è½¬ä¸ºé›¶ï¼‰
         _gobj.transform.localScale = originScale;
         return _h / (h / ScreenHeight);
     }
 
     /// <summary>
-    /// ¸ù¾İ´«ÈëµÄ _h ¼ÆËãÓ¦Ñ¡È¡µÄ localPosition.y£¬ÆäÖĞ _h ·¶Î§ÔÚ [0.0f, 1.0f] ±íÊ¾¶¥²¿µ½ÆÁÄ»¶¥²¿¾àÀëµÄÕ¼±È
+    /// æ ¹æ®ä¼ å…¥çš„ _h è®¡ç®—åº”é€‰å–çš„ localPosition.yï¼Œå…¶ä¸­ _h èŒƒå›´åœ¨ [0.0f, 1.0f] è¡¨ç¤ºé¡¶éƒ¨åˆ°å±å¹•é¡¶éƒ¨è·ç¦»çš„å æ¯”
     /// </summary>
-    /// <param name="_h">±íÊ¾Õ¼ÆÁÄ»µÄ¸ß¶È£¬¸ÃÖµÓ¦ÔÚ [0.0f, 1.0f] ÄÚ</param>
-    /// <param name="TGT_S">±íÊ¾¼Æ»®µÄËõ·ÅÖµ£¨´Ëº¯ÊıÓ¦ÔÚ Get_Scale º¯ÊıÖ®ºóÖ´ĞĞ£©</param>
-    /// <param name="_gobj">±íÊ¾Òª¼ÆËã y Î»ÖÃµÄ¶ÔÏó</param>
+    /// <param name="_h">è¡¨ç¤ºå å±å¹•çš„é«˜åº¦ï¼Œè¯¥å€¼åº”åœ¨ [0.0f, 1.0f] å†…</param>
+    /// <param name="TGT_S">è¡¨ç¤ºè®¡åˆ’çš„ç¼©æ”¾å€¼ï¼ˆæ­¤å‡½æ•°åº”åœ¨ Get_Scale å‡½æ•°ä¹‹åæ‰§è¡Œï¼‰</param>
+    /// <param name="_gobj">è¡¨ç¤ºè¦è®¡ç®— y ä½ç½®çš„å¯¹è±¡</param>
     /// <returns></returns>
     public static float Get_PosY(float _h, float TGT_S, GameObject _gobj)
     {
@@ -39,7 +39,7 @@ public class ScaleInScreen
 
         _gobj.transform.localPosition = new Vector3(0, 0, 0);
         _gobj.transform.localScale = new Vector3(TGT_S, TGT_S, TGT_S);
-        Vector3[] corners = new Vector3[4]; // »ñÈ¡ËÄ¸ö½ÇµÄÆÁÄ»×ø±ê£¬Ë³Ğò£º×óÏÂ¡¢×óÉÏ¡¢ÓÒÉÏ¡¢ÓÒÏÂ
+        Vector3[] corners = new Vector3[4]; // è·å–å››ä¸ªè§’çš„å±å¹•åæ ‡ï¼Œé¡ºåºï¼šå·¦ä¸‹ã€å·¦ä¸Šã€å³ä¸Šã€å³ä¸‹
         _gobj.GetComponent<RectTransform>().GetWorldCorners(corners);
         float zero_height = Camera.main.WorldToScreenPoint(corners[1]).y;
 
@@ -58,7 +58,7 @@ public class ScaleInScreen
 
 public class S_GameStart : MonoBehaviour
 {
-    public AudioClip timerClip;             // µ¹¼ÆÊ±ÒôĞ§
+    public AudioClip timerClip;             // å€’è®¡æ—¶éŸ³æ•ˆ
 
     private Text T;
     private GameObject field;
@@ -97,11 +97,11 @@ public class S_GameStart : MonoBehaviour
     void Anim_Field()
     {
         if (GAME_START) { return; }
-        // Ëõ·ÅÖÁÕ½¶·ÇøÓòÕ¼ÆÁÄ»¸ß¶ÈµÄ 85%
+        // ç¼©æ”¾è‡³æˆ˜æ–—åŒºåŸŸå å±å¹•é«˜åº¦çš„ 85%
         float TGT_S = ScaleInScreen.Get_Scale(0.85f, field);
         float cur_scale = Functions.F_paraFadeout(timer, 2.0f, ScaleInScreen.Get_Scale(0.2f, field), TGT_S);
         field.transform.localScale = new Vector3(cur_scale, cur_scale, cur_scale);
-        // Î»ÒÆÖÁÕ½¶·ÇøÓòÉÏ·½´¦ÓÚÆÁÄ»¸ß¶ÈµÄ 11% ´¦
+        // ä½ç§»è‡³æˆ˜æ–—åŒºåŸŸä¸Šæ–¹å¤„äºå±å¹•é«˜åº¦çš„ 11% å¤„
         float TGT_P = ScaleInScreen.Get_PosY(0.11f, TGT_S, field);
         float cur_posY = Functions.F_paraFadeout(timer, 2.0f, 0.0f, TGT_P);
         field.transform.localPosition = new Vector3(0, cur_posY, 0);
@@ -121,7 +121,7 @@ public class S_GameStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // »ñÈ¡¶ÔÓ¦×é¼ş / ¶ÔÏó£¬ÒÔ¼°³õÊ¼»¯¶¯»­×´Ì¬
+        // è·å–å¯¹åº”ç»„ä»¶ / å¯¹è±¡ï¼Œä»¥åŠåˆå§‹åŒ–åŠ¨ç”»çŠ¶æ€
         field = GameObject.FindGameObjectWithTag("Field");
         float fieldInitScale = ScaleInScreen.Get_Scale(0.2f, field);
         field.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
@@ -134,7 +134,7 @@ public class S_GameStart : MonoBehaviour
         flg1 = flg2 = true;
         GAME_START = false;
 
-        // ²¥·Å×¼±¸µ¹¼ÆÊ±ÒôĞ§
+        // æ’­æ”¾å‡†å¤‡å€’è®¡æ—¶éŸ³æ•ˆ
         field.GetComponent<S_AudioEffect>().PlayAudio(timerClip, 1.0f, 5.0f);
     }
 

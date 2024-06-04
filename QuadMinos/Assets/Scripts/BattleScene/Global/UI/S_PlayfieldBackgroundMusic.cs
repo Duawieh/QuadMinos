@@ -14,17 +14,17 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
     {
         ads = GetComponent<AudioSource>();
 
-        CopyDefaultBackgroundMusicFiles(1);
+        CopyDefaultBackgroundMusicFiles(4);
         StartCoroutine(GetBackgroundMusic());
     }
 
-    // ½« StreamingAssets ÎÄ¼ş¼ĞÄÚµÄ _tot ¸öÎÄ¼ş¸´ÖÆµ½ PersistentData
+    // å°† StreamingAssets æ–‡ä»¶å¤¹å†…çš„ _tot ä¸ªæ–‡ä»¶å¤åˆ¶åˆ° PersistentData
     private void CopyDefaultBackgroundMusicFiles(int _tot)
     {
         for (int i = 0; i < _tot; i++)
         {
             string _path = "/BattleMusic/";
-            string _name = "bm_" + i + ".mp3";
+            string _name = "bm_" + i.ToString() + ".mp3";
             GetComponent<StreamingAssetsFiles>().CopyFileToPersistentDataPath(_path, _name);
         }
         return;
@@ -50,16 +50,19 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
         yield break;
     }
 
-    public void AudioPlay()
+    public IEnumerator AudioPlay()
     {
-        if (ads.enabled)
-        {
-            ads.clip = backgroundMusic;
-            ads.volume = GameSettings.MusicVolume;
-            ads.loop = true;
-            ads.Play();
+        while (ads.clip == null) {
+            if (ads.enabled)
+            {
+                ads.clip = backgroundMusic;
+                ads.volume = GameSettings.MusicVolume;
+                ads.loop = true;
+                ads.Play();
+            }
+            yield return 0;
         }
-        return;
+        yield break;
     }
 
     public IEnumerator AudioStop()

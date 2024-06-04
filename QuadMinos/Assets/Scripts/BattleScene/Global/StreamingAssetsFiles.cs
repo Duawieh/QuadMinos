@@ -6,14 +6,14 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering;
 
 /// <summary>
-/// ¹ØÓÚ StreamingAssetsFiles ÎÄ¼şµÄ´¦Àí
+/// å…³äº StreamingAssetsFiles æ–‡ä»¶çš„å¤„ç†
 /// </summary>
 public class StreamingAssetsFiles : MonoBehaviour
 {
-    // ½«ÎÄ¼ş´Ó _frm ¸´ÖÆµ½ _to
+    // å°†æ–‡ä»¶ä» _frm å¤åˆ¶åˆ° _to
     private IEnumerator Copy(string _frm, string _to, string _name)
     {
-        // Èô persistentDataPath ÏÂÒÑ°üº¬¸ÃÎÄ¼ş£¬·µ»Ø
+        // è‹¥ persistentDataPath ä¸‹å·²åŒ…å«è¯¥æ–‡ä»¶ï¼Œè¿”å›
         if (File.Exists(_to + _name)) yield break;
         Directory.CreateDirectory(_to);
 
@@ -39,7 +39,7 @@ public class StreamingAssetsFiles : MonoBehaviour
     }
 
     /// <summary>
-    /// ´«ÈëÒÔ StreamingAssets ÎÄ¼ş¼ĞÎª¸ùÄ¿Â¼µÄÎÄ¼şÏà¶ÔÂ·¾¶£¬½«ÎÄ¼ş¸´ÖÆµ½ persistentDataPath ÏÂ
+    /// ä¼ å…¥ä»¥ StreamingAssets æ–‡ä»¶å¤¹ä¸ºæ ¹ç›®å½•çš„æ–‡ä»¶ç›¸å¯¹è·¯å¾„ï¼Œå°†æ–‡ä»¶å¤åˆ¶åˆ° persistentDataPath ä¸‹
     /// </summary>
     public void CopyFileToPersistentDataPath(string _pth, string fileName)
     {

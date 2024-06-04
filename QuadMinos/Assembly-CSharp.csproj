@@ -114,6 +114,9 @@
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_UINote.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\BattleScene\Effects\sh_ScreenWave.shader" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.38f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
       <Private>False</Private>
