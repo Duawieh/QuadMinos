@@ -1,9 +1,0 @@
-
-=== Sat May 25 11:51:27 2024
-
-Packages were changed.
-Update Mode: updateDependencies
-
-The following packages were updated:
-  com.unity.feature.2d from version 1.0.0 to 2.0.0
-  com.unity.ide.visualstudio from version 2.0.20 to 2.0.22
