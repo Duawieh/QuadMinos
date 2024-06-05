@@ -26,6 +26,21 @@ public class ScaleInScreen
     }
 
     /// <summary>
+    /// 根据传入的 GameObject 对象，求其在屏幕上的高度
+    /// </summary>
+    /// <param name="_gobj">表示要计算屏幕高度的对象，该对象应保证旋转为零</param>
+    /// <returns>
+    /// 返回给定 GameObject 在屏幕上的高度，以单位屏幕坐标为单位
+    /// </returns>
+    public static float Get_Height(GameObject _gobj) {
+        Vector3[] corners = new Vector3[4]; // 获取四个角的屏幕坐标，顺序：左下、左上、右上、右下
+        _gobj.GetComponent<RectTransform>().GetWorldCorners(corners);
+        float y_d = Camera.main.WorldToScreenPoint(corners[0]).y;
+        float y_u = Camera.main.WorldToScreenPoint(corners[1]).y;
+        return y_u - y_d;    // 用左上角纵坐标减左下角纵坐标得高度（需保证旋转为零）
+    }
+
+    /// <summary>
     /// 根据传入的 _h 计算应选取的 localPosition.y，其中 _h 范围在 [0.0f, 1.0f] 表示顶部到屏幕顶部距离的占比
     /// </summary>
     /// <param name="_h">表示占屏幕的高度，该值应在 [0.0f, 1.0f] 内</param>

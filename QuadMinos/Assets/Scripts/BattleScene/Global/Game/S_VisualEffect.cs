@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.SceneManagement;
 
-// ¶¯»­ÇúÏß
+// åŠ¨ç”»æ›²çº¿å‡½æ•°
 public class Functions
 {
     /// <summary>
-    /// ÒÔ¶ş´Îº¯ÊıÎª»ù´¡ Éú³ÉÖğ½¥¼õ»ºµÄ±ä»¯
+    /// ä»¥äºŒæ¬¡å‡½æ•°ä¸ºåŸºç¡€ ç”Ÿæˆé€æ¸å‡ç¼“çš„å˜åŒ–
     /// </summary>
     public static float F_paraFadeout(float t, float T_tot, float B, float M)
     {
@@ -21,7 +21,7 @@ public class Functions
     }
 
     /// <summary>
-    /// ÒÔ¶ş´Îº¯ÊıÎª»ù´¡ Éú³ÉÖğ½¥¼Ó¿ìµÄ±ä»¯
+    /// ä»¥äºŒæ¬¡å‡½æ•°ä¸ºåŸºç¡€ ç”Ÿæˆé€æ¸åŠ å¿«çš„å˜åŒ–
     /// </summary>
     public static float F_paraFadein(float t, float T_tot, float B, float M)
     {
@@ -32,7 +32,7 @@ public class Functions
     }
 
     /// <summary>
-    /// ÒÔ¶ş´Îº¯ÊıÎª»ù´¡ Éú³Éµ­Èëµ­³öµÄ±ä»¯
+    /// ä»¥äºŒæ¬¡å‡½æ•°ä¸ºåŸºç¡€ ç”Ÿæˆæ·¡å…¥æ·¡å‡ºçš„å˜åŒ–
     /// </summary>
     public static float F_paraFadeinout(float t, float T_tot, float B, float M)
     {
@@ -45,7 +45,7 @@ public class Functions
     }
 
     /// <summary>
-    /// ÒÔ¶ş´Îº¯ÊıÎª»ù´¡ Éú³Éµ¯Á¦µÄ±ä»¯
+    /// ä»¥äºŒæ¬¡å‡½æ•°ä¸ºåŸºç¡€ ç”Ÿæˆå¼¹åŠ›çš„å˜åŒ–
     /// </summary>
     public static float F_paraBounce(float t, float T_tot, float T_mid, float B, float M)
     {
@@ -56,7 +56,7 @@ public class Functions
     }
 
     /// <summary>
-    /// ÒÔÒ»´Îº¯ÊıÎª»ù´¡ Éú³ÉÏßĞÔµÄ±ä»¯
+    /// ä»¥ä¸€æ¬¡å‡½æ•°ä¸ºåŸºç¡€ ç”Ÿæˆçº¿æ€§çš„å˜åŒ–
     /// </summary>
     public static float F_lineFade(float t, float T_tot, float B, float M)
     {
@@ -64,11 +64,11 @@ public class Functions
     }
 
     /// <summary>
-    /// ÒÔÈı½Çº¯ÊıºÍÒ»´Îº¯ÊıÎª»ù´¡ Éú³Éµ¯»É¼òĞ³ÔË¶¯²¢Öğ½¥Í£Ö¹µÄ¶¯»­
+    /// ä»¥ä¸‰è§’å‡½æ•°å’Œä¸€æ¬¡å‡½æ•°ä¸ºåŸºç¡€ ç”Ÿæˆå¼¹ç°§ç®€è°è¿åŠ¨å¹¶é€æ¸åœæ­¢çš„åŠ¨ç”»
     /// </summary>
-    /// <param name="B">¼òĞ³Æ½ºâÎ»ÖÃ</param>
-    /// <param name="M">×î´óÕñ·ùÎ»ÖÃ£¬Óë B µÄ´óĞ¡¹ØÏµ¾ö¶¨µÚÒ»´ÎÕñ¶¯Ê±µÄ·½Ïò</param>
-    /// <param name="_Times">¼òĞ³Õñ¶¯µÄÖÜÆÚÊı</param>
+    /// <param name="B">ç®€è°å¹³è¡¡ä½ç½®</param>
+    /// <param name="M">æœ€å¤§æŒ¯å¹…ä½ç½®ï¼Œä¸ B çš„å¤§å°å…³ç³»å†³å®šç¬¬ä¸€æ¬¡æŒ¯åŠ¨æ—¶çš„æ–¹å‘</param>
+    /// <param name="_Times">ç®€è°æŒ¯åŠ¨çš„å‘¨æœŸæ•°</param>
     public static float F_triBounce(float t, float T_tot, float B, float M, float _Times)
     {
         float _omega = 2 * Mathf.PI / T_tot * _Times;
@@ -81,7 +81,7 @@ public class Functions
 public class S_VisualEffect : MonoBehaviour
 {
     /**************************
-     * Ğ§¹û±àºÅ¶ÔÕÕ±í
+     * æ•ˆæœç¼–å·å¯¹ç…§è¡¨
      * 
      * 0 - Lock
      * 1 - FailedToRotate
@@ -97,14 +97,14 @@ public class S_VisualEffect : MonoBehaviour
      * 
      * ************************/
 
-    public AudioClip[] clips;               // ÒôĞ§£¨½öÓÃÓÚµ÷ÓÃ S_AudioEffect ÀàµÄ³ÉÔ±º¯Êı£¬²»ÔÊĞíÔÚ´ËÀàÄÚ²¥·Å£©
+    public AudioClip[] clips;               // éŸ³æ•ˆï¼ˆä»…ç”¨äºè°ƒç”¨ S_AudioEffect ç±»çš„æˆå‘˜å‡½æ•°ï¼Œä¸å…è®¸åœ¨æ­¤ç±»å†…æ’­æ”¾ï¼‰
 
-    private bool[] animPlaying;             // ¶¯»­ÊÇ·ñÕıÔÚ²¥·Å£¨ÓÉ¶¯»­º¯Êı¿ØÖÆ£¬Ê×´Îµ÷ÓÃÊ±¿ªÆô£¬¶¯»­½áÊøºó¹Ø±Õ£©
-    private float[] animBegin;              // ¶¯»­¿ªÊ¼µÄÊ±¼ä
+    private bool[] animPlaying;             // åŠ¨ç”»æ˜¯å¦æ­£åœ¨æ’­æ”¾ï¼ˆç”±åŠ¨ç”»å‡½æ•°æ§åˆ¶ï¼Œé¦–æ¬¡è°ƒç”¨æ—¶å¼€å¯ï¼ŒåŠ¨ç”»ç»“æŸåå…³é—­ï¼‰
+    private float[] animBegin;              // åŠ¨ç”»å¼€å§‹çš„æ—¶é—´
 
-    public Vector3 originPosition;          // Ä¬ÈÏ Transform.localPosition
-    public Vector3 originRotation;          // Ä¬ÈÏ Transform.localRotate
-    public Vector3 originScaltion;          // Ä¬ÈÏ Transform.localScale
+    public Vector3 originPosition;          // é»˜è®¤ Transform.localPosition
+    public Vector3 originRotation;          // é»˜è®¤ Transform.localRotate
+    public Vector3 originScaltion;          // é»˜è®¤ Transform.localScale
 
     private void ResetTransform()
     {
@@ -375,7 +375,7 @@ public class S_VisualEffect : MonoBehaviour
         }
         else _b = warnColor_fns.b;
 
-        // ¸ü¸ÄÆåÅÌ¡¢HOLDÇø¡¢NEXTÇø¡¢°´Å¥ UI ÑÕÉ«
+        // æ›´æ”¹æ£‹ç›˜ã€HOLDåŒºã€NEXTåŒºã€æŒ‰é’® UI é¢œè‰²
         foreach (GameObject item in SpritesUI)
             item.GetComponent<SpriteRenderer>().color = new Color(_r, _g, _b);
         foreach (GameObject item in ButtonsUI)
@@ -494,7 +494,7 @@ public class S_VisualEffect : MonoBehaviour
         return;
     }
 
-    // ¼ì²éµ±Ç°¶Ñµş¸ß¶È+ÉËº¦Ìõ¸ß¶È£¬¸Ä±äÕ½³¡ÑÕÉ«
+    // æ£€æŸ¥å½“å‰å †å é«˜åº¦+ä¼¤å®³æ¡é«˜åº¦ï¼Œæ”¹å˜æˆ˜åœºé¢œè‰²
     private int blk_height;
     public GameObject FireWarning;
     private GameObject cur_fw;
@@ -544,13 +544,13 @@ public class S_VisualEffect : MonoBehaviour
         State_Danger(blk_height);
     }
 
-    // ÅĞ¶ÏÊÇ·ñÎª¼«Î£Çé¿ö£¬²¢Õ¹Ê¾»ò¹Ø±Õ¶ÔÓ¦Ğ§¹û
-    public bool dangerState = false;        // µ±Ç°ÊÇ·ñÎª¼«Î£×´Ì¬£¨ÓÃÓÚÆäËû½Å±¾ÒıÓÃ¾ö¶¨ÊÇ·ñÏÔÊ¾¾¯Ê¾ĞÅÏ¢£©
+    // åˆ¤æ–­æ˜¯å¦ä¸ºæå±æƒ…å†µï¼Œå¹¶å±•ç¤ºæˆ–å…³é—­å¯¹åº”æ•ˆæœ
+    public bool dangerState = false;        // å½“å‰æ˜¯å¦ä¸ºæå±çŠ¶æ€ï¼ˆç”¨äºå…¶ä»–è„šæœ¬å¼•ç”¨å†³å®šæ˜¯å¦æ˜¾ç¤ºè­¦ç¤ºä¿¡æ¯ï¼‰
     private void State_Danger(int blk_height)
     {
         if (blk_height >= 20)
         {
-            // Éú³É»ğÑæÅçÉäÁ£×ÓĞ§¹û
+            // ç”Ÿæˆç«ç„°å–·å°„ç²’å­æ•ˆæœ
             if (cur_fw == null)
             {
                 cur_fw = Instantiate(FireWarning, transform);
@@ -561,7 +561,7 @@ public class S_VisualEffect : MonoBehaviour
         }
         else
         {
-            // ¹Ø±Õ»ğÑæÅçÉäÁ£×ÓĞ§¹û
+            // å…³é—­ç«ç„°å–·å°„ç²’å­æ•ˆæœ
             if (cur_fw != null)
             {
                 cur_fw.GetComponent<S_UIWarning>().Relive();
@@ -572,7 +572,7 @@ public class S_VisualEffect : MonoBehaviour
         return;
     }
 
-    // ¼ì²éµ±Ç°¶Ñµş¸ß¶È£¬¶Ñµş¹ı¸ßÊ±Õ½³¡Ëæ Mino µÄÎ»ÖÃÇãĞ±
+    // æ£€æŸ¥å½“å‰å †å é«˜åº¦ï¼Œå †å è¿‡é«˜æ—¶æˆ˜åœºéš Mino çš„ä½ç½®å€¾æ–œ
     private void State_Tilt()
     {
         blk_height = GetComponent<GameProcess>().blockHeight;
@@ -587,7 +587,7 @@ public class S_VisualEffect : MonoBehaviour
         return;
     }
 
-    // ÓÎÏ·½áÊø£¬Çå³ıËùÓĞÊÓ¾õĞ§¹û
+    // æ¸¸æˆç»“æŸï¼Œæ¸…é™¤æ‰€æœ‰è§†è§‰æ•ˆæœ
     private void Option_FailedClear()
     {
         for (int i = 0; i < 8; i++) animPlaying[i] = false;

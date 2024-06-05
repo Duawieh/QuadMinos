@@ -15,35 +15,42 @@ public class Anim_MainButtons : MonoBehaviour
 
     private IEnumerator InitAnimation()
     {
-        Vector3 UnderScreenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2.0f, -0.2f * Screen.height, 0));
-        foreach (GameObject button in buttons)
-            button.transform.position = UnderScreenCenter;
+        // 根据屏幕尺寸变换按钮大小
+        // 初始化按钮尺寸为按钮高度占屏幕高度 8%
+        float buttonsScaleRate = ScaleInScreen.Get_Scale(0.08f, buttons[0]);
+        foreach (GameObject button in buttons) {
+            button.transform.localScale = new Vector3(buttonsScaleRate, buttonsScaleRate, 1);
+        }
+        // 计算变换尺寸后的按钮在屏幕上所占高度
+        // 初始化按钮位置在屏幕正下方
+        float buttonsScreenHeight = ScaleInScreen.Get_Height(buttons[0]);
+        Vector3 underScreenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2.0f, -0.5f * buttonsScreenHeight, 0));
+        foreach (GameObject button in buttons) {
+            button.transform.position = underScreenCenter;
+        }
 
         float _t = 0.0f;
-
+        
+        // 第一阶段动画：一个按钮从屏幕下方进入，到达屏幕中央，动画曲线淡出
         while (_t < 0.5f)
         {
             _t += Time.deltaTime;
-            float PosY = Functions.F_paraFadeout(_t, 0.5f, UnderScreenCenter.y, 0.0f);
+            float PosY = Functions.F_paraFadeout(_t, 0.5f, underScreenCenter.y, 0.0f);
             buttons[0].transform.position = new Vector3(0, PosY, 0);
             yield return null;
         }
 
-        buttons[0].transform.position = Vector3.zero;
+        // 初始化所有按钮位置为第一个按钮的位置，即屏幕中央
+        // 第二阶段动画：其他按钮从上一个按钮下方列出，动画曲线线性
         foreach (GameObject button in buttons)
-            button.transform.position = buttons[0].transform.position;
-
-        while (buttons[0].transform.localPosition.y - buttons[4].transform.localPosition.y < 96 * 4)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                if (buttons[i].transform.localPosition.y <= -96 * i)
-                {
-                    buttons[i].transform.localPosition = new Vector3(0, -96 * i, 0);
+            button.transform.position = Vector3.zero;
+        while (buttons[0].transform.localPosition.y - buttons[4].transform.localPosition.y < buttonsScreenHeight * 4) {
+            for (int i = 0; i < 5; i++) {
+                if (buttons[i].transform.localPosition.y <= -buttonsScreenHeight * i) {
+                    buttons[i].transform.localPosition = new Vector3(0, -buttonsScreenHeight * i, 0);
                     continue;
                 }
-
-                buttons[i].transform.localPosition += new Vector3(0, -96 * 4 * Time.deltaTime, 0);
+                buttons[i].transform.localPosition += new Vector3(0, -buttonsScreenHeight * 4 * Time.deltaTime, 0);
             }
             yield return null;
         }
