@@ -30,9 +30,9 @@ public class S_ButtonsInit : MonoBehaviour
         Image img = GetComponent<Image>();
         if (img != null) { img.enabled = _vis; }
 
-        for (int i = 0; i < _cur.transform.childCount; i++)
+        for (int i = 0; i < _cur.childCount; i++)
         {
-            Transform child = transform.GetChild(i);
+            Transform child = _cur.GetChild(i);
             ButtonsSetVisibility(child, _vis);
         }
 
