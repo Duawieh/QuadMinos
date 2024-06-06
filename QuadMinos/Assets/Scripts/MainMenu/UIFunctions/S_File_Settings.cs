@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 /// <summary>
 /// 玩家在 Setting Panel 设置的信息
 /// </summary>
@@ -106,6 +107,7 @@ class SettingsData
         return;
     }
 }
+
 
 public class File_Settings {
     /// <summary>

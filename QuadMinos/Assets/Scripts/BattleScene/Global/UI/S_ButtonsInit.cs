@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class S_ButtonsInit : MonoBehaviour
 {
@@ -23,6 +24,29 @@ public class S_ButtonsInit : MonoBehaviour
         return;
     }
 
+    private void ButtonsSetVisibility(Transform _cur, bool _vis)
+    {
+        Debug.Log(_cur.name);
+        Image img = GetComponent<Image>();
+        if (img != null) { img.enabled = _vis; }
+
+        for (int i = 0; i < _cur.transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            ButtonsSetVisibility(child, _vis);
+        }
+
+        return;
+    }
+
+    // 初始化 HUD 可见性
+    private void ButtonsVisibleInit()
+    {
+        ButtonsSetVisibility(ButtonsLeft.transform, GameSettings.ShowHUD);
+        ButtonsSetVisibility(ButtonsRight.transform, GameSettings.ShowHUD);
+        return;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +54,7 @@ public class S_ButtonsInit : MonoBehaviour
         GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
         GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
         ButtonsPositonInit();
+        ButtonsVisibleInit();
+        return;
     }
 }
