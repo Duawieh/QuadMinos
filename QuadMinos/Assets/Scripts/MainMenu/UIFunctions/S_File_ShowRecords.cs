@@ -46,7 +46,7 @@ public class S_File_ShowRecords : MonoBehaviour
             Date_Blitz.GetComponent<Text>().text = "";
         }
 
-        // 显示 闪电战 模式的历史最佳成绩（若有同成绩则取时间最早者（时间排序在保存时处理））
+        // 显示 马拉松 模式的历史最佳成绩（若有同成绩则取时间最早者（时间排序在保存时处理））
         BattleDataInfo _data_marathon = GetTopRecord(4);
         if (_data_marathon._time != "0000/00/00")
         {

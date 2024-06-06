@@ -16,7 +16,7 @@ class HistoryBattleData
 {
     /// <summary>
     /// 表示战斗数据的类型
-    /// 1 - 计分型（分数越高排名越靠前）(GameMode = 3 / 4)
+    /// 1 - 计分型（分数越高排名越靠前）(GameMode = 3 or 4)
     /// 2 - 计时型（时间越短排名越靠前）(GameMode = 2)
     /// 3 - 耐力型（时间越长排名越靠前）(GameMode = 5)
     /// </summary>

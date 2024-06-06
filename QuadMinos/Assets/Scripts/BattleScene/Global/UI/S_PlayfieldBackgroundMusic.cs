@@ -36,7 +36,7 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
         while (filesPath.Length <= 0)
         {
             filesPath = Directory.GetFiles(Application.persistentDataPath + "/BattleMusic", "*.mp3");
-            yield return 0;
+            yield return null;
         }
 
         int tgt = Random.Range(0, filesPath.Length);
@@ -60,7 +60,7 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
                 ads.loop = true;
                 ads.Play();
             }
-            yield return 0;
+            yield return null;
         }
         yield break;
     }

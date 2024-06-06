@@ -49,7 +49,7 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         while (tgtFile == null)
         {
             tgtFile = GetTargetFileInfo(Application.persistentDataPath + "/BackgroundImages/");
-            yield return 0;
+            yield return null;
         }
 
         using(UnityWebRequest UWR_file = UnityWebRequestTexture.GetTexture("file://" + tgtFile.FullName))
@@ -103,7 +103,7 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         {
             comp_image.color = new Color(1, 1, 1, _alpha);
             _alpha += Time.deltaTime * 0.2f;
-            yield return 0;
+            yield return null;
         }
 
         yield break;

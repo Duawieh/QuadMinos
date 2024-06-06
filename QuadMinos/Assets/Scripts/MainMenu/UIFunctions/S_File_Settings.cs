@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 禅模式设置、多人游戏攻击模式设置、全局音量设置
+/// 玩家在 Setting Panel 设置的信息
 /// </summary>
 public class GameSettings
 {
@@ -19,9 +19,16 @@ public class GameSettings
     /// 攻击模式（1-随机目标 2-歼灭模式 3-反击模式）
     /// </summary>
     public static int AttackMode;
+    public static string PlayerID;
 
     public static float MusicVolume;
     public static float EffectVolume;
+    public static bool ShowHUD;
+    public static bool ShowShadowblocks;
+
+    public static float OperationVARR;  // 垂直操作最大重复速率（即摇杆拖动到最大时的 ARR）
+    public static float OperationHARR;  // 水平操作最大重复速率（即摇杆拖动到最大时的 ARR）
+    public static float OperationRAS;   // 自动重复操作最小距离（拖动达此距离后才开始自动重复操作，1 表示拖动到底）
 
     public static void Init()
     {
@@ -30,11 +37,18 @@ public class GameSettings
         GarbageProb = 0.5f;
         GarbageRatio = 1.0f;
         AttackMode = 1;
+        PlayerID = "unkown tourist";
         MusicVolume = 1.0f;
         EffectVolume = 1.0f;
+        ShowHUD = true;
+        ShowShadowblocks = true;
+        OperationVARR = 1.0f;
+        OperationHARR = 1.0f;
+        OperationRAS = 0.5f;
         return;
     }
 }
+
 
 [Serializable]
 class SettingsData
@@ -45,9 +59,16 @@ class SettingsData
     public float GarbageRatio;
 
     public int AttackMode;
+    public string PlayerID;
 
     public float MusicVolume;
     public float EffectVolume;
+    public bool ShowHUD;
+    public bool ShowShadowblocks;
+
+    public float OperationVARR;
+    public float OperationHARR;
+    public float OperationRAS;
 
     public SettingsData()
     {
@@ -56,8 +77,14 @@ class SettingsData
         GarbageProb = GameSettings.GarbageProb;
         GarbageRatio = GameSettings.GarbageRatio;
         AttackMode = GameSettings.AttackMode;
+        PlayerID = GameSettings.PlayerID;
         MusicVolume = GameSettings.MusicVolume;
         EffectVolume = GameSettings.EffectVolume;
+        ShowHUD = GameSettings.ShowHUD;
+        ShowShadowblocks = GameSettings.ShowShadowblocks;
+        OperationVARR = GameSettings.OperationVARR;
+        OperationHARR = GameSettings.OperationHARR;
+        OperationRAS = GameSettings.OperationRAS;
         return;
     }
 
@@ -68,8 +95,14 @@ class SettingsData
         GameSettings.GarbageProb = GarbageProb;
         GameSettings.GarbageRatio = GarbageRatio;
         GameSettings.AttackMode = AttackMode;
+        GameSettings.PlayerID = PlayerID;
         GameSettings.MusicVolume = MusicVolume;
         GameSettings.EffectVolume = EffectVolume;
+        GameSettings.ShowHUD = ShowHUD;
+        GameSettings.ShowShadowblocks = ShowShadowblocks;
+        GameSettings.OperationVARR = OperationVARR;
+        GameSettings.OperationHARR = OperationHARR;
+        GameSettings.OperationRAS = OperationRAS;
         return;
     }
 }

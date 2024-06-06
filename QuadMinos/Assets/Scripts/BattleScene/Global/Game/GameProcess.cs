@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Íæ¼Ò½øÐÐµÄ²Ù×÷µÄ¼ÇÂ¼
+/// </summary>
 public class Operations
 {
-    public int opt;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    public float _t;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    public int opt;        // ²Ù×÷µÄÖÖÀà
+    public float _t;       // ²Ù×÷½øÐÐµÄÊ±¼ä
 
     public Operations(int opt, float _t)
     {
@@ -16,12 +19,12 @@ public class Operations
 }
 
 /// <summary>
-/// ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ï·Ä£Ê½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Øºï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ï¢
+/// ±¾¾ÖÓÎÏ·µÄÉèÖÃÐÅÏ¢
 /// </summary>
 public class BattleInfo
 {
     /// <summary>
-    /// ï¿½ï¿½Ï·Ä£Ê½ï¿½ï¿½1-ï¿½ï¿½Ä£Ê½ 2-40ï¿½ï¿½ 3-ï¿½ï¿½ï¿½ï¿½Õ½ 4-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 5-ï¿½ï¿½Ò¶ï¿½Õ½ï¿½ï¿½
+    /// ÓÎÏ·Ä£Ê½ÐÅÏ¢ 1-ìøÄ£Ê½ 2-40ÐÐ 3-ÉÁµçÕ½ 4-ÂíÀ­ËÉ 5-¶àÈËÄ£Ê½
     /// </summary>
     public static int GameMode = 1;
     public static float Gravity = 0.0156f;
@@ -32,24 +35,24 @@ public class BattleInfo
 
 public class GameProcess : MonoBehaviour
 {
-    public int AttackMode;          // ï¿½ï¿½ï¿½ï¿½Ä£Ê½
-    public int GameMode;            // ï¿½ï¿½Ï·Ä£Ê½
-    public int LockReset;           // ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    public float Gravity;           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(G)
-    public float LockTime;          // ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½(ï¿½ï¿½)
-    public float GarbageRatio;      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½Ø£ï¿½ï¿½ï¿½ÖµÓ¦ï¿½ï¿½ï¿½ï¿½ [0, 1]
-    public float GarbageProb;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ÖµÓ¦ï¿½ï¿½ï¿½ï¿½ [0, 1]
+    public int AttackMode;          // Íæ¼Ò½ø¹¥²ßÂÔ£¨¶àÈËÄ£Ê½¿ÉÓÃ£©
+    public int GameMode;            // ÓÎÏ·Ä£Ê½
+    public int LockReset;           // ×î´óËø¶¨ÖØÖÃ´ÎÊý
+    public float Gravity;           // ÖØÁ¦(G)
+    public float LockTime;          // Ëø¶¨ÑÓ³Ù(Ãë)
+    public float GarbageRatio;      // À¬»øÐÐ¹¥»÷±ÈÂÊ [0, 1]£¨½öìøÄ£Ê½¿ÉÓÃ£©
+    public float GarbageProb;       // À¬»øÐÐÌí¼Ó¸ÅÂÊ [0, 1]£¨½öìøÄ£Ê½¿ÉÓÃ£©
 
-    public GameObject UI_Background;        // UI - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Í±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½
-    public GameObject UI_StartDownTimer;    // UI - ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ê±
-    public GameObject UI_PlayerButtons;     // UI - ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½
-    private GameObject UI_prepareText;      // UI - ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½Ä»
+    public GameObject UI_Background;        // UI - ÓÎÏ·±³¾°Í¼Ïñ
+    public GameObject UI_StartDownTimer;    // UI - ÓÎÏ·¿ªÊ¼µ¹¼ÆÊ±
+    public GameObject UI_PlayerButtons;     // UI - Íæ¼Ò²Ù×÷HUD
+    private GameObject UI_prepareText;      // UI - ÓÎÏ·×¼±¸ÌáÊ¾
 
-    public List<Operations> operations = new List<Operations>();    // ï¿½ï¿½ÒµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    public int blockHeight = 0;                                     // ï¿½ï¿½Ò¶Ñµï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ß¶ï¿½
-    public bool finished = false;                                   // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½
+    public List<Operations> operations = new List<Operations>();    // ²Ù×÷¼ÇÂ¼±í
+    public int blockHeight = 0;                                     // ·½¿é¶Ñµþ¸ß¶È
+    public bool finished = false;                                   // ÊÇ·ñÓÎÏ·½áÊø
 
-    // ï¿½ï¿½Ï·ï¿½ï¿½Ê¼Ç°ï¿½ï¿½È¡Õ½ï¿½ï¿½ï¿½ï¿½Ï¢
+    // »ñÈ¡±¾¾ÖÓÎÏ·ÉèÖÃÐÅÏ¢
     private void GetBattleInfo()
     {
         AttackMode = GameSettings.AttackMode;
@@ -76,7 +79,7 @@ public class GameProcess : MonoBehaviour
         GetComponent<GenerateMinos>().NextOrder();
         for (int i = 1; i < que.Length; i++)
         {
-            // ï¿½ï¿½Ê¾ NEXT ï¿½Ð±ï¿½ï¿½ï¿½ mino
+            // ÔÚ NEXT ÇøÓò»æÖÆ mino
             GetComponent<DrawNewMinos>().DrawNextMinos(que[i], i - 1);
         }
         return;
@@ -120,10 +123,10 @@ public class GameProcess : MonoBehaviour
         StartCoroutine(WaitFor_GAME_PREPARE());
     }
 
-    // ï¿½ï¿½Ö¤Ö¡ï¿½Ê´ïµ½ 60fps ï¿½ï¿½ï¿½ï¿½ï¿½Ù¿ï¿½Ê¼ï¿½ï¿½Ï·
+    // Ç¿ÖÆÉè¶¨ 60fps Ö¡ÂÊ£¬Ö¡ÂÊµ½´ïÉè¶¨Ö¡ÂÊºóÔÙ¿ªÊ¼ÓÎÏ·
     private IEnumerator WaitFor_GAME_PREPARE()
     {
-        Application.targetFrameRate = 60;   // ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½Îª 60
+        Application.targetFrameRate = 60;   // Éè¶¨Ö¡ÂÊÎª 60
         yield return null;
 
         while (Time.deltaTime * 50 >= 1.0f) yield return null;
@@ -132,7 +135,7 @@ public class GameProcess : MonoBehaviour
         yield break;
     }
 
-    // ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ mino ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ minoï¿½ï¿½Í¬Ê±Í£Ö¹ï¿½Æ·ï¿½
+    // µ±ÓÎÏ·½áÊøÊ±Í£Ö¹»æÖÆ mino ²¢ÇÒÉ¾³ý³¡ÉÏÕýÔÚÂäÏÂµÄ mino
     private void StopDrawMinos()
     {
         GetComponent<DrawNewMinos>().enabled = false;

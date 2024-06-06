@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ public class S_ProcessAlert : MonoBehaviour
     public IEnumerator Process_40Line()
     {
         GameObject _title = Instantiate(Alert_40Line);
-        _title.GetComponent<S_GameAlertUI>().SetText("¾¡¿ìÏû³ı 40 ĞĞ£¡");
+        _title.GetComponent<S_GameAlertUI>().SetText("å°½å¿«æ¶ˆé™¤ 40 è¡Œï¼");
         GameObject _tgtLine = Instantiate(Target_40Line, transform);
         _tgtLine.transform.localPosition = new Vector3(0, 9.6f, 0);
         while (true)
@@ -35,26 +35,26 @@ public class S_ProcessAlert : MonoBehaviour
     public IEnumerator Process_Blitz()
     {
         GameObject _title = Instantiate(Alert_Blitz);
-        _title.GetComponent<S_GameAlertUI>().SetText("¾¡¿ÉÄÜÔÚ 2 ·ÖÖÓÄÚÄÃµ½¸ü¸ß·ÖÊı£¡");
+        _title.GetComponent<S_GameAlertUI>().SetText("å°½å¯èƒ½åœ¨ 2 åˆ†é’Ÿå†…æ‹¿åˆ°æ›´é«˜åˆ†æ•°ï¼");
 
         GameObject _alert;
         yield return new WaitForSeconds(58.0f);
         while (BattleScore._Time - 60 < 0) yield return null;
 
         _alert = Instantiate(Alert_Blitz);
-        _alert.GetComponent<S_GameAlertUI>().SetText("Ê£ÏÂ 1 ·ÖÖÓ");
+        _alert.GetComponent<S_GameAlertUI>().SetText("å‰©ä¸‹ 1 åˆ†é’Ÿ");
 
         yield return new WaitForSeconds(28.0f);
         while (BattleScore._Time - 90 < 0) yield return null;
 
         _alert = Instantiate(Alert_Blitz);
-        _alert.GetComponent<S_GameAlertUI>().SetText("Ê£ÏÂ 30 Ãë");
+        _alert.GetComponent<S_GameAlertUI>().SetText("å‰©ä¸‹ 30 ç§’");
 
         yield return new WaitForSeconds(18.0f);
         while (BattleScore._Time - 110 < 0) yield return null;
 
         _alert = Instantiate(Alert_Blitz);
-        _alert.GetComponent<S_GameAlertUI>().SetText("Ê£ÏÂ 10 Ãë");
+        _alert.GetComponent<S_GameAlertUI>().SetText("å‰©ä¸‹ 10 ç§’");
 
         yield return new WaitForSeconds(5.0f);
         while (BattleScore._Time - 120 < 0) yield return null;
@@ -71,7 +71,7 @@ public class S_ProcessAlert : MonoBehaviour
         GetComponent<GameProcess>().finished = true;
 
         GameObject _title = Instantiate(Alert_Marathon);
-        _title.GetComponent<S_GameAlertUI>().SetText("¾¡Á¦´ïµ½¸ü¸ßÄ¿±ê£¡");
+        _title.GetComponent<S_GameAlertUI>().SetText("å°½åŠ›è¾¾åˆ°æ›´é«˜ç›®æ ‡ï¼");
 
         int lastLevelLines = 0;
         int levelupLines = 10;
@@ -85,7 +85,7 @@ public class S_ProcessAlert : MonoBehaviour
                 curLevel++;
                 if (curLevel >= 5) levelupLines = lastLevelLines;
                 GameObject _alert = Instantiate(Alert_Marathon);
-                _alert.GetComponent<S_GameAlertUI>().SetText("µ±Ç°µÈ¼¶Îª Lv." + curLevel.ToString());
+                _alert.GetComponent<S_GameAlertUI>().SetText("å½“å‰ç­‰çº§ä¸º Lv." + curLevel.ToString());
             }
             GetComponent<GameProcess>().Gravity = levelGravity[Mathf.Min(curLevel, 20)];
             GetComponent<GameProcess>().LockTime = Mathf.Max(0.25f, 1 / levelGravity[Mathf.Min(curLevel, 20)] / 60);
