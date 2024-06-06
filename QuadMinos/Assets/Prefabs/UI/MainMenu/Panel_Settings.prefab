@@ -294,7 +294,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5863667288613132830}
         m_TargetAssemblyTypeName: S_ChangeSettings, Assembly-CSharp
-        m_MethodName: OnEndEdit_Inputfield_Gravity
+        m_MethodName: OnEndEdit_Inputfield_MaxHARR
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -980,7 +980,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6700\u5927HARR\uFF08\u6C34\u5E73\u6700\u5927\u81EA\u52A8\u91CD\u590D\u64CD\u4F5C\u901F\u7387\uFF09"
+  m_Text: "\u6700\u5927VARR\uFF08\u5782\u76F4\u6700\u5927\u81EA\u52A8\u91CD\u590D\u64CD\u4F5C\u901F\u7387\uFF09"
 --- !u!1 &1235170845744658821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,6 +1061,134 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!1 &1498905263856054140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4512704505812860031}
+  - component: {fileID: 3946752492776983743}
+  m_Layer: 0
+  m_Name: EffectAudioPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4512704505812860031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498905263856054140}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2795975103467890293}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3946752492776983743
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498905263856054140}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3182bb3a6dc1e2342a57ae8345833b50, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1661717763108976255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,7 +1936,7 @@ RectTransform:
   - {fileID: 6939041211493518799}
   - {fileID: 628040351598746221}
   m_Father: {fileID: 2795975103467890293}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1926,7 +2054,7 @@ GameObject:
   - component: {fileID: 5596861076155139297}
   - component: {fileID: 4848282337856764254}
   m_Layer: 5
-  m_Name: Title_EnabledHUD
+  m_Name: Toggle_EnabledHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2000,7 +2128,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5863667288613132830}
+        m_TargetAssemblyTypeName: S_ChangeSettings, Assembly-CSharp
+        m_MethodName: OnChange_Toggle_ShowHUD
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &2534142226637886000
 GameObject:
@@ -2300,7 +2440,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5863667288613132830}
         m_TargetAssemblyTypeName: S_ChangeSettings, Assembly-CSharp
-        m_MethodName: OnEndEdit_Inputfield_Gravity
+        m_MethodName: OnEndEdit_Inputfield_MaxVARR
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3212,7 +3352,7 @@ GameObject:
   - component: {fileID: 2190656638835937044}
   - component: {fileID: 5722414903356461684}
   m_Layer: 5
-  m_Name: Title_EnabledShadowBlock
+  m_Name: Toggle_EnabledShadowBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3286,7 +3426,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5863667288613132830}
+        m_TargetAssemblyTypeName: S_ChangeSettings, Assembly-CSharp
+        m_MethodName: OnChange_Toggle_ShowShadowBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &3859920638469045899
 GameObject:
@@ -3426,7 +3578,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5863667288613132830}
         m_TargetAssemblyTypeName: S_ChangeSettings, Assembly-CSharp
-        m_MethodName: OnEndEdit_Inputfield_Gravity
+        m_MethodName: OnEndEdit_Inputfield_MinRAS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4696,7 +4848,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5863667288613132830}
         m_TargetAssemblyTypeName: S_ChangeSettings, Assembly-CSharp
-        m_MethodName: OnEndEdit_Inputfield_GarbageRatio
+        m_MethodName: OnEndEdit_Inputfield_PlayerID
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4796,7 +4948,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0~20.0
+  m_Text: 0~10.0
 --- !u!1 &5976706896704009602
 GameObject:
   m_ObjectHideFlags: 0
@@ -5982,9 +6134,15 @@ MonoBehaviour:
   Inputfield_LockTime: {fileID: 2912809127780163435}
   Inputfield_GarbageProb: {fileID: 2249586843289045417}
   Inputfield_GarbageRatio: {fileID: 7713158281488722200}
+  Inputfield_PlayerID: {fileID: 5855761969197197960}
+  Inputfield_MaxVARR: {fileID: 2623014933524193601}
+  Inputfield_MaxHARR: {fileID: 177808898420193336}
+  Inputfield_MinRAS: {fileID: 3859920638469045899}
   Dropdown_AttackMode: {fileID: 8121490817479053469}
   Slider_MusicVolume: {fileID: 4723800541591028176}
   Slider_EffectVolume: {fileID: 2367125227452017033}
+  Toggle_ShowHUD: {fileID: 2528125168023358349}
+  Toggle_ShowShadowBlock: {fileID: 3812502880673069409}
 --- !u!114 &5863667288613132830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6811,6 +6969,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4512704505812860031}
   - {fileID: 4707241882769507101}
   m_Father: {fileID: 1834663353402759622}
   m_RootOrder: 4

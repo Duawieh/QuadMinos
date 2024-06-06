@@ -61,6 +61,7 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
+            // 重力的合法范围在 0.0 ~ 20.0
             if (_value >= 0.0f && _value <= 20.0f)
             {
                 GameSettings.Gravity = _value;
@@ -77,9 +78,27 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
+            // 锁定延迟的合法范围在 0.25 ~ 0x7fffffff
             if (_value >= 0.25f)
             {
                 GameSettings.LockTime = _value;
+                File_Settings.SaveSettings();
+            }
+        }
+        GetComponent<S_File_Settings>().UpdateGUI();
+        return;
+    }
+
+    public void OnEndEdit_Inputfield_GarbageRatio()
+    {
+        string _input = GetComponent<S_File_Settings>().Inputfield_GarbageRatio.GetComponent<InputField>().text;
+        float _value = StringToFloat(_input);
+        if (_value != -1.0f)
+        {
+            // 垃圾行伤害倍率的合法范围在 0.0 ~ 8.0
+            if (_value >= 0.0f && _value <= 8.0f)
+            {
+                GameSettings.GarbageRatio = _value;
                 File_Settings.SaveSettings();
             }
         }
@@ -93,6 +112,7 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
+            // 垃圾行添加概率的合法范围在 0.0 ~ 1.0
             if (_value >= 0.0f && _value <= 1.0f)
             {
                 GameSettings.GarbageProb = _value;
@@ -109,9 +129,10 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
-            if (_value >= 0.0f && _value <= 8.0f)
+            // 最小 RAS 的合法范围在 0.0 ~ 1.0
+            if (_value >= 0.0f && _value <= 1.0f)
             {
-                GameSettings.MinRAS = _value;
+                GameSettings.OperationRAS = _value;
                 File_Settings.SaveSettings();
             }
         }
@@ -125,9 +146,10 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
-            if (_value >= 0.0f && _value <= 8.0f)
+            // 最大 VARR 的合法范围在 0.01 ~ 20.0
+            if (_value >= 0.01f && _value <= 20.0f)
             {
-                GameSettings.MaxVARR = _value;
+                GameSettings.OperationVARR = _value;
                 File_Settings.SaveSettings();
             }
         }
@@ -141,25 +163,10 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
-            if (_value >= 0.0f && _value <= 8.0f)
+            // 最大 HARR 的合法范围在 0.01 ~ 10.0
+            if (_value >= 0.01f && _value <= 10.0f)
             {
-                GameSettings.MaxHARR = _value;
-                File_Settings.SaveSettings();
-            }
-        }
-        GetComponent<S_File_Settings>().UpdateGUI();
-        return;
-    }
-
-    public void OnEndEdit_Inputfield_MinRAS()
-    {
-        string _input = GetComponent<S_File_Settings>().Inputfield_MinRAS.GetComponent<InputField>().text;
-        float _value = StringToFloat(_input);
-        if (_value != -1.0f)
-        {
-            if (_value >= 0.0f && _value <= 8.0f)
-            {
-                GameSettings.OperationRAS = _value;
+                GameSettings.OperationHARR = _value;
                 File_Settings.SaveSettings();
             }
         }
@@ -195,6 +202,26 @@ public class S_ChangeSettings : MonoBehaviour
     public void OnChange_Slider_EffectVolume()
     {
         GameSettings.EffectVolume = GetComponent<S_File_Settings>().Slider_EffectVolume.GetComponent<Slider>().value;
+        File_Settings.SaveSettings();
+        // 拖动完成后播放一个音效，让玩家对音量有直观感受
+        // 注意：主菜单场景中不可出现同名对象
+        // 注意：Setting Panel 打开时会播放一次，无伤大雅。
+        AudioSource tester = GameObject.Find("EffectAudioPlayer").GetComponent<AudioSource>();
+        tester.volume = GameSettings.EffectVolume;
+        tester.Play();
+        return;
+    }
+
+    public void OnChange_Toggle_ShowHUD()
+    {
+        GameSettings.ShowHUD = GetComponent<S_File_Settings>().Toggle_ShowHUD.GetComponent<Toggle>().isOn;
+        File_Settings.SaveSettings();
+        return;
+    }
+
+    public void OnChange_Toggle_ShowShadowBlock()
+    {
+        GameSettings.ShowShadowblock = GetComponent<S_File_Settings>().Toggle_ShowShadowBlock.GetComponent<Toggle>().isOn;
         File_Settings.SaveSettings();
         return;
     }

@@ -25,7 +25,7 @@ public class GameSettings
     public static float MusicVolume;
     public static float EffectVolume;
     public static bool ShowHUD;
-    public static bool ShowShadowblocks;
+    public static bool ShowShadowblock;
 
     public static float OperationVARR;  // 垂直操作最大重复速率（即摇杆拖动到最大时的 ARR）
     public static float OperationHARR;  // 水平操作最大重复速率（即摇杆拖动到最大时的 ARR）
@@ -42,7 +42,7 @@ public class GameSettings
         MusicVolume = 1.0f;
         EffectVolume = 1.0f;
         ShowHUD = true;
-        ShowShadowblocks = true;
+        ShowShadowblock = true;
         OperationVARR = 1.0f;
         OperationHARR = 1.0f;
         OperationRAS = 0.5f;
@@ -82,7 +82,7 @@ class SettingsData
         MusicVolume = GameSettings.MusicVolume;
         EffectVolume = GameSettings.EffectVolume;
         ShowHUD = GameSettings.ShowHUD;
-        ShowShadowblocks = GameSettings.ShowShadowblocks;
+        ShowShadowblocks = GameSettings.ShowShadowblock;
         OperationVARR = GameSettings.OperationVARR;
         OperationHARR = GameSettings.OperationHARR;
         OperationRAS = GameSettings.OperationRAS;
@@ -100,7 +100,7 @@ class SettingsData
         GameSettings.MusicVolume = MusicVolume;
         GameSettings.EffectVolume = EffectVolume;
         GameSettings.ShowHUD = ShowHUD;
-        GameSettings.ShowShadowblocks = ShowShadowblocks;
+        GameSettings.ShowShadowblock = ShowShadowblocks;
         GameSettings.OperationVARR = OperationVARR;
         GameSettings.OperationHARR = OperationHARR;
         GameSettings.OperationRAS = OperationRAS;
@@ -167,9 +167,15 @@ public class S_File_Settings : MonoBehaviour
     public GameObject Inputfield_LockTime;
     public GameObject Inputfield_GarbageProb;
     public GameObject Inputfield_GarbageRatio;
+    public GameObject Inputfield_PlayerID;
+    public GameObject Inputfield_MaxVARR;
+    public GameObject Inputfield_MaxHARR;
+    public GameObject Inputfield_MinRAS;
     public GameObject Dropdown_AttackMode;
     public GameObject Slider_MusicVolume;
     public GameObject Slider_EffectVolume;
+    public GameObject Toggle_ShowHUD;
+    public GameObject Toggle_ShowShadowBlock;
 
     // Start is called before the first frame update
     void Start()
@@ -187,9 +193,16 @@ public class S_File_Settings : MonoBehaviour
         Inputfield_GarbageRatio.GetComponent<InputField>().text = GameSettings.GarbageRatio.ToString("f4");
 
         Dropdown_AttackMode.GetComponent<Dropdown>().value = GameSettings.AttackMode - 1;
+        Inputfield_PlayerID.GetComponent<InputField>().text = GameSettings.PlayerID;
 
         Slider_MusicVolume.GetComponent<Slider>().value = GameSettings.MusicVolume;
         Slider_EffectVolume.GetComponent<Slider>().value = GameSettings.EffectVolume;
+        Toggle_ShowHUD.GetComponent<Toggle>().isOn = GameSettings.ShowHUD;
+        Toggle_ShowShadowBlock.GetComponent<Toggle>().isOn = GameSettings.ShowShadowblock;
+
+        Inputfield_MaxVARR.GetComponent<InputField>().text = GameSettings.OperationVARR.ToString("f4");
+        Inputfield_MaxHARR.GetComponent<InputField>().text = GameSettings.OperationHARR.ToString("f4");
+        Inputfield_MinRAS .GetComponent<InputField>().text = GameSettings.OperationRAS .ToString("f4");
         return;
     }
 }
