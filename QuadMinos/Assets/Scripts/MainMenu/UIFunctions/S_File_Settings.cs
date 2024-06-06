@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 
 /// <summary>
-/// Íæ¼ÒÔÚ Setting Panel ÉèÖÃµÄĞÅÏ¢
+/// ç©å®¶åœ¨ Setting Panel è®¾ç½®çš„ä¿¡æ¯
 /// </summary>
 public class GameSettings
 {
@@ -17,7 +17,7 @@ public class GameSettings
     public static float GarbageRatio;
 
     /// <summary>
-    /// ¹¥»÷Ä£Ê½£¨1-Ëæ»úÄ¿±ê 2-¼ßÃğÄ£Ê½ 3-·´»÷Ä£Ê½£©
+    /// æ”»å‡»æ¨¡å¼ï¼ˆ1-éšæœºç›®æ ‡ 2-æ­¼ç­æ¨¡å¼ 3-åå‡»æ¨¡å¼ï¼‰
     /// </summary>
     public static int AttackMode;
     public static string PlayerID;
@@ -27,9 +27,9 @@ public class GameSettings
     public static bool ShowHUD;
     public static bool ShowShadowblocks;
 
-    public static float OperationVARR;  // ´¹Ö±²Ù×÷×î´óÖØ¸´ËÙÂÊ£¨¼´Ò¡¸ËÍÏ¶¯µ½×î´óÊ±µÄ ARR£©
-    public static float OperationHARR;  // Ë®Æ½²Ù×÷×î´óÖØ¸´ËÙÂÊ£¨¼´Ò¡¸ËÍÏ¶¯µ½×î´óÊ±µÄ ARR£©
-    public static float OperationRAS;   // ×Ô¶¯ÖØ¸´²Ù×÷×îĞ¡¾àÀë£¨ÍÏ¶¯´ï´Ë¾àÀëºó²Å¿ªÊ¼×Ô¶¯ÖØ¸´²Ù×÷£¬1 ±íÊ¾ÍÏ¶¯µ½µ×£©
+    public static float OperationVARR;  // å‚ç›´æ“ä½œæœ€å¤§é‡å¤é€Ÿç‡ï¼ˆå³æ‘‡æ†æ‹–åŠ¨åˆ°æœ€å¤§æ—¶çš„ ARRï¼‰
+    public static float OperationHARR;  // æ°´å¹³æ“ä½œæœ€å¤§é‡å¤é€Ÿç‡ï¼ˆå³æ‘‡æ†æ‹–åŠ¨åˆ°æœ€å¤§æ—¶çš„ ARRï¼‰
+    public static float OperationRAS;   // è‡ªåŠ¨é‡å¤æ“ä½œæœ€å°è·ç¦»ï¼ˆæ‹–åŠ¨è¾¾æ­¤è·ç¦»åæ‰å¼€å§‹è‡ªåŠ¨é‡å¤æ“ä½œï¼Œ1 è¡¨ç¤ºæ‹–åŠ¨åˆ°åº•ï¼‰
 
     public static void Init()
     {
@@ -111,7 +111,7 @@ class SettingsData
 
 public class File_Settings {
     /// <summary>
-    /// ´Ó persistentDataPath ÖĞ¶ÁÈ¡ÉèÖÃÎÄ¼ş²¢´æÈëÀàÄÚ
+    /// ä» persistentDataPath ä¸­è¯»å–è®¾ç½®æ–‡ä»¶å¹¶å­˜å…¥ç±»å†…
     /// </summary>
     public static IEnumerator GetSettings()
     {
@@ -121,7 +121,7 @@ public class File_Settings {
 
         if (!File.Exists(pth))
         {
-            GameSettings.Init();    // ÔÚµü´úÆ÷Ê×´ÎÍË³öÇ°¾ÍÒªÍê³É³õÊ¼»¯£¬ÒÔ·ÀÖ¹µ÷ÓÃµ½¿ÕĞÅÏ¢
+            GameSettings.Init();    // åœ¨è¿­ä»£å™¨é¦–æ¬¡é€€å‡ºå‰å°±è¦å®Œæˆåˆå§‹åŒ–ï¼Œä»¥é˜²æ­¢è°ƒç”¨åˆ°ç©ºä¿¡æ¯
             SaveSettings();
             yield return null;
         }
