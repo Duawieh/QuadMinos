@@ -6,15 +6,19 @@ using UnityEngine.UI;
 public class S_ChangeSettings : MonoBehaviour
 {
     /// <summary>
-    /// ½«Êı×Ö×Ö·û´®×ª»»Îª¸¡µãÊı£¬µ±ÎŞ·¨×ª»»Ê±·µ»Ø -1
+    /// å°†æ•°å­—å­—ç¬¦ä¸²è½¬æ¢ä¸ºæµ®ç‚¹æ•°ï¼Œå½“æ— æ³•è½¬æ¢æ—¶è¿”å› -1
     /// </summary>
-    /// <param name="_s">Òª½øĞĞ×ª»»µÄ×Ö·û´®£¬ĞèÒª±£Ö¤Æä±íÊ¾µÄÊı×Ö·Ç¸º</param>
-    /// <returns>ÓÉ×Ö·û´®×ª»»µÃµ½µÄ¸¡µãÊı£¬»ò -1.0f ±íÊ¾·Ç·¨×Ö·û´®</returns>
+    /// <param name="_s">è¦è¿›è¡Œè½¬æ¢çš„å­—ç¬¦ä¸²ï¼Œéœ€è¦ä¿è¯å…¶è¡¨ç¤ºçš„æ•°å­—éè´Ÿ</param>
+    /// <returns>ç”±å­—ç¬¦ä¸²è½¬æ¢å¾—åˆ°çš„æµ®ç‚¹æ•°ï¼Œæˆ– -1.0f è¡¨ç¤ºéæ³•å­—ç¬¦ä¸²</returns>
     private float StringToFloat(string _s)
     {
+        // æ•´æ•°éƒ¨åˆ†çš„å€¼
         float _integerValue = 0.0f;
+        // å°æ•°éƒ¨åˆ†çš„å€¼
         float _floatValue = 0.0f;
+        // å°æ•°éƒ¨åˆ†æœ€ä½ä½çš„æŒ‡æ•°
         float _floatTimes = 1.0f;
+        // å°æ•°ç‚¹æ‰€åœ¨å­—ç¬¦ä¸²å†…çš„ä½ç½®ï¼ˆåˆå§‹åŒ–ä¸ºæ— ç©·å¤§ï¼‰
         int _point = (int)1e9;
         for (int i = 0; i < _s.Length; i++)
         {
@@ -33,17 +37,17 @@ public class S_ChangeSettings : MonoBehaviour
             }
             else if (_s[i] == '.')
             {
-                // ÈôĞ¡ÊıµãÔÚ¿ªÍ·£¬ÈÏÎªÊ¡È¥ÁËÇ°ÎÄµÄ 0£¬²»±¨´í
+                // è‹¥å°æ•°ç‚¹åœ¨å¼€å¤´ï¼Œè®¤ä¸ºçœå»äº†å‰æ–‡çš„ 0ï¼Œä¸æŠ¥é”™
                 if (_point == 1e9)
                 {
                     _point = i;
                 }
-                // Èç¹û×Ö·û´®ÄÚ°üº¬³¬¹ıÒ»¸öĞ¡Êıµã£¬±¨´í
+                // å¦‚æœå­—ç¬¦ä¸²å†…åŒ…å«è¶…è¿‡ä¸€ä¸ªå°æ•°ç‚¹ï¼ŒæŠ¥é”™
                 else return -1;
             }
             else if (_s[i] == 'f')
             {
-                // Èç¹û f ³öÏÖÔÚÄ©Î²£¬ÈÏÎªËüÊÇ float ÊıµÄµ¥Î»£¬²»±¨´í
+                // å¦‚æœ f å‡ºç°åœ¨æœ«å°¾ï¼Œè®¤ä¸ºå®ƒæ˜¯ float æ•°çš„å•ä½ï¼Œä¸æŠ¥é”™
                 if (i != _s.Length - 1) return -1;
             }
             else return -1;
@@ -99,18 +103,75 @@ public class S_ChangeSettings : MonoBehaviour
         return;
     }
 
-    public void OnEndEdit_Inputfield_GarbageRatio()
+    public void OnEndEdit_Inputfield_MinRAS()
     {
-        string _input = GetComponent<S_File_Settings>().Inputfield_GarbageRatio.GetComponent<InputField>().text;
+        string _input = GetComponent<S_File_Settings>().Inputfield_MinRAS.GetComponent<InputField>().text;
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
             if (_value >= 0.0f && _value <= 8.0f)
             {
-                GameSettings.GarbageRatio = _value;
+                GameSettings.MinRAS = _value;
                 File_Settings.SaveSettings();
             }
         }
+        GetComponent<S_File_Settings>().UpdateGUI();
+        return;
+    }
+
+    public void OnEndEdit_Inputfield_MaxVARR()
+    {
+        string _input = GetComponent<S_File_Settings>().Inputfield_MaxVARR.GetComponent<InputField>().text;
+        float _value = StringToFloat(_input);
+        if (_value != -1.0f)
+        {
+            if (_value >= 0.0f && _value <= 8.0f)
+            {
+                GameSettings.MaxVARR = _value;
+                File_Settings.SaveSettings();
+            }
+        }
+        GetComponent<S_File_Settings>().UpdateGUI();
+        return;
+    }
+
+    public void OnEndEdit_Inputfield_MaxHARR()
+    {
+        string _input = GetComponent<S_File_Settings>().Inputfield_MaxHARR.GetComponent<InputField>().text;
+        float _value = StringToFloat(_input);
+        if (_value != -1.0f)
+        {
+            if (_value >= 0.0f && _value <= 8.0f)
+            {
+                GameSettings.MaxHARR = _value;
+                File_Settings.SaveSettings();
+            }
+        }
+        GetComponent<S_File_Settings>().UpdateGUI();
+        return;
+    }
+
+    public void OnEndEdit_Inputfield_MinRAS()
+    {
+        string _input = GetComponent<S_File_Settings>().Inputfield_MinRAS.GetComponent<InputField>().text;
+        float _value = StringToFloat(_input);
+        if (_value != -1.0f)
+        {
+            if (_value >= 0.0f && _value <= 8.0f)
+            {
+                GameSettings.MinRAS = _value;
+                File_Settings.SaveSettings();
+            }
+        }
+        GetComponent<S_File_Settings>().UpdateGUI();
+        return;
+    }
+
+    public void OnEndEdit_Inputfield_PlayerID()
+    {
+        string _input = GetComponent<S_File_Settings>().Inputfield_PlayerID.GetComponent<InputField>().text;
+        GameSettings.PlayerID = _input;
+        File_Settings.SaveSettings();
         GetComponent<S_File_Settings>().UpdateGUI();
         return;
     }
@@ -126,7 +187,7 @@ public class S_ChangeSettings : MonoBehaviour
     {
         GameSettings.MusicVolume = GetComponent<S_File_Settings>().Slider_MusicVolume.GetComponent<Slider>().value;
         File_Settings.SaveSettings();
-        // ÍÏ¶¯ÒôÁ¿ÌõµÄÍ¬Ê±¸Ä±äÖ÷²Ëµ¥±³¾°ÒôÀÖÒôÁ¿´óĞ¡£¬ÈÃÍæ¼Ò¶ÔÒôÁ¿ÓĞÖ±¹Û¸ĞÊÜ
+        // æ‹–åŠ¨éŸ³é‡æ¡çš„åŒæ—¶æ”¹å˜ä¸»èœå•èƒŒæ™¯éŸ³ä¹éŸ³é‡å¤§å°ï¼Œè®©ç©å®¶å¯¹éŸ³é‡æœ‰ç›´è§‚æ„Ÿå—
         GameObject.FindGameObjectWithTag("Field").GetComponent<AudioSource>().volume = GameSettings.MusicVolume;
         return;
     }

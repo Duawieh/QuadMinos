@@ -24,9 +24,10 @@ public class S_ButtonsInit : MonoBehaviour
         return;
     }
 
+    // _vis == 0：递归取消激活所有操作 UI 的 Image 组件
+    // _vis == 1：递归保持激活所有操作 UI 的 Image 组件
     private void ButtonsSetVisibility(Transform _cur, bool _vis)
     {
-        Debug.Log(_cur.name);
         Image img = GetComponent<Image>();
         if (img != null) { img.enabled = _vis; }
 
@@ -42,8 +43,7 @@ public class S_ButtonsInit : MonoBehaviour
     // 初始化 HUD 可见性
     private void ButtonsVisibleInit()
     {
-        ButtonsSetVisibility(ButtonsLeft.transform, GameSettings.ShowHUD);
-        ButtonsSetVisibility(ButtonsRight.transform, GameSettings.ShowHUD);
+        ButtonsSetVisibility(transform, GameSettings.ShowHUD);
         return;
     }
 
