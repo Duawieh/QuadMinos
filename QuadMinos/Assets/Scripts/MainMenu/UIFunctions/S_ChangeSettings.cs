@@ -159,7 +159,7 @@ public class S_ChangeSettings : MonoBehaviour
         {
             if (_value >= 0.0f && _value <= 8.0f)
             {
-                GameSettings.MinRAS = _value;
+                GameSettings.OperationRAS = _value;
                 File_Settings.SaveSettings();
             }
         }
