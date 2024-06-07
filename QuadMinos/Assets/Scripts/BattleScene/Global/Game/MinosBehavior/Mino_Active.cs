@@ -24,6 +24,7 @@ public class Mino_Active : MonoBehaviour
     private float C;            // 锁定计时器
     private int R;              // 锁定重置上限
     private int cnt;            // 锁定重置次数
+    private bool actFlg = false;// 方块是否已激活并完成初始化 
 
     public int MinoType;        // mino 的形状
     public int RotFlag = 0;     // mino 的旋转状态（按照 SRS 旋转系统规定的方向）
@@ -267,6 +268,8 @@ public class Mino_Active : MonoBehaviour
         cnt = 0;
         shadows = new GameObject[4];
         shadowsP = new PosIndex[4];
+        actFlg = true;
+        return;
     }
 
     // Update is called once per frame
@@ -287,6 +290,7 @@ public class Mino_Active : MonoBehaviour
     // 左移
     public void Operate_L()
     {
+        if (!actFlg) return;
         if (GetComponent<Mino_Kick>().Kick_Left(MinoType, RotFlag)) return;
         field.GetComponent<GameProcess>().operations.Add(new Operations(0, Time.time));
         P += new PosIndex(-1, 0);
@@ -298,6 +302,7 @@ public class Mino_Active : MonoBehaviour
     // 右移
     public void Operate_R()
     {
+        if (!actFlg) return;
         if (GetComponent<Mino_Kick>().Kick_Right(MinoType, RotFlag)) return;
         field.GetComponent<GameProcess>().operations.Add(new Operations(1, Time.time));
         P += new PosIndex(+1, 0);
@@ -309,6 +314,7 @@ public class Mino_Active : MonoBehaviour
     // 软降
     public void Operate_D()
     {
+        if (!actFlg) return;
         if (GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag)) return;
         field.GetComponent<GameProcess>().operations.Add(new Operations(2, Time.time));
         P = P + new PosIndex(0, -1);
@@ -320,6 +326,7 @@ public class Mino_Active : MonoBehaviour
     // 换块
     public void Operate_H()
     {
+        if (!actFlg) return;
         if (!Holdable) return;
         field.GetComponent<GameProcess>().operations.Add(new Operations(3, Time.time));
         DestroyShadows();
@@ -332,6 +339,7 @@ public class Mino_Active : MonoBehaviour
     // 逆旋
     public void Operate_A()
     {
+        if (!actFlg) return;
         field.GetComponent<GameProcess>().operations.Add(new Operations(4, Time.time));
         int bgn = RotFlag;
         RotateAntiClockwise();
@@ -359,6 +367,7 @@ public class Mino_Active : MonoBehaviour
     // 正旋
     public void Operate_C()
     {
+        if (!actFlg) return;
         field.GetComponent<GameProcess>().operations.Add(new Operations(5, Time.time));
         int bgn = RotFlag;
         RotateClockwise();
@@ -386,6 +395,7 @@ public class Mino_Active : MonoBehaviour
     // 硬降
     public void Operate_HD()
     {
+        if (!actFlg) return;
         bool droped = false;
         while (!GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag))
         {
