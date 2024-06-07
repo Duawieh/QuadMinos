@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class S_Battle : MonoBehaviour
 {
-    public int DMG_Height;                      // ÊÜµ½µÄÉËº¦»á²úÉúµÄÀ¬»øĞĞ¸ß¶È£¬¼´ÉËº¦Ìõ×Ü³¤¶È
-    public List<GameObject> DMG;                // Éú³ÉµÄÉËº¦ÌõĞòÁĞ£¬Ò²°üº¬Ïà¹ØµÄÉËº¦ĞÅÏ¢
-    public GameObject AttackStar;               // ¹¥»÷Á£×ÓĞ§¹û
+    public int DMG_Height;                      // å—åˆ°çš„ä¼¤å®³ä¼šäº§ç”Ÿçš„åƒåœ¾è¡Œé«˜åº¦ï¼Œå³ä¼¤å®³æ¡æ€»é•¿åº¦
+    public List<GameObject> DMG;                // ç”Ÿæˆçš„ä¼¤å®³æ¡åºåˆ—ï¼Œä¹ŸåŒ…å«ç›¸å…³çš„ä¼¤å®³ä¿¡æ¯
+    public GameObject AttackStar;               // æ”»å‡»ç²’å­æ•ˆæœ
 
     private GameObject scorePanel;
-    private GameObject[] enemies;               // µĞÈËÁĞ±í£¨ÁĞ±íÖĞ²»°üº¬×ÔÉí£¬Èô·¢ÏÖ targetIndex != 0£¬ĞèÒªÌØÅĞ¶ÁÈ¡£©
-    private int targetIndex = 0;                // ¹¥»÷µÄÄ¿±ê£¨0±íÊ¾×Ô¼º£¬Ê£ÓàÊı×ÖÎªµĞÈËĞòºÅ£©
-    private int foe = 0;                        // ³ğÈË£¬¼´×î½üÒ»´Î¹¥»÷×Ô¼ºµÄµĞÈËµÄ±àºÅ
+    private GameObject[] enemies;               // æ•Œäººåˆ—è¡¨ï¼ˆåˆ—è¡¨ä¸­ä¸åŒ…å«è‡ªèº«ï¼Œè‹¥å‘ç° targetIndex != 0ï¼Œéœ€è¦ç‰¹åˆ¤è¯»å–ï¼‰
+    private int targetIndex = 0;                // æ”»å‡»çš„ç›®æ ‡ï¼ˆ0è¡¨ç¤ºè‡ªå·±ï¼Œå‰©ä½™æ•°å­—ä¸ºæ•Œäººåºå·ï¼‰
+    private int foe = 0;                        // ä»‡äººï¼Œå³æœ€è¿‘ä¸€æ¬¡æ”»å‡»è‡ªå·±çš„æ•Œäººçš„ç¼–å·
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class S_Battle : MonoBehaviour
             switch (attackMode)
             {
                 case 1:
-                    targetIndex = Random.Range(0, enemies.Length) + 1;  // Ëæ»úÇĞ»»¹¥»÷Ä¿±ê
+                    targetIndex = Random.Range(0, enemies.Length) + 1;  // éšæœºåˆ‡æ¢æ”»å‡»ç›®æ ‡
                     break;
                 case 2:
                     targetIndex = 1;
@@ -44,7 +44,7 @@ public class S_Battle : MonoBehaviour
         return;
     }
 
-    // ¸ù¾İµÃ·Ö¿Û³ıÊÜµ½¹¥»÷²úÉúµÄÀ¬»øĞĞĞòÁĞ
+    // æ ¹æ®å¾—åˆ†æ‰£é™¤å—åˆ°æ”»å‡»äº§ç”Ÿçš„åƒåœ¾è¡Œåºåˆ—
     public void DamageDefense(int scr)
     {
         scr /= 100;
@@ -54,7 +54,7 @@ public class S_Battle : MonoBehaviour
             GameObject bar = DMG[DMG.Count - 1];
             if (bar.GetComponent<S_UIDamage>().DMG <= scr)
             {
-                // ½«¸ÃÉËº¦ÌõÇå¿Õ
+                // å°†è¯¥ä¼¤å®³æ¡æ¸…ç©º
                 DMG_Height -= bar.GetComponent<S_UIDamage>().DMG;
                 scr -= bar.GetComponent<S_UIDamage>().DMG;
                 DMG.Remove(bar);
@@ -62,7 +62,7 @@ public class S_Battle : MonoBehaviour
             }
             else
             {
-                // ¿Û³ıÉËº¦Ìõ¼ÇÂ¼µÄ²¿·ÖÉËº¦
+                // æ‰£é™¤ä¼¤å®³æ¡è®°å½•çš„éƒ¨åˆ†ä¼¤å®³
                 bar.GetComponent<S_UIDamage>().ChangeLength(bar.GetComponent<S_UIDamage>().DMG - scr);
                 DMG_Height -= scr;
                 scr = 0;
@@ -77,13 +77,13 @@ public class S_Battle : MonoBehaviour
         return barPos;
     }
 
-    // ·¢Æğ¹¥»÷£¬´«Èë¹¥»÷Á¦ºÍÏûĞĞËùÓÃ·½¿é£¨ÓÃÓÚ¿ØÖÆĞ§¹û£©
+    // å‘èµ·æ”»å‡»ï¼Œä¼ å…¥æ”»å‡»åŠ›å’Œæ¶ˆè¡Œæ‰€ç”¨æ–¹å—ï¼ˆç”¨äºæ§åˆ¶æ•ˆæœï¼‰
     public void Attack(int atk, GameObject mino)
     {
-        // °´Éè¶¨µÄ¸ÅÂÊ·¢Æğ¹¥»÷
+        // æŒ‰è®¾å®šçš„æ¦‚ç‡å‘èµ·æ”»å‡»
         float prob = Random.Range(0.0f, 1.0f);
         if (prob > GetComponent<GameProcess>().GarbageProb) return;
-        // °´Éè¶¨µÄ±ÈÂÊ¼ÆËãÉËº¦
+        // æŒ‰è®¾å®šçš„æ¯”ç‡è®¡ç®—ä¼¤å®³
         float rat = GetComponent<GameProcess>().GarbageRatio;
         int dmg = Mathf.FloorToInt(rat * atk);
 

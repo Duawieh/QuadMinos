@@ -24,13 +24,13 @@ public class S_ButtonsInit : MonoBehaviour
         return;
     }
 
-    // _vis == 0£ºµİ¹éÈ¡Ïû¼¤»îËùÓĞ²Ù×÷ UI µÄ Image ×é¼ş
-    // _vis == 1£ºµİ¹é±£³Ö¼¤»îËùÓĞ²Ù×÷ UI µÄ Image ×é¼ş
+    // _vis == 0ï¼šé€’å½’å–æ¶ˆæ¿€æ´»æ‰€æœ‰æ“ä½œ UI çš„ Image ç»„ä»¶
+    // _vis == 1ï¼šé€’å½’ä¿æŒæ¿€æ´»æ‰€æœ‰æ“ä½œ UI çš„ Image ç»„ä»¶
     private void ButtonsSetVisibility(Transform _cur, bool _vis)
     {
-        Image img = GetComponent<Image>();
+        Image img = _cur.GetComponent<Image>();
         if (img != null) { img.enabled = _vis; }
-
+        
         for (int i = 0; i < _cur.childCount; i++)
         {
             Transform child = _cur.GetChild(i);
@@ -40,7 +40,7 @@ public class S_ButtonsInit : MonoBehaviour
         return;
     }
 
-    // ³õÊ¼»¯ HUD ¿É¼ûĞÔ
+    // åˆå§‹åŒ– HUD å¯è§æ€§
     private void ButtonsVisibleInit()
     {
         ButtonsSetVisibility(transform, GameSettings.ShowHUD);

@@ -45,7 +45,7 @@ public class GameSettings
         ShowShadowblock = true;
         OperationVARR = 1.0f;
         OperationHARR = 1.0f;
-        OperationRAS = 0.5f;
+        OperationRAS = 0.3f;
         return;
     }
 }

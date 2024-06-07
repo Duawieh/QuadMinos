@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Íæ¼Ò½øĞĞµÄ²Ù×÷µÄ¼ÇÂ¼
+/// ç©å®¶è¿›è¡Œçš„æ“ä½œçš„è®°å½•
 /// </summary>
 public class Operations
 {
-    public int opt;        // ²Ù×÷µÄÖÖÀà
-    public float _t;       // ²Ù×÷½øĞĞµÄÊ±¼ä
+    public int opt;        // æ“ä½œçš„ç§ç±»
+    public float _t;       // æ“ä½œè¿›è¡Œçš„æ—¶é—´
 
     public Operations(int opt, float _t)
     {
@@ -19,12 +19,12 @@ public class Operations
 }
 
 /// <summary>
-/// ±¾¾ÖÓÎÏ·µÄÉèÖÃĞÅÏ¢
+/// æœ¬å±€æ¸¸æˆçš„è®¾ç½®ä¿¡æ¯
 /// </summary>
 public class BattleInfo
 {
     /// <summary>
-    /// ÓÎÏ·Ä£Ê½ĞÅÏ¢ 1-ìøÄ£Ê½ 2-40ĞĞ 3-ÉÁµçÕ½ 4-ÂíÀ­ËÉ 5-¶àÈËÄ£Ê½
+    /// æ¸¸æˆæ¨¡å¼ä¿¡æ¯ 1-ç¦…æ¨¡å¼ 2-40è¡Œ 3-é—ªç”µæˆ˜ 4-é©¬æ‹‰æ¾ 5-å¤šäººæ¨¡å¼
     /// </summary>
     public static int GameMode = 1;
     public static float Gravity = 0.0156f;
@@ -35,24 +35,24 @@ public class BattleInfo
 
 public class GameProcess : MonoBehaviour
 {
-    public int AttackMode;          // Íæ¼Ò½ø¹¥²ßÂÔ£¨¶àÈËÄ£Ê½¿ÉÓÃ£©
-    public int GameMode;            // ÓÎÏ·Ä£Ê½
-    public int LockReset;           // ×î´óËø¶¨ÖØÖÃ´ÎÊı
-    public float Gravity;           // ÖØÁ¦(G)
-    public float LockTime;          // Ëø¶¨ÑÓ³Ù(Ãë)
-    public float GarbageRatio;      // À¬»øĞĞ¹¥»÷±ÈÂÊ [0, 1]£¨½öìøÄ£Ê½¿ÉÓÃ£©
-    public float GarbageProb;       // À¬»øĞĞÌí¼Ó¸ÅÂÊ [0, 1]£¨½öìøÄ£Ê½¿ÉÓÃ£©
+    public int AttackMode;          // ç©å®¶è¿›æ”»ç­–ç•¥ï¼ˆå¤šäººæ¨¡å¼å¯ç”¨ï¼‰
+    public int GameMode;            // æ¸¸æˆæ¨¡å¼
+    public int LockReset;           // æœ€å¤§é”å®šé‡ç½®æ¬¡æ•°
+    public float Gravity;           // é‡åŠ›(G)
+    public float LockTime;          // é”å®šå»¶è¿Ÿ(ç§’)
+    public float GarbageRatio;      // åƒåœ¾è¡Œæ”»å‡»æ¯”ç‡ [0, 1]ï¼ˆä»…ç¦…æ¨¡å¼å¯ç”¨ï¼‰
+    public float GarbageProb;       // åƒåœ¾è¡Œæ·»åŠ æ¦‚ç‡ [0, 1]ï¼ˆä»…ç¦…æ¨¡å¼å¯ç”¨ï¼‰
 
-    public GameObject UI_Background;        // UI - ÓÎÏ·±³¾°Í¼Ïñ
-    public GameObject UI_StartDownTimer;    // UI - ÓÎÏ·¿ªÊ¼µ¹¼ÆÊ±
-    public GameObject UI_PlayerButtons;     // UI - Íæ¼Ò²Ù×÷HUD
-    private GameObject UI_prepareText;      // UI - ÓÎÏ·×¼±¸ÌáÊ¾
+    public GameObject UI_Background;        // UI - æ¸¸æˆèƒŒæ™¯å›¾åƒ
+    public GameObject UI_StartDownTimer;    // UI - æ¸¸æˆå¼€å§‹å€’è®¡æ—¶
+    public GameObject UI_PlayerButtons;     // UI - ç©å®¶æ“ä½œHUD
+    private GameObject UI_prepareText;      // UI - æ¸¸æˆå‡†å¤‡æç¤º
 
-    public List<Operations> operations = new List<Operations>();    // ²Ù×÷¼ÇÂ¼±í
-    public int blockHeight = 0;                                     // ·½¿é¶Ñµş¸ß¶È
-    public bool finished = false;                                   // ÊÇ·ñÓÎÏ·½áÊø
+    public List<Operations> operations = new List<Operations>();    // æ“ä½œè®°å½•è¡¨
+    public int blockHeight = 0;                                     // æ–¹å—å †å é«˜åº¦
+    public bool finished = false;                                   // æ˜¯å¦æ¸¸æˆç»“æŸ
 
-    // »ñÈ¡±¾¾ÖÓÎÏ·ÉèÖÃĞÅÏ¢
+    // è·å–æœ¬å±€æ¸¸æˆè®¾ç½®ä¿¡æ¯
     private void GetBattleInfo()
     {
         AttackMode = GameSettings.AttackMode;
@@ -79,7 +79,7 @@ public class GameProcess : MonoBehaviour
         GetComponent<GenerateMinos>().NextOrder();
         for (int i = 1; i < que.Length; i++)
         {
-            // ÔÚ NEXT ÇøÓò»æÖÆ mino
+            // åœ¨ NEXT åŒºåŸŸç»˜åˆ¶ mino
             GetComponent<DrawNewMinos>().DrawNextMinos(que[i], i - 1);
         }
         return;
@@ -123,10 +123,10 @@ public class GameProcess : MonoBehaviour
         StartCoroutine(WaitFor_GAME_PREPARE());
     }
 
-    // Ç¿ÖÆÉè¶¨ 60fps Ö¡ÂÊ£¬Ö¡ÂÊµ½´ïÉè¶¨Ö¡ÂÊºóÔÙ¿ªÊ¼ÓÎÏ·
+    // å¼ºåˆ¶è®¾å®š 60fps å¸§ç‡ï¼Œå¸§ç‡åˆ°è¾¾è®¾å®šå¸§ç‡åå†å¼€å§‹æ¸¸æˆ
     private IEnumerator WaitFor_GAME_PREPARE()
     {
-        Application.targetFrameRate = 60;   // Éè¶¨Ö¡ÂÊÎª 60
+        Application.targetFrameRate = 60;   // è®¾å®šå¸§ç‡ä¸º 60
         yield return null;
 
         while (Time.deltaTime * 50 >= 1.0f) yield return null;
@@ -135,7 +135,7 @@ public class GameProcess : MonoBehaviour
         yield break;
     }
 
-    // µ±ÓÎÏ·½áÊøÊ±Í£Ö¹»æÖÆ mino ²¢ÇÒÉ¾³ı³¡ÉÏÕıÔÚÂäÏÂµÄ mino
+    // å½“æ¸¸æˆç»“æŸæ—¶åœæ­¢ç»˜åˆ¶ mino å¹¶ä¸”åˆ é™¤åœºä¸Šæ­£åœ¨è½ä¸‹çš„ mino
     private void StopDrawMinos()
     {
         GetComponent<DrawNewMinos>().enabled = false;

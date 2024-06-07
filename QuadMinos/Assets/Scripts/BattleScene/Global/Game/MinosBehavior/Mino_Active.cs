@@ -17,23 +17,23 @@ public class Mino_Active : MonoBehaviour
     private GameObject[] units;
     private GameObject[] shadows;
     private PosIndex[] shadowsP;
-    private SRS srs;            // SRS Ğı×ªÏµÍ³Ğı×ª¡¢ÌßÇ½±í
-    private float G;            // ´Ó GameProcess ÖĞ¶ÁÈ¡µÄÖØÁ¦´óĞ¡
-    private float L;            // ´Ó GameProcess ÖĞ¶ÁÈ¡µÄËø¶¨ÑÓ³Ù
-    private float T;            // ÉÏÒ»´ÎÏÂ×¹ÖÁ½ñµÄÊ±¼ä
-    private float C;            // Ëø¶¨¼ÆÊ±Æ÷
-    private int R;              // Ëø¶¨ÖØÖÃÉÏÏŞ
-    private int cnt;            // Ëø¶¨ÖØÖÃ´ÎÊı
+    private SRS srs;            // SRS æ—‹è½¬ç³»ç»Ÿæ—‹è½¬ã€è¸¢å¢™è¡¨
+    private float G;            // ä» GameProcess ä¸­è¯»å–çš„é‡åŠ›å¤§å°
+    private float L;            // ä» GameProcess ä¸­è¯»å–çš„é”å®šå»¶è¿Ÿ
+    private float T;            // ä¸Šä¸€æ¬¡ä¸‹å è‡³ä»Šçš„æ—¶é—´
+    private float C;            // é”å®šè®¡æ—¶å™¨
+    private int R;              // é”å®šé‡ç½®ä¸Šé™
+    private int cnt;            // é”å®šé‡ç½®æ¬¡æ•°
 
-    public int MinoType;        // mino µÄĞÎ×´
-    public int RotFlag = 0;     // mino µÄĞı×ª×´Ì¬£¨°´ÕÕ SRS Ğı×ªÏµÍ³¹æ¶¨µÄ·½Ïò£©
-    public bool Holdable;       // ¿É½øĞĞ HOLD ²Ù×÷
-    public PosIndex P;          // mino µÄĞı×ªÖĞĞÄµÄÕ½³¡Î»ÖÃ£¨ËùÓĞÎ»ÒÆ²Ù×÷ÓÃ PosIndex ÀàÍê³É£¬¼õÉÙ¸¡µã¾«¶ÈÎÊÌâ£©
+    public int MinoType;        // mino çš„å½¢çŠ¶
+    public int RotFlag = 0;     // mino çš„æ—‹è½¬çŠ¶æ€ï¼ˆæŒ‰ç…§ SRS æ—‹è½¬ç³»ç»Ÿè§„å®šçš„æ–¹å‘ï¼‰
+    public bool Holdable;       // å¯è¿›è¡Œ HOLD æ“ä½œ
+    public PosIndex P;          // mino çš„æ—‹è½¬ä¸­å¿ƒçš„æˆ˜åœºä½ç½®ï¼ˆæ‰€æœ‰ä½ç§»æ“ä½œç”¨ PosIndex ç±»å®Œæˆï¼Œå‡å°‘æµ®ç‚¹ç²¾åº¦é—®é¢˜ï¼‰
 
     private void RefreshPosition()
     {
-        transform.localPosition = P.GetPosition();          // ¸üĞÂĞı×ªÖĞĞÄÏà¶ÔÎ»ÖÃ
-        PosIndex[] localP = srs.GetPos(MinoType, RotFlag);  // »ñÈ¡µ±Ç°Ğı×ª×´Ì¬ÏÂµÄ×Ó¿éÏà¶ÔÕ½³¡×ø±ê
+        transform.localPosition = P.GetPosition();          // æ›´æ–°æ—‹è½¬ä¸­å¿ƒç›¸å¯¹ä½ç½®
+        PosIndex[] localP = srs.GetPos(MinoType, RotFlag);  // è·å–å½“å‰æ—‹è½¬çŠ¶æ€ä¸‹çš„å­å—ç›¸å¯¹æˆ˜åœºåæ ‡
         transform.localRotation= Quaternion.identity;
         for (int i = 0; i < units.Length; i++)
         {
@@ -74,13 +74,13 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // ·Ç¹Ì¶¨Ê±µÄĞı×ªÈôÂú×ã T-SPIN£¬²úÉúÏàÓ¦Ğ§¹û£¨_dir Îª·½Ïò£¬0ÎªÄæÊ±Õë£¬1ÎªË³Ê±Õë£©
+    // éå›ºå®šæ—¶çš„æ—‹è½¬è‹¥æ»¡è¶³ T-SPINï¼Œäº§ç”Ÿç›¸åº”æ•ˆæœï¼ˆ_dir ä¸ºæ–¹å‘ï¼Œ0ä¸ºé€†æ—¶é’ˆï¼Œ1ä¸ºé¡ºæ—¶é’ˆï¼‰
     private void SpinEffect(bool _dir)
     {
-        // Éú³É T-Spin Á£×ÓÌØĞ§²¢µ÷ÓÃÌßÇ½Å¤×ª¶¯»­£¨´Ë´¦ T-spin ÓëÌßÇ½Å¤×ª¹²ÓÃÍ¬Ò»¶¯»­£©
+        // ç”Ÿæˆ T-Spin ç²’å­ç‰¹æ•ˆå¹¶è°ƒç”¨è¸¢å¢™æ‰­è½¬åŠ¨ç”»ï¼ˆæ­¤å¤„ T-spin ä¸è¸¢å¢™æ‰­è½¬å…±ç”¨åŒä¸€åŠ¨ç”»ï¼‰
         GameObject _star = Instantiate(UI_SpinStar, field.transform.parent);
         _star.transform.position = transform.position;
-        // ÈôĞı×ª·½ÏòÎªÄæÊ±Õë£¬Á£×ÓĞ§¹û·´Ïò
+        // è‹¥æ—‹è½¬æ–¹å‘ä¸ºé€†æ—¶é’ˆï¼Œç²’å­æ•ˆæœåå‘
         if (!_dir)
         {
             ParticleSystem.VelocityOverLifetimeModule VOL = _star.GetComponent<ParticleSystem>().velocityOverLifetime;
@@ -98,7 +98,7 @@ public class Mino_Active : MonoBehaviour
         scoreNote.transform.localScale = Vector3.one;
         scoreNote.transform.position = transform.position;
         scoreNote = scoreNote.transform.GetChild(1).gameObject;
-        // µÃ·Ö·Ö²ãÉèÉ«
+        // å¾—åˆ†åˆ†å±‚è®¾è‰²
         if (_score <= 300) scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(1, 1, 1), 48, false);
         else if (_score <= 600) scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(1, 0.8039216f, 0), 72, false);
         else if (_score <= 900) scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(1, 0.6352941f, 0), 128, false);
@@ -107,40 +107,40 @@ public class Mino_Active : MonoBehaviour
             GameObject _Ring = Instantiate(UI_ThunderRing);
             _Ring.transform.position = transform.position;
             _Ring.transform.localScale = Vector3.one;
-            field.GetComponent<S_AudioEffect>().PlayAudio(Clip_Thunder, 1.0f, 10.0f);   // ¸ßÉËº¦±©»÷ÒôĞ§
-            if (_score <= 1200) scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(1, 0, 0), 196, true);
-            else scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(0.8274511f, 0.2196079f, 1), 256, true);
+            field.GetComponent<S_AudioEffect>().PlayAudio(Clip_Thunder, 1.0f, 10.0f);   // é«˜ä¼¤å®³æš´å‡»éŸ³æ•ˆ
+            if (_score <= 1200) scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(1, 0, 0, 0.5f), 196, true);
+            else scoreNote.GetComponent<S_UINote>().Init(_score.ToString(), new Color(0.8274511f, 0.2196079f, 1, 0.5f), 256, true);
         }
         return;
     }
 
-    // Ëø¶¨²¢»æÖÆÏÂÒ»¸ö mino
+    // é”å®šå¹¶ç»˜åˆ¶ä¸‹ä¸€ä¸ª mino
     private void Lock()
     {
-        // ¼ÇÂ¼²Ù×÷ĞòÁĞ£¨²Ù×÷ 6-Lock£©
+        // è®°å½•æ“ä½œåºåˆ—ï¼ˆæ“ä½œ 6-Lockï¼‰
         field.GetComponent<GameProcess>().operations.Add(new Operations(6, Time.time));
-        // »ñÈ¡ºÍ¸üĞÂ×Ó¿éÎ»ÖÃ£¬Ö´ĞĞ×Ó¿éËø¶¨³õÊ¼»¯º¯Êı
+        // è·å–å’Œæ›´æ–°å­å—ä½ç½®ï¼Œæ‰§è¡Œå­å—é”å®šåˆå§‹åŒ–å‡½æ•°
         PosIndex[] unitsP = srs.GetPos(MinoType, RotFlag);
         for (int i = 0; i < 4; i++)
             units[i].GetComponent<Mino_Locked>().Lock(P + unitsP[i], MinoType);
-        // ¼ìÑé T-SPIN
+        // æ£€éªŒ T-SPIN
         bool T_SPIN = GetComponent<Mino_Kick>().Spin_Check(MinoType, P);
-        // µİ¹éÇå³ıÌîÂúµÄĞĞ²¢¼ÆËãÏûĞĞÊı
+        // é€’å½’æ¸…é™¤å¡«æ»¡çš„è¡Œå¹¶è®¡ç®—æ¶ˆè¡Œæ•°
         int cleared = field.GetComponent<PlayfieldState>().Clear(1, 0);
         int scr = 0;
-        // ´«µİµÃ·Ö¼ÆËãÏµÍ³²ÎÊı
+        // ä¼ é€’å¾—åˆ†è®¡ç®—ç³»ç»Ÿå‚æ•°
         if (cleared > 0)
         {
-            // ·ÖÎöÏû³ıÀàĞÍ²¢¼ÆËãµÃ·Ö£¬Í¬Ê±µ÷ÓÃÏàÓ¦Ğ§¹û
+            // åˆ†ææ¶ˆé™¤ç±»å‹å¹¶è®¡ç®—å¾—åˆ†ï¼ŒåŒæ—¶è°ƒç”¨ç›¸åº”æ•ˆæœ
             scr = field.GetComponent<S_Score>().Cleared(cleared, T_SPIN);
             ClearEffect(field.GetComponent<S_Score>().thunderComboScore);
             field.GetComponent<S_Battle>().Attack(scr / 100, gameObject);
         }
         else
         {
-            // Èç¹û·ûºÏ T-SPIN£¬µ÷ÓÃ T-SPIN MINI Ğ§¹û£¨²»²úÉúµÃ·Ö£¬µ«²»»áÉú³ÉÀ¬»øĞĞ£¬Ò²²»´ò¶ÏÁ¬»÷£©
+            // å¦‚æœç¬¦åˆ T-SPINï¼Œè°ƒç”¨ T-SPIN MINI æ•ˆæœï¼ˆä¸äº§ç”Ÿå¾—åˆ†ï¼Œä½†ä¸ä¼šç”Ÿæˆåƒåœ¾è¡Œï¼Œä¹Ÿä¸æ‰“æ–­è¿å‡»ï¼‰
             if (T_SPIN) field.GetComponent<S_Score>().MiniSpin();
-            // Î´Ôì³ÉÏû³ı£¬ÇÒÎ´½øĞĞ T-SPIN£¬½«ÊÕµ½µÄÉËº¦×ª»¯ÎªÀ¬»øĞĞ£¬Í¬Ê±´ò¶ÏÁ¬»÷
+            // æœªé€ æˆæ¶ˆé™¤ï¼Œä¸”æœªè¿›è¡Œ T-SPINï¼Œå°†æ”¶åˆ°çš„ä¼¤å®³è½¬åŒ–ä¸ºåƒåœ¾è¡Œï¼ŒåŒæ—¶æ‰“æ–­è¿å‡»
             else
             {
                 field.GetComponent<DrawNewMinos>().DrawGarbageLines();
@@ -149,20 +149,20 @@ public class Mino_Active : MonoBehaviour
             }
 
         }
-        // ¼ÇÂ¼±íÏÖÇé¿ö
+        // è®°å½•è¡¨ç°æƒ…å†µ
         field.GetComponent<S_Score>().Pieces++;
         field.GetComponent<S_Score>().Lines += cleared;
         field.GetComponent<S_Score>().Attacked += scr / 100;
-        // µ÷ÓÃËø¶¨Ğ§¹û
+        // è°ƒç”¨é”å®šæ•ˆæœ
         field.GetComponent<S_VisualEffect>().Anim_Lock(true);
-        // É¾³ıµ±Ç° mino ²¢»æÖÆÏÂÒ» mino
+        // åˆ é™¤å½“å‰ mino å¹¶ç»˜åˆ¶ä¸‹ä¸€ mino
         DestroyShadows();
         Destroy(gameObject);
         field.GetComponent<GameProcess>().NEXT_MINO(true);
         return;
     }
 
-    // Ëø¶¨ÑÓ³Ù¼ÆÊ±
+    // é”å®šå»¶è¿Ÿè®¡æ—¶
     private void LockTimer()
     {
         if (!GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag))
@@ -175,6 +175,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
+    // æ£€æµ‹é˜´å½±å—ä½ç½®æ˜¯å¦ä¸åœ°å½¢å†²çª
     private bool ShadowKick()
     {
         for (int i = 0; i < 4; i++)
@@ -197,6 +198,7 @@ public class Mino_Active : MonoBehaviour
 
     private void DrawShadowMino()
     {
+        if (!GameSettings.ShowShadowblock) return;
         DestroyShadows();
         for (int i = 0; i < 4; i++)
         {
@@ -220,7 +222,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // Ëø¶¨ÖØÖÃ
+    // é”å®šé‡ç½®
     private void LockReset()
     {
         if (C <= 0.00005f) return;
@@ -230,7 +232,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // Îª×Ó¶ÔÏóÖ¸¶¨ÏàÓ¦ tag
+    // ä¸ºå­å¯¹è±¡æŒ‡å®šç›¸åº” tag
     private void TagInit()
     {
         Transform[] sons = GetComponentsInChildren<Transform>();
@@ -279,10 +281,10 @@ public class Mino_Active : MonoBehaviour
     }
 
     //**************************************************
-    //  Íæ¼Ò²Ù×÷¶¯×÷
+    //  ç©å®¶æ“ä½œåŠ¨ä½œ
     //**************************************************
 
-    // ×óÒÆ
+    // å·¦ç§»
     public void Operate_L()
     {
         if (GetComponent<Mino_Kick>().Kick_Left(MinoType, RotFlag)) return;
@@ -293,7 +295,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // ÓÒÒÆ
+    // å³ç§»
     public void Operate_R()
     {
         if (GetComponent<Mino_Kick>().Kick_Right(MinoType, RotFlag)) return;
@@ -304,7 +306,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // Èí½µ
+    // è½¯é™
     public void Operate_D()
     {
         if (GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag)) return;
@@ -315,7 +317,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // »»¿é
+    // æ¢å—
     public void Operate_H()
     {
         if (!Holdable) return;
@@ -327,7 +329,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // ÄæĞı
+    // é€†æ—‹
     public void Operate_A()
     {
         field.GetComponent<GameProcess>().operations.Add(new Operations(4, Time.time));
@@ -343,7 +345,7 @@ public class Mino_Active : MonoBehaviour
         P = p;
         RefreshPosition();
         if (GetComponent<Mino_Kick>().Spin_Check(MinoType, p)) SpinEffect(false);
-        // ¼ì²éÊÇ·ñÂú×ã X-Spin£¬ÈôÊÇ£¬Õ¹Ê¾Á£×ÓĞ§¹û
+        // æ£€æŸ¥æ˜¯å¦æ»¡è¶³ X-Spinï¼Œè‹¥æ˜¯ï¼Œå±•ç¤ºç²’å­æ•ˆæœ
         if (GetComponent<Mino_Kick>().X_Spin_Check(MinoType, RotFlag))
         {
                 GameObject _star = Instantiate(UI_XSpinStar);
@@ -354,7 +356,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // ÕıĞı
+    // æ­£æ—‹
     public void Operate_C()
     {
         field.GetComponent<GameProcess>().operations.Add(new Operations(5, Time.time));
@@ -370,7 +372,7 @@ public class Mino_Active : MonoBehaviour
         P = p;
         RefreshPosition();
         if (GetComponent<Mino_Kick>().Spin_Check(MinoType, p)) SpinEffect(true);
-        // ¼ì²éÊÇ·ñÂú×ã X-Spin£¬ÈôÊÇ£¬Õ¹Ê¾Á£×ÓĞ§¹û
+        // æ£€æŸ¥æ˜¯å¦æ»¡è¶³ X-Spinï¼Œè‹¥æ˜¯ï¼Œå±•ç¤ºç²’å­æ•ˆæœ
         if (GetComponent<Mino_Kick>().X_Spin_Check(MinoType, RotFlag))
         {
             GameObject _star = Instantiate(UI_XSpinStar);
@@ -381,7 +383,7 @@ public class Mino_Active : MonoBehaviour
         return;
     }
 
-    // Ó²½µ
+    // ç¡¬é™
     public void Operate_HD()
     {
         bool droped = false;

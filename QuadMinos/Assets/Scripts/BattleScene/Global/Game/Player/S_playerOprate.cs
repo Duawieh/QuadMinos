@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class S_playerOprate : MonoBehaviour
 {
+    // 每种操作对应按键按下的时间
     private float[] clickTimer = new float[7];
+    // 每种操作对应按键在上一帧是否被按下
     private bool[] clicked = new bool[7];
 
     /***********************
@@ -21,7 +24,12 @@ public class S_playerOprate : MonoBehaviour
      * 
      * *********************/
 
+# if UNITY_EDITOR
     private const float LONG_PRESS = 0.20f;     // 长按判定时长
+// # elif UNITY_ANDROID
+    private const float MIN_VARR = 0.1f;
+    private const float MIN_HARR = 0.1f;
+# endif
 
     public GameObject moveBackground;           // 触控遥感区域背景对象（既作为背景，也负责划定触控范围）
     public GameObject moveHandle;               // 触控遥感对象
@@ -50,6 +58,7 @@ public class S_playerOprate : MonoBehaviour
     // 键盘操作转换
     private void OperateOnKeyboard()
     {
+# if UNITY_EDITOR
         if (Input.GetKey(KeyCode.LeftArrow)) {
             Click_MoveLeft();
             clicked[0] = true;
@@ -88,9 +97,11 @@ public class S_playerOprate : MonoBehaviour
         }
         else clicked[6] = false;
         LongPressOperations();
+# endif
         return;
     }
 
+# if UNITY_EDITOR
     // 长按判定函数（仅键盘操作有效）
     private void LongPressOperations()
     {
@@ -111,11 +122,12 @@ public class S_playerOprate : MonoBehaviour
         clicked[buttonId] = true;
         return;
     }
+# endif
 
     //----------------------------------------------------------------------
-    // 遥感触控
+    // 摇杆触控
     //----------------------------------------------------------------------
-    private float Get_Radius()
+    private float Get_sqrRadius()
     {
         Vector3[] corners = new Vector3[4]; // 获取四个角的屏幕坐标，顺序：左下、左上、右上、右下
         moveBackground.GetComponent<RectTransform>().GetWorldCorners(corners);
@@ -124,7 +136,8 @@ public class S_playerOprate : MonoBehaviour
         return (y_u - y_d) * (y_u - y_d);   // 用左上角纵坐标减左下角纵坐标得半径（需保证旋转为零）
     }
 
-    // 将鼠标点击事件转化为 Touch 对象（仅用于在 PC 上进行测试）
+# if UNITY_EDITOR
+    // 将鼠标点击事件转化为 Touch 对象（仅用于在 Editor 内进行测试）
     private Touch temp_p;
     private Touch TestMouseTouch(float R, Vector2 C)
     {
@@ -158,17 +171,14 @@ public class S_playerOprate : MonoBehaviour
         // 将 Touch 事件赋值为 moveTouch 后返回
         if (temp_p.phase != TouchPhase.Ended && temp_p.phase != TouchPhase.Canceled)
         {
-            if (temp_p.rawPosition.y <= C.y)
+            if ((temp_p.rawPosition - C).sqrMagnitude <= R * 1.777f)
             {
-                if ((temp_p.rawPosition - C).sqrMagnitude <= R) moveTouch = temp_p;
-            }
-            else
-            {
-                if (((temp_p.rawPosition - C) * 3).sqrMagnitude <= R) moveTouch = temp_p;
+                if ((temp_p.rawPosition.y - C.y) <= Math.Sqrt(R * 0.111f)) moveTouch = temp_p;
             }
         }
         return moveTouch;
     }
+# endif
 
     // 由触摸点更新遥感位置
     private void HandlePositionUpdate(float R, Vector2 C, Touch moveTouch)
@@ -177,7 +187,7 @@ public class S_playerOprate : MonoBehaviour
         if (moveTouch.phase != TouchPhase.Ended && moveTouch.phase != TouchPhase.Canceled)
         {
             Vector2 vec = moveTouch.position - C;
-            // 将遥感限制在触控检测区域内
+            // 将摇杆限制在触控检测区域内
             if (vec.y > 0) vec = new Vector2(vec.x, 0);
             if (vec.sqrMagnitude > R) vec = vec.normalized * Mathf.Sqrt(R);
             vec += C;
@@ -192,81 +202,98 @@ public class S_playerOprate : MonoBehaviour
     }
 
     // 摇杆操作
-    private int moveHorizenTimer = 0;
-    private int moveVertenTimer = 0;
+    private float moveHorizenTimer = 0.0f;
+    private float moveVertenTimer = 0.0f;
+    /// <summary>
+    /// 由摇杆进行的移动操作
+    /// </summary>
+    /// <param name="R">摇杆操作区域的半径的平方</param>
+    /// <param name="C">摇杆操作区域的圆心</param>
     private void MoveOperations(float R, Vector2 C)
     {
+        // 摇杆屏幕位置
         Vector2 P = Camera.main.WorldToScreenPoint(moveHandle.transform.position);
+        // 摇杆操作区域半径
         R = Mathf.Sqrt(R);
-        // 摇杆水平拖动超过五分之一半径时视为进行操作
+        // 摇杆水平拖动量与半径比值达到 0.1 时视为有效操作
         // 水平移动
-        if (Mathf.Abs((P - C).x * 5) >= R)
+        if (Mathf.Abs((P - C).x * 10) >= R)
         {
-            if (moveHorizenTimer == 0)
+            moveHorizenTimer += FigureHARR(Mathf.Abs((P - C).x), R);
+            while (moveHorizenTimer >= 0)
             {
                 if ((P - C).x < 0) Click_MoveLeft();
                 else Click_MoveRight();
+                moveHorizenTimer -= 1.0f;
             }
-            moveHorizenTimer++;
-            if (moveHorizenTimer > ResetTime_Horizen(Mathf.Abs((P - C).x), R)) moveHorizenTimer = 0;
-        } else moveHorizenTimer = 0;
-        // 摇杆垂直拖动超过三分之一半径时视为进行操作
+        } else moveHorizenTimer = 0.0f;
+        // 摇杆垂直拖动量与半径比值达到 0.1 时视为有效操作
         // 垂直移动
-        if ((C - P).y * 3f >= R)
+        if ((C - P).y * 10 >= R)
         {
-            if (moveVertenTimer == 0)
+            moveVertenTimer += FigureVARR(Mathf.Abs((P - C).y), R);
+            while (moveVertenTimer >= 0)
             {
                 Click_Drop();
+                moveVertenTimer -= 1.0f;
             }
-            moveVertenTimer++;
-            if (moveVertenTimer > ResetTime_Vertical((C - P).y, R)) moveVertenTimer = 0;
-        }
-        else moveVertenTimer = 0;
+        } else moveVertenTimer = 0.0f;
     }
-    // 根据摇杆移动量计算下一次操作之间间隔的帧数（最慢 12 帧，最快 0 帧）
-    private float ResetTime_Horizen(float _pivot, float R)
-    {
-        _pivot -= R / 5;
-        R *= 0.8f;
-        return Mathf.Ceil(-12 / R * _pivot + 12);
+
+    private float FigureHARR(float _pivot, float R) {
+        ref float minRAS = ref GameSettings.OperationRAS;
+        ref float maxHARR = ref GameSettings.OperationHARR;
+        _pivot /= R;
+        if (_pivot < minRAS) return 0.0f;
+        return Functions.F_lineFade(_pivot - minRAS, 1.0f - minRAS, 0.0167f, maxHARR);
     }
-    // 根据摇杆移动量计算下一次操作之间间隔的帧数（最慢 20 帧，最快 0 帧）
-    private float ResetTime_Vertical(float _pivot, float R)
-    {
-        _pivot -= R / 3;
-        R *= 0.666666666f;
-        float _G = field.GetComponent<GameProcess>().Gravity;
-        return Mathf.Ceil(-0.3f / _G / R * _pivot + 0.3f / _G);
+    private float FigureVARR(float _pivot, float R) {
+        ref float minRAS = ref GameSettings.OperationRAS;
+        ref float maxVARR = ref GameSettings.OperationVARR;
+        _pivot /= R;
+        if (_pivot < minRAS) return 0.0f;
+        return Functions.F_lineFade(_pivot - minRAS, 1.0f - minRAS, 0.0167f, maxVARR);
     }
+
+    // // 根据摇杆移动量计算下一次操作之间间隔的帧数（最慢 12 帧，最快 0 帧）
+    // private float ResetTime_Horizen(float _pivot, float R)
+    // {
+    //     _pivot -= R / 5;
+    //     R *= 0.8f;
+    //     return Mathf.Ceil(-12 / R * _pivot + 12);
+    // }
+    // // 根据摇杆移动量计算下一次操作之间间隔的帧数（最慢 20 帧，最快 0 帧）
+    // private float ResetTime_Vertical(float _pivot, float R)
+    // {
+    //     _pivot -= R / 3;
+    //     R *= 0.666666666f;
+    //     float _G = field.GetComponent<GameProcess>().Gravity;
+    //     return Mathf.Ceil(-0.3f / _G / R * _pivot + 0.3f / _G);
+    // }
 
     private void TouchMoveHandle()
     {
         Touch moveTouch = new();
         moveTouch.phase = TouchPhase.Canceled;
         // 获取手柄触控区在屏幕上的半径的平方
-        float R = Get_Radius();
+        float R = Get_sqrRadius();
         // 获取手柄触控区在屏幕上的中心坐标
         Vector2 C = Camera.main.WorldToScreenPoint(moveBackground.transform.position);
         // 获取（更新）位于手柄触控区内的 Touch 对象
         foreach (Touch p in Input.touches)
         {
-            if (p.phase == TouchPhase.Ended || p.phase == TouchPhase.Canceled) continue;
-            else { 
-                if (p.rawPosition.y <= C.y)
+            if (p.phase != TouchPhase.Ended && p.phase != TouchPhase.Canceled)
+            {
+                if ((p.rawPosition - C).sqrMagnitude <= R * 1.777f)
                 {
-                    if ((p.rawPosition - C).sqrMagnitude <= R) moveTouch = p;
-                } 
-                else
-                {
-                    if (((p.rawPosition - C) * 3).sqrMagnitude <= R) moveTouch = p;
+                    if ((p.rawPosition.y - C.y) <= Math.Sqrt(R * 0.111f)) moveTouch = p;
                 }
             }
         }
 
-        // 仅应在 PC 端调试时具有该语句
-        //-------------------------------
-        //moveTouch = TestMouseTouch(R, C);
-        //-------------------------------
+# if UNITY_EDITOR
+        moveTouch = TestMouseTouch(R, C);
+# endif
 
         HandlePositionUpdate(R, C, moveTouch);
         MoveOperations(R, C);

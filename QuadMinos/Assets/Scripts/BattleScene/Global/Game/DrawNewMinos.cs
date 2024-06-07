@@ -46,7 +46,7 @@ public class MinosInitP
         initPosIndex[6][1] = new PosIndex(5, 22);
         initPosIndex[6][2] = new PosIndex(6, 22);
         initPosIndex[6][3] = new PosIndex(5, 23);
-        // ÆßÖÖ Mino µÄ¼¸ºÎÖĞĞÄÏà¶ÔĞı×ªÖĞĞÄµÄÆ«ÒÆ£¨·½¿é±ß³¤Îª 0.32f£©
+        // ä¸ƒç§ Mino çš„å‡ ä½•ä¸­å¿ƒç›¸å¯¹æ—‹è½¬ä¸­å¿ƒçš„åç§»ï¼ˆæ–¹å—è¾¹é•¿ä¸º 0.32fï¼‰
         centerPivot = new Vector2[7];
         centerPivot[0] = new Vector2(+0.16f, +0.00f);
         centerPivot[1] = new Vector2(+0.00f, +0.16f);
@@ -100,8 +100,8 @@ public class DrawNewMinos : MonoBehaviour
         return false;
     }
 
-    // ¼ì²éÊÇ·ñÓĞ¿Õ¼äÉú³ÉĞÂµÄ Mino£¬Èç¹ûÓĞ»æÖÆĞÂµÄ Mino£¬·ñÔòÖ´ĞĞ GAME_OVER()
-    // »ù±¾µÄ»æÖÆ£¬ÓÃÓÚÔÚµÚ 22 ĞĞÖĞÑë»æÖÆĞÂÏÂÂäµÄ²Ù×÷¿é
+    // æ£€æŸ¥æ˜¯å¦æœ‰ç©ºé—´ç”Ÿæˆæ–°çš„ Minoï¼Œå¦‚æœæœ‰ç»˜åˆ¶æ–°çš„ Minoï¼Œå¦åˆ™æ‰§è¡Œ GAME_OVER()
+    // åŸºæœ¬çš„ç»˜åˆ¶ï¼Œç”¨äºåœ¨ç¬¬ 22 è¡Œä¸­å¤®ç»˜åˆ¶æ–°ä¸‹è½çš„æ“ä½œå—
     public void DrawMino(int _id, bool _hold)
     {
         if (Check_Draw(_id))
@@ -112,7 +112,7 @@ public class DrawNewMinos : MonoBehaviour
         {
             GameObject newMino = Instantiate(actMinos[_id]);
             newMino.transform.parent = transform;
-            newMino.transform.localPosition = new Vector2(-0.16f, 3.68f);   // ³õÊ¼Éú³ÉÎ»ÖÃ
+            newMino.transform.localPosition = new Vector2(-0.16f, 3.68f);   // åˆå§‹ç”Ÿæˆä½ç½®
             newMino.transform.localScale = Vector3.one;
             newMino.GetComponent<Mino_Active>().Holdable = _hold;
             newMino.GetComponent<Mino_Active>().MinoType = _id;
@@ -121,7 +121,7 @@ public class DrawNewMinos : MonoBehaviour
         }
     }
 
-    // »æÖÆ½ûÇøµÄºìÉ«²æºÅ£¬ÓÃÓÚÌáÊ¾Íæ¼Ò»áµ¼ÖÂÓÎÏ·Ê§°ÜµÄÇøÓò
+    // ç»˜åˆ¶ç¦åŒºçš„çº¢è‰²å‰å·ï¼Œç”¨äºæç¤ºç©å®¶ä¼šå¯¼è‡´æ¸¸æˆå¤±è´¥çš„åŒºåŸŸ
     public void DrawForbiddenCross(int _id, bool _enabled)
     {
         for (int i = 0; i < 4; i++)
@@ -136,10 +136,10 @@ public class DrawNewMinos : MonoBehaviour
         return;
     }
 
-    // »æÖÆ NEXT ÇøÓòµÄ mino
+    // ç»˜åˆ¶ NEXT åŒºåŸŸçš„ mino
     public void DrawNextMinos(int _type, int i)
     {
-        if (nextMino[i] != null) { DestroyImmediate(nextMino[i]); }  // Çå³ıÔ­ÓĞ·½¿é
+        if (nextMino[i] != null) { DestroyImmediate(nextMino[i]); }  // æ¸…é™¤åŸæœ‰æ–¹å—
         nextMino[i] = Instantiate(actMinos[_type]);
         nextMino[i].transform.parent = nextMinoCases[i].transform;
         nextMino[i].transform.localScale = new Vector3(0.47f, 0.47f, 0.47f);
@@ -148,10 +148,10 @@ public class DrawNewMinos : MonoBehaviour
         return;
     }
 
-    // »æÖÆ HOLD ÇøÓòµÄ mino
+    // ç»˜åˆ¶ HOLD åŒºåŸŸçš„ mino
     public void DrawHoldMino(int _type)
     {
-        if (holdMino != null) { DestroyImmediate(holdMino); }       // Çå³ıÔ­ÓĞ·½¿é
+        if (holdMino != null) { DestroyImmediate(holdMino); }       // æ¸…é™¤åŸæœ‰æ–¹å—
         holdMino = Instantiate(actMinos[_type]);
         holdMino.transform.parent = holdMinoCase.transform;
         holdMino.transform.localScale = new Vector3(0.47f, 0.47f, 0.47f);
@@ -159,31 +159,32 @@ public class DrawNewMinos : MonoBehaviour
         holdMino.tag = "UIMino";
     }
 
-    // »æÖÆÀ¬»øĞĞ
+    // ç»˜åˆ¶åƒåœ¾è¡Œ
     public void DrawGarbageLines()
     {
         ref List<GameObject> dmgUI = ref GetComponent<S_Battle>().DMG;
         if (dmgUI.Count == 0) { return; }
 
-        List<int> emptyBlocks = new List<int>();    // ×ÔÏÂ¶øÉÏ¼ÇÂ¼¼´½«³öÏÖµÄÀ¬»øĞĞµÄ¿ÕÎ»Õ½³¡×ø±ê
+        List<int> emptyBlocks = new List<int>();    // è‡ªä¸‹è€Œä¸Šè®°å½•å³å°†å‡ºç°çš„åƒåœ¾è¡Œçš„ç©ºä½æˆ˜åœºåæ ‡
 
-        // ´Ó×îÏÂ·½µÄÉËº¦Ìõ¿ªÊ¼£¬½«ÉËº¦Ìõ°üº¬µÄĞÅÏ¢×ª»¯ÎªÒªÌí¼ÓµÄÀ¬»øĞĞµÄ¿ÕÁĞ±àºÅ
+        // ä»æœ€ä¸‹æ–¹çš„ä¼¤å®³æ¡å¼€å§‹ï¼Œå°†ä¼¤å®³æ¡åŒ…å«çš„ä¿¡æ¯è½¬åŒ–ä¸ºè¦æ·»åŠ çš„åƒåœ¾è¡Œçš„ç©ºåˆ—ç¼–å·
         foreach (GameObject bar in dmgUI)
         {
             int _dmg = bar.GetComponent<S_UIDamage>().DMG;
             int _ept = bar.GetComponent<S_UIDamage>().DMG;
             for (int i = 1; i <= _dmg; i++) emptyBlocks.Add(_ept);
-        // ½«ÉËº¦Ìõ¶ÓÁĞÇå¿Õ
+        // å°†ä¼¤å®³æ¡é˜Ÿåˆ—æ¸…ç©º
             Destroy(bar);
         }
         dmgUI.Clear();
         GetComponent<S_Battle>().DMG_Height = 0;
 
-        int _lines = emptyBlocks.Count;             // ÒªÌí¼ÓµÄÀ¬»øĞĞĞĞÊı
+        // è¦æ·»åŠ çš„åƒåœ¾è¡Œè¡Œæ•°
+        int _lines = emptyBlocks.Count;
         GetComponent<S_Score>().addedLines= _lines;
         GetComponent<S_VisualEffect>().Anim_Garbage(true);
 
-        // ½«¶ÑµşÉÏÒÆ²¢ÔÚÏÂ·½»æÖÆÀ¬»øĞĞ
+        // å°†å †å ä¸Šç§»å¹¶åœ¨ä¸‹æ–¹ç»˜åˆ¶åƒåœ¾è¡Œ
         GetComponent<PlayfieldState>().Add(1, _lines);
         int j = 1;
         foreach (int _ept in emptyBlocks)

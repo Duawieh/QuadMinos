@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-// SRS Ğı×ªÏµÍ³ÌßÇ½¼ì²â±í
+// SRS æ—‹è½¬ç³»ç»Ÿè¸¢å¢™æ£€æµ‹è¡¨
 public class SRS
 {
-    private PosIndex[][][] checkTable = new PosIndex[3][][];    // ÌßÇ½¼ì²âÆ«ÒÆ±í£¬·Ö±ğ¶ÔÓ¦JLSTZ¿é¡¢I¿é¡¢O¿é£¬ËÄ¸ö·½Ïò£¨0,R,2,L)£¬Îå´Î¼ì²â
-    private PosIndex[][][] rotPosTable = new PosIndex[7][][];   // Ğı×ªÎ»ÖÃ±í£¬·Ö±ğ¶ÔÓ¦ÆßÖÖ·½¿é£¬ËÄ¸ö·½Ïò£¨0,R,2,L)£¬ËÄ¸ö×Ó¿é
+    private PosIndex[][][] checkTable = new PosIndex[3][][];    // è¸¢å¢™æ£€æµ‹åç§»è¡¨ï¼Œåˆ†åˆ«å¯¹åº”JLSTZå—ã€Iå—ã€Oå—ï¼Œå››ä¸ªæ–¹å‘ï¼ˆ0,R,2,L)ï¼Œäº”æ¬¡æ£€æµ‹
+    private PosIndex[][][] rotPosTable = new PosIndex[7][][];   // æ—‹è½¬ä½ç½®è¡¨ï¼Œåˆ†åˆ«å¯¹åº”ä¸ƒç§æ–¹å—ï¼Œå››ä¸ªæ–¹å‘ï¼ˆ0,R,2,L)ï¼Œå››ä¸ªå­å—
 
     public void Init()
     {
-        // ³õÊ¼»¯Ğı×ªÎ»ÖÃ±í
+        // åˆå§‹åŒ–æ—‹è½¬ä½ç½®è¡¨
         {
             // I
             rotPosTable[0] = new PosIndex[4][];
@@ -56,21 +56,21 @@ public class SRS
             rotPosTable[6][2] = new PosIndex[] { new PosIndex(0, 0), new PosIndex(-1, 0), new PosIndex(0, -1), new PosIndex(+1, -1) };
             rotPosTable[6][3] = new PosIndex[] { new PosIndex(0, 0), new PosIndex(0, +1), new PosIndex(-1, 0), new PosIndex(-1, -1) };
         }
-        // ³õÊ¼»¯ Kick ±í
+        // åˆå§‹åŒ– Kick è¡¨
         {
-            // JLSTZ ¿é kick ¼ì²âÆ«ÒÆ±í
+            // JLSTZ å— kick æ£€æµ‹åç§»è¡¨
             checkTable[0] = new PosIndex[4][];
             checkTable[0][0] = new PosIndex[] { new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +0) };
             checkTable[0][1] = new PosIndex[] { new PosIndex(+0, +0), new PosIndex(+1, +0), new PosIndex(+1, -1), new PosIndex(+0, +2), new PosIndex(+1, +2) };
             checkTable[0][2] = new PosIndex[] { new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +0) };
             checkTable[0][3] = new PosIndex[] { new PosIndex(+0, +0), new PosIndex(-1, +0), new PosIndex(-1, -1), new PosIndex(+0, +2), new PosIndex(-1, +2) };
-            // I ¿é kick ¼ì²âÆ«ÒÆ±í
+            // I å— kick æ£€æµ‹åç§»è¡¨
             checkTable[1] = new PosIndex[4][];
             checkTable[1][0] = new PosIndex[] { new PosIndex(+0, +0), new PosIndex(-1, +0), new PosIndex(+2, +0), new PosIndex(-1, +0), new PosIndex(+2, +0) };
             checkTable[1][1] = new PosIndex[] { new PosIndex(-1, +0), new PosIndex(+0, +0), new PosIndex(+0, +0), new PosIndex(+0, +1), new PosIndex(+0, -2) };
             checkTable[1][2] = new PosIndex[] { new PosIndex(-1, +1), new PosIndex(+1, +1), new PosIndex(-2, +1), new PosIndex(+1, +0), new PosIndex(-2, +0) };
             checkTable[1][3] = new PosIndex[] { new PosIndex(+0, +1), new PosIndex(+0, +1), new PosIndex(+0, +1), new PosIndex(+0, -1), new PosIndex(+0, +2) };
-            // O ¿é kick ¼ì²âÆ«ÒÆ±í£¨O ¿é²»¿ÉÌßÇ½£¬½öÒ»´Î¼ì²â£©
+            // O å— kick æ£€æµ‹åç§»è¡¨ï¼ˆO å—ä¸å¯è¸¢å¢™ï¼Œä»…ä¸€æ¬¡æ£€æµ‹ï¼‰
             checkTable[2] = new PosIndex[4][];
             checkTable[2][0] = new PosIndex[] { new PosIndex(+0, +0) };
             checkTable[2][1] = new PosIndex[] { new PosIndex(+0, -1) };
@@ -169,7 +169,7 @@ public class Mino_Kick : MonoBehaviour
         return false;
     }
 
-    // ÌßÇ½¼ì²â
+    // è¸¢å¢™æ£€æµ‹
     public PosIndex Kick_Check(int _t, int bgn, int fns)
     {
         PosIndex P = GetComponent<Mino_Active>().P;
@@ -181,7 +181,7 @@ public class Mino_Kick : MonoBehaviour
             bool kicked = false;
             for (int j = 0; j < 4; j++)
             {
-                // »ñÈ¡×Ó¿éÔÚÌßÇ½ºóµÄÕ½³¡×ø±ê
+                // è·å–å­å—åœ¨è¸¢å¢™åçš„æˆ˜åœºåæ ‡
                 PosIndex p_id = unitsP[j] + table[i] + P;
                 kicked = true;
                 if (p_id.x_id < 1 || p_id.x_id > 10) break;
@@ -207,12 +207,12 @@ public class Mino_Kick : MonoBehaviour
         return new PosIndex(0, 0);
     }
 
-    // T-spin ¼ì²â
+    // T-spin æ£€æµ‹
     public bool Spin_Check(int _type, PosIndex p_id)
     {
-        // ¼ì²âÊÇ·ñÎª T ¿é
+        // æ£€æµ‹æ˜¯å¦ä¸º T å—
         if (_type != 5) return false;
-        // ¼ì²â×îºóÒ»´Î·Ç HardDrop ²Ù×÷ÊÇ·ñÎªĞı×ª
+        // æ£€æµ‹æœ€åä¸€æ¬¡é HardDrop æ“ä½œæ˜¯å¦ä¸ºæ—‹è½¬
         ref List<Operations> lst = ref field.GetComponent<GameProcess>().operations;
         for (int i = lst.Count - 1; i >= 0; i--)
         {
@@ -222,7 +222,7 @@ public class Mino_Kick : MonoBehaviour
                 break;
             }
         }
-        // Èı½Ç¼ì²â£¨²»º¬Ç½±ÚÓëµØ°å£©
+        // ä¸‰è§’æ£€æµ‹ï¼ˆä¸å«å¢™å£ä¸åœ°æ¿ï¼‰
         int cnt = 0;
         GameObject[][] taken = field.GetComponent<PlayfieldState>().takenBy;
         if (taken[p_id.x_id + 1][p_id.y_id + 1] != null && taken[p_id.x_id + 1][p_id.y_id + 1].name != "EmptyWall") cnt++;
@@ -230,11 +230,11 @@ public class Mino_Kick : MonoBehaviour
         if (taken[p_id.x_id - 1][p_id.y_id + 1] != null && taken[p_id.x_id - 1][p_id.y_id + 1].name != "EmptyWall") cnt++;
         if (taken[p_id.x_id - 1][p_id.y_id - 1] != null && taken[p_id.x_id - 1][p_id.y_id - 1].name != "EmptyWall") cnt++;
 
-        // ¼ì²â½áÊø
+        // æ£€æµ‹ç»“æŸ
         return cnt >= 3;
     }
 
-    // ÆäËû¿éµÄ Spin ¼ì²â£¨ÎŞµÃ·Ö£¬½öÓÃÓÚÉú³ÉĞ§¹û£©
+    // å…¶ä»–å—çš„ Spin æ£€æµ‹ï¼ˆæ— å¾—åˆ†ï¼Œä»…ç”¨äºç”Ÿæˆæ•ˆæœï¼‰
     public bool X_Spin_Check(int _type, int _rot)
     {
         if (!Kick_Top(_type, _rot)) return false;

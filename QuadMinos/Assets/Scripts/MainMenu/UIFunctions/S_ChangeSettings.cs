@@ -129,8 +129,8 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
-            // 最小 RAS 的合法范围在 0.0 ~ 1.0
-            if (_value >= 0.0f && _value <= 1.0f)
+            // 最小 RAS 的合法范围在 0.1 ~ 0.99
+            if (_value >= 0.1f && _value <= 0.99f)
             {
                 GameSettings.OperationRAS = _value;
                 File_Settings.SaveSettings();
@@ -146,8 +146,8 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
-            // 最大 VARR 的合法范围在 0.01 ~ 20.0
-            if (_value >= 0.01f && _value <= 20.0f)
+            // 最大 VARR 的合法范围在 0.0 ~ 20.0
+            if (_value >= 0.0f && _value <= 20.0f)
             {
                 GameSettings.OperationVARR = _value;
                 File_Settings.SaveSettings();
@@ -163,8 +163,8 @@ public class S_ChangeSettings : MonoBehaviour
         float _value = StringToFloat(_input);
         if (_value != -1.0f)
         {
-            // 最大 HARR 的合法范围在 0.01 ~ 10.0
-            if (_value >= 0.01f && _value <= 10.0f)
+            // 最大 HARR 的合法范围在 0.0 ~ 10.0
+            if (_value >= 0.0f && _value <= 10.0f)
             {
                 GameSettings.OperationHARR = _value;
                 File_Settings.SaveSettings();
