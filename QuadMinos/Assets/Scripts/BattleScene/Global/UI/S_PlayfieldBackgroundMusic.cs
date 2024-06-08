@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 public class S_PlayfieldBackgroundMusic : MonoBehaviour
 {
+    public AudioClip backgroundMusic_BLITZ;                         // 闪电战模式专属背景音乐
     private AudioClip backgroundMusic = null;
     private AudioSource ads;
     private string[] enabledFileTypes = { ".wav", ".mp3", ".ogg" }; // 受支持的背景音乐文件格式
@@ -22,6 +23,12 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
 
     private IEnumerator GetBackgroundMusic()
     {
+        // 闪电战模式播放闪电战专属音乐
+        if (BattleInfo.GameMode == 3) {
+            backgroundMusic = backgroundMusic_BLITZ;
+            yield break;
+        }
+
         List<string> filesPath = new List<string>();
         while (filesPath.Count <= 0)
         {
@@ -30,7 +37,10 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
             yield return null;
         }
 
-        int tgt = Random.Range(0, filesPath.Count);
+        // 随机产生本局音乐
+        // 若游戏模式为 BLITZ，音乐固定为 《神游行列间》
+        int tgt;
+        tgt = Random.Range(0, filesPath.Count);
         string fileName = Application.persistentDataPath + "/BattleMusic/" + filesPath[tgt];
         AudioType audioType = AudioType.MPEG;
         if (fileName.EndsWith(".mp3")) audioType = AudioType.MPEG;

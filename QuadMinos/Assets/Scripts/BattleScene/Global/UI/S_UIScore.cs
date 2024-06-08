@@ -29,11 +29,11 @@ public class S_UIScore : MonoBehaviour
         
     }
 
-    // µ÷ÓÃ T-SPIN Clear ¶ÔÓ¦µÄ UI
+    // è°ƒç”¨ T-SPIN Clear å¯¹åº”çš„ UI
     public void TSpin()
     {
         GameObject flr;
-        // Éú³É T-SPIN ÌáÊ¾ºÍìÅ¹âĞ§¹û£¬²¥·Å T-SPIN ÒôĞ§
+        // ç”Ÿæˆ T-SPIN æç¤ºå’Œç‚«å…‰æ•ˆæœï¼Œæ’­æ”¾ T-SPIN éŸ³æ•ˆ
         UI_ClearType.GetComponent<S_UIClearType>().Init();
         flr = Instantiate(UI_Flare, transform);
         flr.transform.SetAsFirstSibling();
@@ -45,7 +45,7 @@ public class S_UIScore : MonoBehaviour
     public void Clear(int _lines, int _combo, int _b2b)
     {
         UI_ClearLines.GetComponent<S_UIClearLines>().Init(_lines);
-        // ÏûËÄ UI Ğ§¹ûºÍÒôĞ§
+        // æ¶ˆå›› UI æ•ˆæœå’ŒéŸ³æ•ˆ
         if (_lines == 4)
         {
             field.GetComponent<S_AudioEffect>().PlayAudio(Clip_QUAD, 1.0f, 2.0f);
@@ -53,7 +53,7 @@ public class S_UIScore : MonoBehaviour
             flr.transform.SetAsFirstSibling();
             flr.GetComponent<S_UIFlare>().Init(new Color(1, 0.8039216f, 0), 0.6f, UI_ClearLines.transform.position);
         }
-        // Á¬»÷ UI Ğ§¹ûºÍÁ¬»÷ìÅ¹â
+        // è¿å‡» UI æ•ˆæœå’Œè¿å‡»ç‚«å…‰
         if (_combo > 1)
         {
             UI_ComboNum.GetComponent<S_UICombo>().Init(_combo);
@@ -61,7 +61,7 @@ public class S_UIScore : MonoBehaviour
             flr.transform.SetAsFirstSibling();
             flr.GetComponent<S_UIFlare>().Init(Color.white, 0.6f, UI_ComboNum.transform.position);
         }
-        // B2B UI Ğ§¹û£¨Í¨¹ıÊÇ·ñÏûĞĞÅĞ¶ÏÊÇ·ñÎª MINI SPIN£©
+        // B2B UI æ•ˆæœï¼ˆé€šè¿‡æ˜¯å¦æ¶ˆè¡Œåˆ¤æ–­æ˜¯å¦ä¸º MINI SPINï¼‰
         if (_b2b > 1 && _lines > 0)
         {
             UI_B2BNum.GetComponent<S_UIBackToBack>().Init(_b2b);
@@ -78,13 +78,13 @@ public class S_UIScore : MonoBehaviour
         return;
     }
 
-    // ´«ÈëÉËº¦Á¿£¬ÊµÀı»¯ÉËº¦Ìõ£¬²¢·µ»ØÉËº¦ÌõËùÔÚÊÀ½ç×ø±ê
+    // ä¼ å…¥ä¼¤å®³é‡ï¼Œå®ä¾‹åŒ–ä¼¤å®³æ¡ï¼Œå¹¶è¿”å›ä¼¤å®³æ¡æ‰€åœ¨ä¸–ç•Œåæ ‡
     public Vector3 DamageBar(int _dmg)
     {
         GameObject _bar = Instantiate(UI_Damage, field.transform);
         _bar.transform.localScale= Vector3.one;
 
-        // µ÷ÕûĞÂÉú³ÉµÄÉËº¦Ìõµ½ÉËº¦Ìõ¶ÓÁĞ×îÉÏ·½
+        // è°ƒæ•´æ–°ç”Ÿæˆçš„ä¼¤å®³æ¡åˆ°ä¼¤å®³æ¡é˜Ÿåˆ—æœ€ä¸Šæ–¹
         float _h = 0.0f;
         ref List<GameObject> dmgBars = ref field.GetComponent<S_Battle>().DMG;
         foreach (GameObject dmgBar in dmgBars)
@@ -94,7 +94,7 @@ public class S_UIScore : MonoBehaviour
         }
         _bar.transform.localPosition += new Vector3(0, _h, 0);
 
-        // µ÷ÓÃ³õÊ¼»¯º¯Êı£¬½«ÉËº¦ÌõÌí¼Óµ½ÉËº¦ÁĞ±í
+        // è°ƒç”¨åˆå§‹åŒ–å‡½æ•°ï¼Œå°†ä¼¤å®³æ¡æ·»åŠ åˆ°ä¼¤å®³åˆ—è¡¨
         _bar.GetComponent<S_UIDamage>().Init(_dmg);
         dmgBars.Add(_bar);
         field.GetComponent<S_Battle>().DMG_Height += _dmg;

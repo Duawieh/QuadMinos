@@ -2109,6 +2109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c8e4297d7c1ea4d95ecf4252f2f94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundMusic_BLITZ: {fileID: 8300000, guid: cfe62fd791eb1b44cb30deb97ae90ffa, type: 3}
 --- !u!1 &1592888546
 GameObject:
   m_ObjectHideFlags: 0

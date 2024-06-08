@@ -117,9 +117,9 @@ public class GameProcess : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BattleScore.Init(BattleInfo.GameMode);
         transform.localScale = new Vector3(0.0001f, 0.0001f, 0.0001f);
         UI_prepareText = GameObject.Find("Text_Prepare");
-
         StartCoroutine(WaitFor_GAME_PREPARE());
     }
 

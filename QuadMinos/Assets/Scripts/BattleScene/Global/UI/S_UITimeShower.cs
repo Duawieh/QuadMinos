@@ -16,15 +16,23 @@ public class S_UITimeShower : MonoBehaviour
         if (_min < 10) rst += "0";
         if (_min < 1) rst += "0";
         else rst += _min.ToString();
+        
         rst += ":";
 
         sec %= 60.0f;
         if (sec < 10) rst += "0";
+        if (sec < 1) rst += "0.";
         rst += sec.ToString();
 
+        if (rst.Length == 5) rst += ".";
         if (rst.Length > 9) rst = rst.Substring(0, 9);
         while (rst.Length < 9) rst += "0";
         return rst;
+    }
+
+    public void updateUItimer() {
+        float T = BattleScore._Time;
+        GetComponent<Text>().text = GetTime(T);
     }
 
     // Start is called before the first frame update
@@ -37,10 +45,8 @@ public class S_UITimeShower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float T = Time.time - field.GetComponent<S_Score>().BEGIN_TIME;
         if (field.GetComponent<S_Score>().BEGIN_TIME == -1) return;
-        if (field.GetComponent<GameProcess>().finished) return;
-        GetComponent<Text>().text = GetTime(T);
+        updateUItimer();
         return;
     }
 }

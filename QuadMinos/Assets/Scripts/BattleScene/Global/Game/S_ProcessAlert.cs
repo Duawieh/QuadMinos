@@ -59,6 +59,7 @@ public class S_ProcessAlert : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         while (BattleScore._Time - 120 < 0) yield return null;
 
+        BattleScore._Time = 120.0f;
         GetComponent<GameProcess>().finished = true;
         GetComponent<GameProcess>().GAME_OVER();
         Instantiate(Alert_Finish);

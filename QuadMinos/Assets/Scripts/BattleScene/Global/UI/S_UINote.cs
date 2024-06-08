@@ -83,9 +83,9 @@ public class S_UINote : MonoBehaviour
         _T.color = _color;
         _T.fontSize = _size;
         flashEphasis = _flash;
-        // 记录设定的颜色，用于在闪烁强调后恢复色彩
+        // 璁板綍璁惧畾鐨勯鑹诧紝鐢ㄤ簬鍦ㄩ棯鐑佸己璋冨悗鎭㈠鑹插僵
         originColor = _color;
-        // 默认设置闪光关闭
+        // 榛樿璁剧疆闂厜鍏抽棴
         UI_Flare.GetComponent<Image>().color = new Color(0, 0, 0, 0);
         return;
     }

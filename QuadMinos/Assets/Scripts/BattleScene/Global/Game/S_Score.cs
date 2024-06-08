@@ -3,46 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Õ½¶·±íÏÖÊı¾İ£¬ÓÃÓÚ½áËã»­ÃæÕ¹Ê¾ºÍ¸öÈË¼ÍÂ¼´¢´æ
+/// æˆ˜æ–—è¡¨ç°æ•°æ®ï¼Œç”¨äºç»“ç®—ç”»é¢å±•ç¤ºå’Œä¸ªäººçºªå½•å‚¨å­˜
 /// </summary>
 public class BattleScore
 {
     /// <summary>
-    /// ÓÎÏ·Ä£Ê½:
-    ///     1 - ìøÄ£Ê½
-    ///     2 - 40ĞĞ
-    ///     3 - ÉÁµçÕ½
-    ///     4 - ÂíÀ­ËÉ
-    ///     5 - Íæ¼Ò¶ÔÕ½
+    /// æ¸¸æˆæ¨¡å¼:
+    ///     1 - ç¦…æ¨¡å¼
+    ///     2 - 40è¡Œ
+    ///     3 - é—ªç”µæˆ˜
+    ///     4 - é©¬æ‹‰æ¾
+    ///     5 - ç©å®¶å¯¹æˆ˜
     /// </summary>
     public static int GameMode = 0;
     /// <summary>
-    /// ×îÖÕµÃ·Ö
+    /// æœ€ç»ˆå¾—åˆ†
     /// </summary>
     public static int _Score = 0;
     /// <summary>
-    /// ×î¸ßµÃ·Ö
+    /// æœ€é«˜å¾—åˆ†
     /// </summary>
     public static int _Score_Max = 0;
     /// <summary>
-    /// ÓÎÏ·Ê±³¤£¨µ¥Î»ÎªÃë£©
+    /// æ¸¸æˆæ—¶é•¿ï¼ˆå•ä½ä¸ºç§’ï¼‰
     /// </summary>
     public static float _Time = 0.0f;
     /// <summary>
-    /// ×Ü¹²¹Ì¶¨µÄ mino ÊıÁ¿
+    /// æ€»å…±å›ºå®šçš„ mino æ•°é‡
     /// </summary>
     public static int _Locked = 0;
     /// <summary>
-    /// ×Ü¹²Ôì³ÉµÄ¹¥»÷Á¦£¨µ¥Î»ÎªĞĞ£©
+    /// æ€»å…±é€ æˆçš„æ”»å‡»åŠ›ï¼ˆå•ä½ä¸ºè¡Œï¼‰
     /// </summary>
     public static int _Attacked = 0;
     /// <summary>
-    /// ×Ü¹²Ïû³ıµÄĞĞÊı
+    /// æ€»å…±æ¶ˆé™¤çš„è¡Œæ•°
     /// </summary>
     public static int _Lines = 0;
 
     /// <summary>
-    /// ³õÊ¼»¯ËùÓĞ±íÏÖ·Ö£¨ÓÎÏ·¿ªÊ¼Ê±µ÷ÓÃ£©
+    /// åˆå§‹åŒ–æ‰€æœ‰è¡¨ç°åˆ†ï¼ˆæ¸¸æˆå¼€å§‹æ—¶è°ƒç”¨ï¼‰
     /// </summary>
     public static void Init(int _mode)
     {
@@ -62,27 +62,30 @@ public class S_Score : MonoBehaviour
     public AudioClip[] comboClips;
     public GameObject scorePanel;
 
-    public float BEGIN_TIME = -1;   // GAME_START Ê±µÄÊ±¼ä
-    public int SCORE = 0;           // ×ÜµÃ·Ö
-    public int Pieces = 0;          // ×Ü¹Ì¶¨Êı
-    public int Attacked = 0;        // ×Ü¹¥»÷Á¿
-    public int Lines = 0;           // ×ÜÏûĞĞÊı
-    public float thunderComboTimer; // ÉÁµçÁ¬»÷µ¹¼ÆÊ±£¨Á¬»÷ÖĞµÄÏàÁÚ´ÎÊıÏû³ıÊ±¼ä¼ä¸ôÔÚ 1.0s ÄÚÊÓÎªÉÁµçÁ¬»÷£©
-    public int thunderComboScore;   // ÉÁµçÁ¬»÷µÃ·Ö£¨ÎªÂú×ãÉÁµçÁ¬»÷µÄÁ¬»÷µÄ×ÜµÃ·Ö£©
-    public int addedLines;          // ÈôÌí¼ÓÁËÀ¬»øĞĞ£¬´Ë´ÎÌí¼ÓµÄĞĞÊı
-    public int clearedLines;        // Èô½øĞĞÁËÏûĞĞ£¬´Ë´ÎÏûµôµÄĞĞÊı
-    public int clearedCombo;        // Èô½øĞĞÁËÏûĞĞ£¬ÏûĞĞµÄÁ¬»÷Êı£¨µ¥¶À½øĞĞÒ»´ÎÏûĞĞÊ±¼ÇÎª 1£©
-    public int specialCombo;        // Èô½øĞĞÁËÌØÊâÏûĞĞ£¬Á¬Ğø B2B ´ÎÊı£¨µ¥¶À½øĞĞÒ»´Î¸ß¼¶ÏûĞĞÊ±¼ÇÎª 1£©
-    public int TspinScore;          // ´Ë´ÎÏûĞĞÊÇ·ñÎª T-SPIN £¨ÊÇÎª 1 £¬·ñÔòÎª 0£©
+    public float BEGIN_TIME = -1;   // GAME_START æ—¶çš„æ—¶é—´
+    public int SCORE = 0;           // æ€»å¾—åˆ†
+    public int Pieces = 0;          // æ€»å›ºå®šæ•°
+    public int Attacked = 0;        // æ€»æ”»å‡»é‡
+    public int Lines = 0;           // æ€»æ¶ˆè¡Œæ•°
+    public float thunderComboTimer; // é—ªç”µè¿å‡»å€’è®¡æ—¶ï¼ˆè¿å‡»ä¸­çš„ç›¸é‚»æ¬¡æ•°æ¶ˆé™¤æ—¶é—´é—´éš”åœ¨ 1.0s å†…è§†ä¸ºé—ªç”µè¿å‡»ï¼‰
+    public int thunderComboScore;   // é—ªç”µè¿å‡»å¾—åˆ†ï¼ˆä¸ºæ»¡è¶³é—ªç”µè¿å‡»çš„è¿å‡»çš„æ€»å¾—åˆ†ï¼‰
+    public int addedLines;          // è‹¥æ·»åŠ äº†åƒåœ¾è¡Œï¼Œæ­¤æ¬¡æ·»åŠ çš„è¡Œæ•°
+    public int clearedLines;        // è‹¥è¿›è¡Œäº†æ¶ˆè¡Œï¼Œæ­¤æ¬¡æ¶ˆæ‰çš„è¡Œæ•°
+    public int clearedCombo;        // è‹¥è¿›è¡Œäº†æ¶ˆè¡Œï¼Œæ¶ˆè¡Œçš„è¿å‡»æ•°ï¼ˆå•ç‹¬è¿›è¡Œä¸€æ¬¡æ¶ˆè¡Œæ—¶è®°ä¸º 1ï¼‰
+    public int specialCombo;        // è‹¥è¿›è¡Œäº†ç‰¹æ®Šæ¶ˆè¡Œï¼Œè¿ç»­ B2B æ¬¡æ•°ï¼ˆå•ç‹¬è¿›è¡Œä¸€æ¬¡é«˜çº§æ¶ˆè¡Œæ—¶è®°ä¸º 1ï¼‰
+    public int TspinScore;          // æ­¤æ¬¡æ¶ˆè¡Œæ˜¯å¦ä¸º T-SPIN ï¼ˆæ˜¯ä¸º 1 ï¼Œå¦åˆ™ä¸º 0ï¼‰
 
     private void Update()
     {
+        if (BEGIN_TIME == -1) return;
+        if (GetComponent<GameProcess>().finished) return;
         SCORE_Down();
         ThunderCombo_Down();
         DataUpdate();
+        return;
     }
 
-    // ½«Õ½¶·Êı¾İÍ¬²½´¢´æ£¨ÄÚ´æ¿Õ¼ä£©
+    // å°†æˆ˜æ–—æ•°æ®åŒæ­¥å‚¨å­˜ï¼ˆå†…å­˜ç©ºé—´ï¼‰
     private void DataUpdate()
     {
         BattleScore._Score = SCORE;
@@ -94,7 +97,7 @@ public class S_Score : MonoBehaviour
         return;
     }
 
-    // µÃ·ÖËæÊ±¼ä¼õÉÙ
+    // å¾—åˆ†éšæ—¶é—´å‡å°‘
     private float downScoreTimer = 0.0f;
     private void SCORE_Down()
     {
@@ -108,7 +111,7 @@ public class S_Score : MonoBehaviour
         return;
     }
 
-    // ÉÁµçÁ¬»÷ÅĞ¶¨µ¹¼ÆÊ±
+    // é—ªç”µè¿å‡»åˆ¤å®šå€’è®¡æ—¶
     private void ThunderCombo_Down()
     {
         thunderComboTimer-= Time.deltaTime;
@@ -136,10 +139,10 @@ public class S_Score : MonoBehaviour
         return;
     }
 
-    // ´¦ÀíÏû³ıÊı¾İ£¬·ÖÎöÏû³ıÀàĞÍ²¢µ÷ÓÃÏàÓ¦Ğ§¹û£¬¼ÆËãºÍ·µ»ØµÃ·Ö
+    // å¤„ç†æ¶ˆé™¤æ•°æ®ï¼Œåˆ†ææ¶ˆé™¤ç±»å‹å¹¶è°ƒç”¨ç›¸åº”æ•ˆæœï¼Œè®¡ç®—å’Œè¿”å›å¾—åˆ†
     public int Cleared(int lines, bool is_spin)
     {
-        // ¸üĞÂÁ¬»÷Êı¾İ²¢²¥·Å¶ÔÓ¦ÒôÊÓÆµĞ§¹û
+        // æ›´æ–°è¿å‡»æ•°æ®å¹¶æ’­æ”¾å¯¹åº”éŸ³è§†é¢‘æ•ˆæœ
         if (is_spin)
         {
             scorePanel.GetComponent<S_UIScore>().TSpin();
@@ -156,7 +159,7 @@ public class S_Score : MonoBehaviour
         clearedCombo++;
         scorePanel.GetComponent<S_UIScore>().Clear(lines, clearedCombo, specialCombo);
         Audio_Combo();
-        // ¼ÆËã²¢¸üĞÂµÃ·ÖĞÅÏ¢
+        // è®¡ç®—å¹¶æ›´æ–°å¾—åˆ†ä¿¡æ¯
         int GOT = GET_SCORE();
         GetComponent<S_Battle>().DamageDefense(GOT);
         SCORE += GOT;
@@ -164,7 +167,7 @@ public class S_Score : MonoBehaviour
         return GOT;
     }
 
-    // ÏÔÊ¾ SPIN MINI Ğ§¹û²¢¸üĞÂµÃ·ÖĞÅÏ¢£¨ÎŞµÃ·Ö£¬Á¬»÷Çå¿Õ£©
+    // æ˜¾ç¤º SPIN MINI æ•ˆæœå¹¶æ›´æ–°å¾—åˆ†ä¿¡æ¯ï¼ˆæ— å¾—åˆ†ï¼Œè¿å‡»æ¸…ç©ºï¼‰
     public void MiniSpin()
     {
         scorePanel.GetComponent<S_UIScore>().TSpin();

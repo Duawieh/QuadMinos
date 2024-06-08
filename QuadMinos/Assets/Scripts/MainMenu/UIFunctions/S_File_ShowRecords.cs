@@ -21,7 +21,7 @@ public class S_File_ShowRecords : MonoBehaviour
 
     private void ShowRecords()
     {
-        // ÏÔÊ¾ ËÄÊ®ĞĞ Ä£Ê½µÄÀúÊ·×î¼Ñ³É¼¨£¨ÈôÓĞÍ¬³É¼¨ÔòÈ¡Ê±¼ä×îÔçÕß£¨Ê±¼äÅÅĞòÔÚ±£´æÊ±´¦Àí£©£©
+        // æ˜¾ç¤º å››åè¡Œ æ¨¡å¼çš„å†å²æœ€ä½³æˆç»©ï¼ˆè‹¥æœ‰åŒæˆç»©åˆ™å–æ—¶é—´æœ€æ—©è€…ï¼ˆæ—¶é—´æ’åºåœ¨ä¿å­˜æ—¶å¤„ç†ï¼‰ï¼‰
         BattleDataInfo _data_40line = GetTopRecord(2);
         if (_data_40line._time != "0000/00/00") {
             Score_40Line.GetComponent<Text>().text = GetTimeFromSeconds(_data_40line._grade);
@@ -33,7 +33,7 @@ public class S_File_ShowRecords : MonoBehaviour
             Date_40Line.GetComponent<Text>().text = "";
         }
 
-        // ÏÔÊ¾ ÉÁµçÕ½ Ä£Ê½µÄÀúÊ·×î¼Ñ³É¼¨£¨ÈôÓĞÍ¬³É¼¨ÔòÈ¡Ê±¼ä×îÔçÕß£¨Ê±¼äÅÅĞòÔÚ±£´æÊ±´¦Àí£©£©
+        // æ˜¾ç¤º é—ªç”µæˆ˜ æ¨¡å¼çš„å†å²æœ€ä½³æˆç»©ï¼ˆè‹¥æœ‰åŒæˆç»©åˆ™å–æ—¶é—´æœ€æ—©è€…ï¼ˆæ—¶é—´æ’åºåœ¨ä¿å­˜æ—¶å¤„ç†ï¼‰ï¼‰
         BattleDataInfo _data_blitz = GetTopRecord(3);
         if (_data_blitz._time != "0000/00/00")
         {
@@ -46,7 +46,7 @@ public class S_File_ShowRecords : MonoBehaviour
             Date_Blitz.GetComponent<Text>().text = "";
         }
 
-        // ÏÔÊ¾ ÂíÀ­ËÉ Ä£Ê½µÄÀúÊ·×î¼Ñ³É¼¨£¨ÈôÓĞÍ¬³É¼¨ÔòÈ¡Ê±¼ä×îÔçÕß£¨Ê±¼äÅÅĞòÔÚ±£´æÊ±´¦Àí£©£©
+        // æ˜¾ç¤º é©¬æ‹‰æ¾ æ¨¡å¼çš„å†å²æœ€ä½³æˆç»©ï¼ˆè‹¥æœ‰åŒæˆç»©åˆ™å–æ—¶é—´æœ€æ—©è€…ï¼ˆæ—¶é—´æ’åºåœ¨ä¿å­˜æ—¶å¤„ç†ï¼‰ï¼‰
         BattleDataInfo _data_marathon = GetTopRecord(4);
         if (_data_marathon._time != "0000/00/00")
         {
@@ -87,14 +87,14 @@ public class S_File_ShowRecords : MonoBehaviour
     private string GetTimeFromSeconds(float _seconds)
     {
         int _H, _M;
-        // ¼ÆËãĞ¡Ê±Êı
+        // è®¡ç®—å°æ—¶æ•°
         if (_seconds >= 3600.0f)
         {
             _H = Mathf.FloorToInt(_seconds / 3600.0f);
             _seconds -= _H * 3600;
         }
         else _H = 0;
-        // ¼ÆËã·ÖÖÓÊı
+        // è®¡ç®—åˆ†é’Ÿæ•°
         if (_seconds >= 60.0f)
         {
             _M = Mathf.FloorToInt(_seconds / 60.0f);

@@ -23,7 +23,7 @@ public class Anim_MainButtons : MonoBehaviour
         }
         // 计算变换尺寸后的按钮在屏幕上所占高度
         // 初始化按钮位置在屏幕正下方
-        float buttonsScreenHeight = ScaleInScreen.Get_Height(buttons[0]);
+        float buttonsScreenHeight = 1.1f * ScaleInScreen.Get_Height(buttons[0]);
         Vector3 underScreenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2.0f, -0.5f * buttonsScreenHeight, 0));
         foreach (GameObject button in buttons) {
             button.transform.position = underScreenCenter;
@@ -46,11 +46,12 @@ public class Anim_MainButtons : MonoBehaviour
             button.transform.position = Vector3.zero;
         while (buttons[0].transform.localPosition.y - buttons[4].transform.localPosition.y < buttonsScreenHeight * 4) {
             for (int i = 0; i < 5; i++) {
+                // 每个按钮完成移动动画后进行 position 标准化
                 if (buttons[i].transform.localPosition.y <= -buttonsScreenHeight * i) {
                     buttons[i].transform.localPosition = new Vector3(0, -buttonsScreenHeight * i, 0);
                     continue;
                 }
-                buttons[i].transform.localPosition += new Vector3(0, -buttonsScreenHeight * 4 * Time.deltaTime, 0);
+                else buttons[i].transform.localPosition += new Vector3(0, -buttonsScreenHeight * 4 * Time.deltaTime, 0);
             }
             yield return null;
         }

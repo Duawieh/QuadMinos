@@ -14,6 +14,7 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = GameSettings.LockTime;
         BattleInfo.GarbageProb = GameSettings.GarbageProb;
         BattleInfo.GarbageRatio = GameSettings.GarbageRatio;
+        BattleScore.Init(1);
     }
 
     public void ClickButton_40LINE()
@@ -25,6 +26,7 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = 1.0f;
         BattleInfo.GarbageProb = 0.0f;
         BattleInfo.GarbageRatio = 0.0f;
+        BattleScore.Init(2);
     }
 
     public void ClickButton_BLITZ()
@@ -37,6 +39,7 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = 0.5f;
         BattleInfo.GarbageProb = 0.0f;
         BattleInfo.GarbageRatio= 0.0f;
+        BattleScore.Init(3);
     }
 
     public void ClickButton_MARATHON()
@@ -48,5 +51,6 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = 1.0f;
         BattleInfo.GarbageProb = 0.0f;
         BattleInfo.GarbageRatio = 0.0f;
+        BattleScore.Init(4);
     }
 }
