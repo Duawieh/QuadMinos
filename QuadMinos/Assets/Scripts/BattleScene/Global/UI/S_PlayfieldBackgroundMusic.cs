@@ -8,42 +8,43 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
 {
     private AudioClip backgroundMusic = null;
     private AudioSource ads;
+    private string[] enabledFileTypes = { ".wav", ".mp3", ".ogg" }; // 受支持的背景音乐文件格式
 
     // Start is called before the first frame update
     void Start()
     {
         ads = GetComponent<AudioSource>();
-
-        CopyDefaultBackgroundMusicFiles(4);
+        StreamingAssetsToPersistenceData.CopyFilesFromSA2PD
+            ("/BattleMusic", "/BattleMusic", enabledFileTypes, gameObject);
         StartCoroutine(GetBackgroundMusic());
-    }
-
-    // 将 StreamingAssets 文件夹内的 _tot 个文件复制到 PersistentData
-    private void CopyDefaultBackgroundMusicFiles(int _tot)
-    {
-        for (int i = 0; i < _tot; i++)
-        {
-            string _path = "/BattleMusic/";
-            string _name = "bm_" + i.ToString() + ".mp3";
-            GetComponent<StreamingAssetsFiles>().CopyFileToPersistentDataPath(_path, _name);
-        }
         return;
     }
 
     private IEnumerator GetBackgroundMusic()
     {
-        string[] filesPath = new string[0];
-        while (filesPath.Length <= 0)
+        List<string> filesPath = new List<string>();
+        while (filesPath.Count <= 0)
         {
-            filesPath = Directory.GetFiles(Application.persistentDataPath + "/BattleMusic", "*.mp3");
+            filesPath = StreamingAssetsToPersistenceData.getFilesNameInFolderByTypes
+                (Application.persistentDataPath + "/BattleMusic", enabledFileTypes);
             yield return null;
         }
 
-        int tgt = Random.Range(0, filesPath.Length);
+        int tgt = Random.Range(0, filesPath.Count);
+        string fileName = Application.persistentDataPath + "/BattleMusic/" + filesPath[tgt];
+        AudioType audioType = AudioType.MPEG;
+        if (fileName.EndsWith(".mp3")) audioType = AudioType.MPEG;
+        if (fileName.EndsWith(".wav")) audioType = AudioType.WAV;
+        if (fileName.EndsWith(".ogg")) audioType = AudioType.OGGVORBIS;
 
-        using(UnityWebRequest UWR_file = UnityWebRequestMultimedia.GetAudioClip("file://" + filesPath[tgt], AudioType.MPEG))
+# if UNITY_EDITOR
+        using(UnityWebRequest UWR_file = UnityWebRequestMultimedia.GetAudioClip(fileName, audioType))
+# elif UNITY_ANDROID
+        using(UnityWebRequest UWR_file = UnityWebRequestMultimedia.GetAudioClip("file://" + fileName, audioType))
+# endif
         {
             yield return UWR_file.SendWebRequest();
+            if (UWR_file.result != UnityWebRequest.Result.Success) yield break;
             backgroundMusic = DownloadHandlerAudioClip.GetContent(UWR_file);
         }
 

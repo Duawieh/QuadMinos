@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using UnityEditor;
+using System.Runtime.CompilerServices;
+
 
 public class S_PlayfieldBackgroundImage : MonoBehaviour
 {
@@ -14,13 +16,17 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
     private Image comp_image;
     private AspectRatioFitter comp_ARF;
     private Sprite backgroundImage = null;
+    private string[] enabledFileTypes = {".jpg", ".png"}; // 受支持的背景图像文件格式
 
     // Start is called before the first frame update
     void Start()
     {
         InitBackground();
-        CopyDefaultBackgroundImageFiles(11);
+        // 将 Streaming Assets 中的背景图片复制到 persistenceDataPath 中
+        StreamingAssetsToPersistenceData.CopyFilesFromSA2PD
+            ("/BackgroundImages", "/BackgroundImages", enabledFileTypes, gameObject);
         StartCoroutine(GetBackgroundImage());
+        StartCoroutine(SetImage());
         return;
     }
 
@@ -32,63 +38,38 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         return;
     }
 
-    // 将 StreamingAssets 文件夹内的 _tot 个文件复制到 PersistentData
-    private void CopyDefaultBackgroundImageFiles(int _tot)
-    {
-        for (int i = 0; i < _tot; i++)
-        {
-            string _path = "/BackgroundImages/";
-            string _name = "bkg_" + i.ToString() + ".jpg";
-            GetComponent<StreamingAssetsFiles>().CopyFileToPersistentDataPath(_path, _name);
-        }
-    }
-
     private IEnumerator GetBackgroundImage()
     {
-        FileInfo tgtFile = null;
-        while (tgtFile == null)
+        List<string> filesPath = new List<string>();
+        while (filesPath.Count <= 0)
         {
-            tgtFile = GetTargetFileInfo(Application.persistentDataPath + "/BackgroundImages/");
+            filesPath = StreamingAssetsToPersistenceData.getFilesNameInFolderByTypes
+                (Application.persistentDataPath + "/BackgroundImages", enabledFileTypes);
             yield return null;
         }
 
-        using(UnityWebRequest UWR_file = UnityWebRequestTexture.GetTexture("file://" + tgtFile.FullName))
+        int tgt = Random.Range(0, filesPath.Count);
+        string fileFullName = Application.persistentDataPath + "/BackgroundImages/" + filesPath[tgt];
+
+# if UNITY_EDITOR
+        using(UnityWebRequest UWR_file = UnityWebRequestTexture.GetTexture(fileFullName))
+# elif UNITY_ANDROID
+        using(UnityWebRequest UWR_file = UnityWebRequestTexture.GetTexture("file://" + fileFullName))
+# endif
         {
             yield return UWR_file.SendWebRequest();
-            Texture2D texture = DownloadHandlerTexture.GetContent(UWR_file);
-            backgroundImage = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+            if (UWR_file.result != UnityWebRequest.Result.Success) yield break;
+            Texture2D image = ((DownloadHandlerTexture)UWR_file.downloadHandler).texture;
+            backgroundImage = Sprite.Create(image, new Rect(0, 0, image.width, image.height), Vector2.zero);
         }
-
-        StartCoroutine(SetImage());
 
         yield break;
-    }
-
-    private FileInfo GetTargetFileInfo(string path)
-    {
-        DirectoryInfo dirInfo = new DirectoryInfo(Application.persistentDataPath + "/BackgroundImages");
-        FileInfo[] filesInfo = dirInfo.GetFiles("*", SearchOption.AllDirectories);
-
-        if (filesInfo.Length == 0) return null;
-
-        int tgt = Random.Range(0, filesInfo.Length);
-        for (int i = 0, j = 0; i <= filesInfo.Length; i++)
-        {
-            if (i == filesInfo.Length) i = 0;   // 为防止越界访问，环形遍历
-            if (filesInfo[i].Name.EndsWith(".meta")) continue;
-            if (j == tgt)
-            {
-                return filesInfo[i];
-            }
-            j++;
-        }
-
-        return null;
     }
 
     // 设置背景图像
     private IEnumerator SetImage()
     {
+        while (backgroundImage == null) yield return null;
         // 动态调整图像尺寸
         ratio = 1.0f * backgroundImage.texture.width / backgroundImage.texture.height;
         comp_image = GetComponent<Image>();

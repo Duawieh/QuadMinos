@@ -74,7 +74,7 @@
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_ParticleStar.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\DebuggerConsole.cs" />
     <Compile Include="Assets\Scripts\MainMenu\UIFunctions\S_ChangeSettings.cs" />
-    <Compile Include="Assets\Scripts\BattleScene\Global\StreamingAssetsFiles.cs" />
+    <Compile Include="Assets\Scripts\BattleScene\Global\FilesCoroutineOperations.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_ButtonsInit.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\Game\GameProcess.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\Game\S_ProcessAlert.cs" />
