@@ -26,7 +26,6 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
         StreamingAssetsToPersistenceData.CopyFilesFromSA2PD
             ("/BackgroundImages", "/BackgroundImages", enabledFileTypes, gameObject);
         StartCoroutine(GetBackgroundImage());
-        StartCoroutine(SetImage());
         return;
     }
 
@@ -63,13 +62,14 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
             backgroundImage = Sprite.Create(image, new Rect(0, 0, image.width, image.height), Vector2.zero);
         }
 
+        // 能运行到此处则可以确保 UWR_file != null
+        StartCoroutine(SetImage());
         yield break;
     }
 
     // 设置背景图像
     private IEnumerator SetImage()
     {
-        while (backgroundImage == null) yield return null;
         // 动态调整图像尺寸
         ratio = 1.0f * backgroundImage.texture.width / backgroundImage.texture.height;
         comp_image = GetComponent<Image>();
