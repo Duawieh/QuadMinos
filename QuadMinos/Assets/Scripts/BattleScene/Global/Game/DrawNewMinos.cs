@@ -106,6 +106,9 @@ public class DrawNewMinos : MonoBehaviour
     {
         if (Check_Draw(_id))
         {
+            // 马拉松模式和多人模式因堆叠过高导致游戏结束视为正常结束
+            if (BattleInfo.GameMode >= 4) 
+                GetComponent<GameProcess>().finished = true;
             GetComponent<GameProcess>().GAME_OVER();
         }
         else

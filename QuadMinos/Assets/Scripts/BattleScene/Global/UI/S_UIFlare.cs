@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class S_UIFlare : MonoBehaviour
 {
-    private Image img;              // Í¼Ïñ×é¼ş
-    private float M;                // ×î´óÁÁ¶È (0, 1]
+    private Image img;              // å›¾åƒç»„ä»¶
+    private float M;                // æœ€å¤§äº®åº¦ (0, 1]
     private float t;
 
     // Start is called before the first frame update

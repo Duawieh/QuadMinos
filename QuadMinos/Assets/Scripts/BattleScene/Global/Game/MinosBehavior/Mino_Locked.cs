@@ -10,9 +10,9 @@ public class Mino_Locked : MonoBehaviour
     public GameObject UI_ClearStar;
 
     private GameObject field;
-    private int minoType = 7;   // Ä¬ÈÏÎª 7£¬¼´ÈÏÎªÊÇÀ¬»øĞĞ·½¿é
+    private int minoType = 7;   // é»˜è®¤ä¸º 7ï¼Œå³è®¤ä¸ºæ˜¯åƒåœ¾è¡Œæ–¹å—
 
-    // ÊµÀı»¯Á£×ÓÏµÍ³£¬Õ¹Ê¾Ëø¶¨Á£×ÓĞ§¹û
+    // å®ä¾‹åŒ–ç²’å­ç³»ç»Ÿï¼Œå±•ç¤ºé”å®šç²’å­æ•ˆæœ
     private void LockStar(int _type)
     {
         if (_type >= 7) return;
@@ -23,7 +23,7 @@ public class Mino_Locked : MonoBehaviour
         return;
     }
 
-    // ÊµÀı»¯Á£×ÓÏµÍ³£¬Õ¹Ê¾Ïû³ıÁ£×ÓĞ§¹û
+    // å®ä¾‹åŒ–ç²’å­ç³»ç»Ÿï¼Œå±•ç¤ºæ¶ˆé™¤ç²’å­æ•ˆæœ
     private void ClearStar(int _type)
     {
         GameObject _star = Instantiate(UI_ClearStar, field.transform.parent);
@@ -32,7 +32,7 @@ public class Mino_Locked : MonoBehaviour
         return;
     }
 
-    // ÓÉÕ½³¡×ø±ê×ª»¯Îª transform Ïà¶Ô×ø±ê£¬´Ëº¯Êı½öÓ¦ÔÚ·½¿é»î¶¯Ê±±»µ÷ÓÃ
+    // ç”±æˆ˜åœºåæ ‡è½¬åŒ–ä¸º transform ç›¸å¯¹åæ ‡ï¼Œæ­¤å‡½æ•°ä»…åº”åœ¨æ–¹å—æ´»åŠ¨æ—¶è¢«è°ƒç”¨
     public void RefreshPosition(PosIndex localP)
     {
         p_id = localP;
@@ -40,7 +40,7 @@ public class Mino_Locked : MonoBehaviour
         return;
     }
     
-    // ±»Ïû³ıÊ±Ö´ĞĞ
+    // è¢«æ¶ˆé™¤æ—¶æ‰§è¡Œ
     public void Clear()
     {
         ClearStar(minoType);
@@ -48,7 +48,7 @@ public class Mino_Locked : MonoBehaviour
         return;
     }
 
-    // Ëø¶¨³õÊ¼»¯
+    // é”å®šåˆå§‹åŒ–
     public void Lock(PosIndex p, int _type)
     {
         field = GameObject.FindGameObjectWithTag("Field");
@@ -56,7 +56,7 @@ public class Mino_Locked : MonoBehaviour
         transform.tag = "LockUnit";
         p_id = p;
 
-        // ÒòÎªÄ³Ğ©Î´ÖªÔ­ÒòµÄ BUG ²»µÃ²»Ìí¼ÓÁËÏÂÃæµÄÄÚÈİ£¬ÓÃÓÚ¹æ·¶Ëø¶¨µÄ·½¿éµÄÎ»ÖÃ
+        // å› ä¸ºæŸäº›æœªçŸ¥åŸå› çš„ BUG ä¸å¾—ä¸æ·»åŠ äº†ä¸‹é¢çš„å†…å®¹ï¼Œç”¨äºè§„èŒƒé”å®šçš„æ–¹å—çš„ä½ç½®
         //-------------------------------------------------------------
         transform.localPosition = p_id.GetPosition();
         transform.localEulerAngles = Vector3.zero;
@@ -65,7 +65,7 @@ public class Mino_Locked : MonoBehaviour
 
         field.GetComponent<PlayfieldState>().takenBy[p_id.x_id][p_id.y_id] = gameObject;
 
-        // ÏÔÊ¾Ëø¶¨Á£×ÓÌØĞ§
+        // æ˜¾ç¤ºé”å®šç²’å­ç‰¹æ•ˆ
         LockStar(_type);
 
         return;

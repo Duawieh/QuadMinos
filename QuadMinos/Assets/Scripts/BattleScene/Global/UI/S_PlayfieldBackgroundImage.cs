@@ -80,7 +80,7 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
 
         // 设置图像淡入效果
         float _alpha = 0.0f;
-        while (_alpha < 0.65f)
+        while (_alpha < 0.45f)
         {
             comp_image.color = new Color(1, 1, 1, _alpha);
             _alpha += Time.deltaTime * 0.2f;

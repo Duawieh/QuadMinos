@@ -76,6 +76,22 @@ public class S_UINote : MonoBehaviour
         return;
     }
 
+    private IEnumerator NoteSize() {
+        float t = 0.0f;
+        float initialSize = 1.0f;
+        float targetSize = 0.30f;
+
+        while (t < 0.5f) {
+            float curSize = Functions.F_paraFadeout(t, 0.5f, initialSize, targetSize);
+            transform.parent.localScale = new Vector3(curSize, curSize, curSize);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.parent.localScale = new Vector3(targetSize, targetSize, targetSize);
+        yield break;
+    }
+
     public void Init(string _text, Color _color, int _size, bool _flash)
     {
         Text _T = GetComponent<Text>();
@@ -87,6 +103,8 @@ public class S_UINote : MonoBehaviour
         originColor = _color;
         // 默认设置闪光关闭
         UI_Flare.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+
+        if (_size >= 128) StartCoroutine(nameof(NoteSize));
         return;
     }
 }
