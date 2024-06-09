@@ -18,10 +18,9 @@ public class S_UITimeShower : MonoBehaviour
         else rst += _min.ToString();
         
         rst += ":";
-
         sec %= 60.0f;
+
         if (sec < 10) rst += "0";
-        if (sec < 1) rst += "0.";
         rst += sec.ToString();
 
         if (rst.Length == 5) rst += ".";
