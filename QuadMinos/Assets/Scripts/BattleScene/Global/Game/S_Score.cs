@@ -114,7 +114,7 @@ public class S_Score : MonoBehaviour
     // 闪电连击判定倒计时
     private void ThunderCombo_Down()
     {
-        thunderComboTimer-= Time.deltaTime;
+        thunderComboTimer -= Time.deltaTime;
         if (thunderComboTimer <= 0)
         {
             thunderComboTimer = 0.0f;

@@ -682,6 +682,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1088,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05909504584ff94dac0c00becb17a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music_rank1: {fileID: 8300000, guid: cf818440e947bbe42a30337c740d9d74, type: 3}
+  music_rank1: {fileID: 8300000, guid: 980342492883e0347ba6c9d88d594156, type: 3}
   music_rank2: {fileID: 8300000, guid: cf818440e947bbe42a30337c740d9d74, type: 3}
   rankBoard: {fileID: 570327428}
   scorBoard: {fileID: 1688309611}
