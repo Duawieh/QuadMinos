@@ -1091,6 +1091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music_rank1: {fileID: 8300000, guid: 980342492883e0347ba6c9d88d594156, type: 3}
   music_rank2: {fileID: 8300000, guid: cf818440e947bbe42a30337c740d9d74, type: 3}
+  celebration: {fileID: 4096160813596367618, guid: b47a18d4dbc3abd4daf91ad18fd082f3, type: 3}
   rankBoard: {fileID: 570327428}
   scorBoard: {fileID: 1688309611}
   exitBoard: {fileID: 1211216250}

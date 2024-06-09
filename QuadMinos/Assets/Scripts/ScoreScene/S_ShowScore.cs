@@ -8,7 +8,7 @@ public class S_ShowScore : MonoBehaviour
 {
     public AudioClip music_rank1;
     public AudioClip music_rank2;
-
+    public GameObject celebration;
     public GameObject rankBoard;
     public GameObject scorBoard;
     public GameObject exitBoard;
@@ -140,7 +140,13 @@ public class S_ShowScore : MonoBehaviour
     private void RankEffects(int rank)
     {
         AudioSource ads = GetComponent<AudioSource>();
-        if (rank == 1) ads.clip = music_rank1;
+
+        if (rank == 1) {
+            ads.clip = music_rank1;
+            GameObject clb = Instantiate(celebration, transform.parent);
+            clb.transform.localPosition = Vector3.zero;
+            clb.transform.localScale = Vector3.one;
+        }
         else ads.clip = music_rank2;
         ads.volume = GameSettings.MusicVolume;
         ads.Play();
