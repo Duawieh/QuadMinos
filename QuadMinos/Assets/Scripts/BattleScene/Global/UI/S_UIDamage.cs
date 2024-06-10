@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class S_UIDamage : MonoBehaviour
 {
-    public int DMG = 0;         // ��ɵ��˺�����
-    public int EPT = 0;         // ����������ʱ�ճ�����
+    public int DMG = 0;         // 造成的伤害行数
+    public int EPT = 0;         // 产生垃圾行时空出的列
 
-    // �� 0.1s ����ɳ��ȱ仯
+    // 在 0.1s 内完成长度变化
     private IEnumerator Anim_ChangeLength(int _from, int _to)
     {
         float len = transform.localScale.y;
@@ -23,7 +23,7 @@ public class S_UIDamage : MonoBehaviour
         yield break;
     }
 
-    // ��ɾ������ǰ�� 0.1s ��չʾ��ʧ����
+    // 在删除自身前的 0.1s 内展示消失动画
     private IEnumerator Anim_Disappear()
     {
         float len = transform.localScale.y;
@@ -41,14 +41,23 @@ public class S_UIDamage : MonoBehaviour
         yield break;
     }
 
-    public void Init(int _DMG)
+    /// <summary>
+    /// 初始化伤害条，包括播放伤害条积攒的动画，计算空缺列的位置
+    /// </summary>
+    /// <param name="_DMG">传入的伤害量行数</param>
+    /// <param name="_EPT">传入的列数，若有记录则传入记录，无记录则传入 0 表示随机生成</param>
+    /// <returns>返回空缺的列数用于记录</returns>
+    public int Init(int _DMG, int _EPT)
     {
         transform.localScale = new Vector3(1, 0, 1);
         StopAllCoroutines();
         StartCoroutine(Anim_ChangeLength(0, _DMG));
+
         DMG = _DMG;
-        EPT = Random.Range(1, 11);
-        return;
+        if (_EPT != 0) EPT = _EPT;
+        else EPT = Random.Range(1, 11);
+        
+        return EPT;
     }
 
     public void ChangeLength(int _DMG)

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// æŒ‰ 7-bag è§„åˆ™ç”Ÿæˆæ–°çš„ Minos
+/// </summary>
 public class GenerateMinos : MonoBehaviour
 {
     private int[] order = { 0, 1, 2, 3, 4, 5, 6 };
@@ -20,10 +23,10 @@ public class GenerateMinos : MonoBehaviour
         return;
     }
 
-    // ĞòÁĞÊ×Î»ÏòºóÒÆ¶¯Ò»Î»
+    // åºåˆ—é¦–ä½å‘åç§»åŠ¨ä¸€ä½
     public void NextOrder()
     {
-        // »·ĞÎ¸üĞÂºÍÉú³ÉËæ»ú¶ÓÁĞ
+        // ç¯å½¢æ›´æ–°å’Œç”Ÿæˆéšæœºé˜Ÿåˆ—
         order[cur] = order_pre[cur];
         cur++;
         if (cur >= 7)
@@ -34,10 +37,10 @@ public class GenerateMinos : MonoBehaviour
         return;
     }
 
-    // ·µ»ØËæ»úĞòÁĞ
+    // è¿”å›éšæœºåºåˆ—
     public int[] GetOrder(int len)
     {
-        // ÀûÓÃ»·ĞÎ¶ÓÁĞÌáÈ¡Ëæ»úĞòÁĞ
+        // åˆ©ç”¨ç¯å½¢é˜Ÿåˆ—æå–éšæœºåºåˆ—
         int[] rst = new int[len];
         int j = cur;
         for (int i = 0; i < len; i++)

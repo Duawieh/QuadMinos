@@ -640,6 +640,8 @@ GameObject:
   - component: {fileID: 424680944}
   - component: {fileID: 424680943}
   - component: {fileID: 424680949}
+  - component: {fileID: 424680955}
+  - component: {fileID: 424680956}
   - component: {fileID: 424680954}
   - component: {fileID: 424680950}
   - component: {fileID: 424680948}
@@ -807,6 +809,10 @@ MonoBehaviour:
   AttackMode: 1
   GameMode: 1
   LockReset: 15
+  ReviewMode: 0
+  RecordMode: 0
+  RecordLoaded: 0
+  RecordSaved: 0
   Gravity: 0.0156
   LockTime: 0.5
   GarbageRatio: 1
@@ -930,6 +936,30 @@ MonoBehaviour:
   Target_40Line: {fileID: 8463249337064219821, guid: 347945db5b9776f41b0b679903c8c85d, type: 3}
   Alert_Blitz: {fileID: 235859543717234367, guid: 8f532d6b8267c6b429e5db0fd9f205a7, type: 3}
   Alert_Marathon: {fileID: 235859543717234367, guid: c82af3e6292a7974087aab73c0cb9a31, type: 3}
+--- !u!114 &424680955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424680942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d08be6163466e4a9a2aa0d8187fa4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &424680956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424680942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c945310d0a1ae408b783933259bd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &456997800
 GameObject:
   m_ObjectHideFlags: 0

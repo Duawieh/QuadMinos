@@ -6,36 +6,36 @@ using System;
 
 public class S_playerOprate : MonoBehaviour
 {
-    // Ã¿ÖÖ²Ù×÷¶ÔÓ¦°´¼ü°´ÏÂµÄÊ±¼ä
+    // æ¯ç§æ“ä½œå¯¹åº”æŒ‰é”®æŒ‰ä¸‹çš„æ—¶é—´
     private float[] clickTimer = new float[7];
-    // Ã¿ÖÖ²Ù×÷¶ÔÓ¦°´¼üÔÚÉÏÒ»Ö¡ÊÇ·ñ±»°´ÏÂ
+    // æ¯ç§æ“ä½œå¯¹åº”æŒ‰é”®åœ¨ä¸Šä¸€å¸§æ˜¯å¦è¢«æŒ‰ä¸‹
     private bool[] clicked = new bool[7];
 
     /***********************
-     * °´Å¥±àºÅ-¹¦ÄÜ¶ÔÕÕ±í
+     * æŒ‰é’®ç¼–å·-åŠŸèƒ½å¯¹ç…§è¡¨
      * 
-     * 0 - ×óÆ½ÒÆ
-     * 1 - ÓÒÆ½ÒÆ
-     * 2 - Èí½µ
-     * 3 - »»¿é
-     * 4 - ÄæÊ±Õë×ª
-     * 5 - Ë³Ê±Õë×ª
-     * 6 - Ó²½µ
+     * 0 - å·¦å¹³ç§»
+     * 1 - å³å¹³ç§»
+     * 2 - è½¯é™
+     * 3 - æ¢å—
+     * 4 - é€†æ—¶é’ˆè½¬
+     * 5 - é¡ºæ—¶é’ˆè½¬
+     * 6 - ç¡¬é™
      * 
      * *********************/
 
 # if UNITY_EDITOR
-    private const float LONG_PRESS = 0.20f;     // ³¤°´ÅĞ¶¨Ê±³¤
+    private const float LONG_PRESS = 0.20f;     // é•¿æŒ‰åˆ¤å®šæ—¶é•¿
 // # elif UNITY_ANDROID
     private const float MIN_VARR = 0.1f;
     private const float MIN_HARR = 0.1f;
 # endif
 
-    public GameObject moveBackground;           // ´¥¿ØÒ£¸ĞÇøÓò±³¾°¶ÔÏó£¨¼È×÷Îª±³¾°£¬Ò²¸ºÔğ»®¶¨´¥¿Ø·¶Î§£©
-    public GameObject moveHandle;               // ´¥¿ØÒ£¸Ğ¶ÔÏó
+    public GameObject moveBackground;           // è§¦æ§é¥æ„ŸåŒºåŸŸèƒŒæ™¯å¯¹è±¡ï¼ˆæ—¢ä½œä¸ºèƒŒæ™¯ï¼Œä¹Ÿè´Ÿè´£åˆ’å®šè§¦æ§èŒƒå›´ï¼‰
+    public GameObject moveHandle;               // è§¦æ§é¥æ„Ÿå¯¹è±¡
 
-    private GameObject mino;                    // »î¶¯ mino
-    private GameObject field;                   // ÓÎÏ·³¡µØ
+    private GameObject mino;                    // æ´»åŠ¨ mino
+    private GameObject field;                   // æ¸¸æˆåœºåœ°
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +55,7 @@ public class S_playerOprate : MonoBehaviour
         OperateOnKeyboard();
     }
 
-    // ¼üÅÌ²Ù×÷×ª»»
+    // é”®ç›˜æ“ä½œè½¬æ¢
     private void OperateOnKeyboard()
     {
 # if UNITY_EDITOR
@@ -102,7 +102,7 @@ public class S_playerOprate : MonoBehaviour
     }
 
 # if UNITY_EDITOR
-    // ³¤°´ÅĞ¶¨º¯Êı£¨½ö¼üÅÌ²Ù×÷ÓĞĞ§£©
+    // é•¿æŒ‰åˆ¤å®šå‡½æ•°ï¼ˆä»…é”®ç›˜æ“ä½œæœ‰æ•ˆï¼‰
     private void LongPressOperations()
     {
         for (int i = 0; i < 7; i++)
@@ -111,7 +111,7 @@ public class S_playerOprate : MonoBehaviour
         return;
     }
 
-    // ³¤°´£¨½ö¼üÅÌ²Ù×÷ÏÂÉúĞ§£©
+    // é•¿æŒ‰ï¼ˆä»…é”®ç›˜æ“ä½œä¸‹ç”Ÿæ•ˆï¼‰
     private void LongPress(int buttonId)
     {
         if (clickTimer[buttonId] < LONG_PRESS) return;
@@ -125,25 +125,25 @@ public class S_playerOprate : MonoBehaviour
 # endif
 
     //----------------------------------------------------------------------
-    // Ò¡¸Ë´¥¿Ø
+    // æ‘‡æ†è§¦æ§
     //----------------------------------------------------------------------
     private float Get_sqrRadius()
     {
-        Vector3[] corners = new Vector3[4]; // »ñÈ¡ËÄ¸ö½ÇµÄÆÁÄ»×ø±ê£¬Ë³Ğò£º×óÏÂ¡¢×óÉÏ¡¢ÓÒÉÏ¡¢ÓÒÏÂ
+        Vector3[] corners = new Vector3[4]; // è·å–å››ä¸ªè§’çš„å±å¹•åæ ‡ï¼Œé¡ºåºï¼šå·¦ä¸‹ã€å·¦ä¸Šã€å³ä¸Šã€å³ä¸‹
         moveBackground.GetComponent<RectTransform>().GetWorldCorners(corners);
         float y_u = Camera.main.WorldToScreenPoint(corners[1]).y;
         float y_d = Camera.main.WorldToScreenPoint(corners[0]).y;
-        return (y_u - y_d) * (y_u - y_d);   // ÓÃ×óÉÏ½Ç×İ×ø±ê¼õ×óÏÂ½Ç×İ×ø±êµÃ°ë¾¶£¨Ğè±£Ö¤Ğı×ªÎªÁã£©
+        return (y_u - y_d) * (y_u - y_d);   // ç”¨å·¦ä¸Šè§’çºµåæ ‡å‡å·¦ä¸‹è§’çºµåæ ‡å¾—åŠå¾„ï¼ˆéœ€ä¿è¯æ—‹è½¬ä¸ºé›¶ï¼‰
     }
 
 # if UNITY_EDITOR
-    // ½«Êó±êµã»÷ÊÂ¼ş×ª»¯Îª Touch ¶ÔÏó£¨½öÓÃÓÚÔÚ Editor ÄÚ½øĞĞ²âÊÔ£©
+    // å°†é¼ æ ‡ç‚¹å‡»äº‹ä»¶è½¬åŒ–ä¸º Touch å¯¹è±¡ï¼ˆä»…ç”¨äºåœ¨ Editor å†…è¿›è¡Œæµ‹è¯•ï¼‰
     private Touch temp_p;
     private Touch TestMouseTouch(float R, Vector2 C)
     {
         Touch moveTouch = new();
         moveTouch.phase = TouchPhase.Canceled;
-        // ½«Êó±êµã»÷ÊÂ¼ş×ª»¯Îª Touch ¶ÔÏó
+        // å°†é¼ æ ‡ç‚¹å‡»äº‹ä»¶è½¬åŒ–ä¸º Touch å¯¹è±¡
         if (Input.GetMouseButton(0))
         {
             if (temp_p.phase == TouchPhase.Ended)
@@ -168,7 +168,7 @@ public class S_playerOprate : MonoBehaviour
         {
             temp_p.phase = TouchPhase.Ended;
         }
-        // ½« Touch ÊÂ¼ş¸³ÖµÎª moveTouch ºó·µ»Ø
+        // å°† Touch äº‹ä»¶èµ‹å€¼ä¸º moveTouch åè¿”å›
         if (temp_p.phase != TouchPhase.Ended && temp_p.phase != TouchPhase.Canceled)
         {
             if ((temp_p.rawPosition - C).sqrMagnitude <= R * 1.777f)
@@ -180,14 +180,14 @@ public class S_playerOprate : MonoBehaviour
     }
 # endif
 
-    // ÓÉ´¥Ãşµã¸üĞÂÒ£¸ĞÎ»ÖÃ
+    // ç”±è§¦æ‘¸ç‚¹æ›´æ–°é¥æ„Ÿä½ç½®
     private void HandlePositionUpdate(float R, Vector2 C, Touch moveTouch)
     {
-        // ¸ù¾İ»ñÈ¡µ½µÄ moveTouch ¸üĞÂÊÖ±úÎ»ÖÃ
+        // æ ¹æ®è·å–åˆ°çš„ moveTouch æ›´æ–°æ‰‹æŸ„ä½ç½®
         if (moveTouch.phase != TouchPhase.Ended && moveTouch.phase != TouchPhase.Canceled)
         {
             Vector2 vec = moveTouch.position - C;
-            // ½«Ò¡¸ËÏŞÖÆÔÚ´¥¿Ø¼ì²âÇøÓòÄÚ
+            // å°†æ‘‡æ†é™åˆ¶åœ¨è§¦æ§æ£€æµ‹åŒºåŸŸå†…
             if (vec.y > 0) vec = new Vector2(vec.x, 0);
             if (vec.sqrMagnitude > R) vec = vec.normalized * Mathf.Sqrt(R);
             vec += C;
@@ -201,22 +201,22 @@ public class S_playerOprate : MonoBehaviour
         return;
     }
 
-    // Ò¡¸Ë²Ù×÷
+    // æ‘‡æ†æ“ä½œ
     private float moveHorizenTimer = 0.0f;
     private float moveVertenTimer = 0.0f;
     /// <summary>
-    /// ÓÉÒ¡¸Ë½øĞĞµÄÒÆ¶¯²Ù×÷
+    /// ç”±æ‘‡æ†è¿›è¡Œçš„ç§»åŠ¨æ“ä½œ
     /// </summary>
-    /// <param name="R">Ò¡¸Ë²Ù×÷ÇøÓòµÄ°ë¾¶µÄÆ½·½</param>
-    /// <param name="C">Ò¡¸Ë²Ù×÷ÇøÓòµÄÔ²ĞÄ</param>
+    /// <param name="R">æ‘‡æ†æ“ä½œåŒºåŸŸçš„åŠå¾„çš„å¹³æ–¹</param>
+    /// <param name="C">æ‘‡æ†æ“ä½œåŒºåŸŸçš„åœ†å¿ƒ</param>
     private void MoveOperations(float R, Vector2 C)
     {
-        // Ò¡¸ËÆÁÄ»Î»ÖÃ
+        // æ‘‡æ†å±å¹•ä½ç½®
         Vector2 P = Camera.main.WorldToScreenPoint(moveHandle.transform.position);
-        // Ò¡¸Ë²Ù×÷ÇøÓò°ë¾¶
+        // æ‘‡æ†æ“ä½œåŒºåŸŸåŠå¾„
         R = Mathf.Sqrt(R);
-        // Ò¡¸ËË®Æ½ÍÏ¶¯Á¿Óë°ë¾¶±ÈÖµ´ïµ½ 0.1 Ê±ÊÓÎªÓĞĞ§²Ù×÷
-        // Ë®Æ½ÒÆ¶¯
+        // æ‘‡æ†æ°´å¹³æ‹–åŠ¨é‡ä¸åŠå¾„æ¯”å€¼è¾¾åˆ° 0.1 æ—¶è§†ä¸ºæœ‰æ•ˆæ“ä½œ
+        // æ°´å¹³ç§»åŠ¨
         if (Mathf.Abs((P - C).x * 10) >= R)
         {
             moveHorizenTimer += FigureHARR(Mathf.Abs((P - C).x), R);
@@ -227,8 +227,8 @@ public class S_playerOprate : MonoBehaviour
                 moveHorizenTimer -= 1.0f;
             }
         } else moveHorizenTimer = 0.0f;
-        // Ò¡¸Ë´¹Ö±ÍÏ¶¯Á¿Óë°ë¾¶±ÈÖµ´ïµ½ 0.1 Ê±ÊÓÎªÓĞĞ§²Ù×÷
-        // ´¹Ö±ÒÆ¶¯
+        // æ‘‡æ†å‚ç›´æ‹–åŠ¨é‡ä¸åŠå¾„æ¯”å€¼è¾¾åˆ° 0.1 æ—¶è§†ä¸ºæœ‰æ•ˆæ“ä½œ
+        // å‚ç›´ç§»åŠ¨
         if ((C - P).y * 10 >= R)
         {
             moveVertenTimer += FigureVARR(Mathf.Abs((P - C).y), R);
@@ -255,31 +255,15 @@ public class S_playerOprate : MonoBehaviour
         return Functions.F_lineFade(_pivot - minRAS, 1.0f - minRAS, 0.0167f, maxVARR);
     }
 
-    // // ¸ù¾İÒ¡¸ËÒÆ¶¯Á¿¼ÆËãÏÂÒ»´Î²Ù×÷Ö®¼ä¼ä¸ôµÄÖ¡Êı£¨×îÂı 12 Ö¡£¬×î¿ì 0 Ö¡£©
-    // private float ResetTime_Horizen(float _pivot, float R)
-    // {
-    //     _pivot -= R / 5;
-    //     R *= 0.8f;
-    //     return Mathf.Ceil(-12 / R * _pivot + 12);
-    // }
-    // // ¸ù¾İÒ¡¸ËÒÆ¶¯Á¿¼ÆËãÏÂÒ»´Î²Ù×÷Ö®¼ä¼ä¸ôµÄÖ¡Êı£¨×îÂı 20 Ö¡£¬×î¿ì 0 Ö¡£©
-    // private float ResetTime_Vertical(float _pivot, float R)
-    // {
-    //     _pivot -= R / 3;
-    //     R *= 0.666666666f;
-    //     float _G = field.GetComponent<GameProcess>().Gravity;
-    //     return Mathf.Ceil(-0.3f / _G / R * _pivot + 0.3f / _G);
-    // }
-
     private void TouchMoveHandle()
     {
         Touch moveTouch = new();
         moveTouch.phase = TouchPhase.Canceled;
-        // »ñÈ¡ÊÖ±ú´¥¿ØÇøÔÚÆÁÄ»ÉÏµÄ°ë¾¶µÄÆ½·½
+        // è·å–æ‰‹æŸ„è§¦æ§åŒºåœ¨å±å¹•ä¸Šçš„åŠå¾„çš„å¹³æ–¹
         float R = Get_sqrRadius();
-        // »ñÈ¡ÊÖ±ú´¥¿ØÇøÔÚÆÁÄ»ÉÏµÄÖĞĞÄ×ø±ê
+        // è·å–æ‰‹æŸ„è§¦æ§åŒºåœ¨å±å¹•ä¸Šçš„ä¸­å¿ƒåæ ‡
         Vector2 C = Camera.main.WorldToScreenPoint(moveBackground.transform.position);
-        // »ñÈ¡£¨¸üĞÂ£©Î»ÓÚÊÖ±ú´¥¿ØÇøÄÚµÄ Touch ¶ÔÏó
+        // è·å–ï¼ˆæ›´æ–°ï¼‰ä½äºæ‰‹æŸ„è§¦æ§åŒºå†…çš„ Touch å¯¹è±¡
         foreach (Touch p in Input.touches)
         {
             if (p.phase != TouchPhase.Ended && p.phase != TouchPhase.Canceled)
@@ -304,6 +288,9 @@ public class S_playerOprate : MonoBehaviour
 
     public void Click_MoveLeft()
     {
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+        
         clickTimer[0] += Time.deltaTime;
         if (clicked[0]) return;
 
@@ -313,6 +300,9 @@ public class S_playerOprate : MonoBehaviour
 
     public void Click_MoveRight()
     {
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         clickTimer[1] += Time.deltaTime;
         if (clicked[1]) return;
 
@@ -322,6 +312,9 @@ public class S_playerOprate : MonoBehaviour
 
     public void Click_Drop()
     {
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         clickTimer[2] += Time.deltaTime;
         if (clicked[2]) return;
 
@@ -331,6 +324,9 @@ public class S_playerOprate : MonoBehaviour
 
     public void Click_Hold()
     {
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         clickTimer[3] += Time.deltaTime;
         if (clicked[3]) return;
 
@@ -339,7 +335,10 @@ public class S_playerOprate : MonoBehaviour
     }
 
     public void Click_TurnAnticlock()
-    {
+    {        
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         clickTimer[4] += Time.deltaTime;
         if (clicked[4]) return;
 
@@ -349,6 +348,9 @@ public class S_playerOprate : MonoBehaviour
 
     public void Click_TurnClock()
     {
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         clickTimer[5] += Time.deltaTime;
         if (clicked[5]) return;
 
@@ -358,6 +360,9 @@ public class S_playerOprate : MonoBehaviour
 
     public void Click_HardDrop()
     {
+        // æ’­æ”¾å½•åƒæ—¶ç¦ç”¨æ“ä½œ
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         clickTimer[6] += Time.deltaTime;
         if (clicked[6]) return;
 

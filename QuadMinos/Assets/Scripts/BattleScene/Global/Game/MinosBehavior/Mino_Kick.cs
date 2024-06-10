@@ -213,7 +213,7 @@ public class Mino_Kick : MonoBehaviour
         // 检测是否为 T 块
         if (_type != 5) return false;
         // 检测最后一次非 HardDrop 操作是否为旋转
-        ref List<Operations> lst = ref field.GetComponent<GameProcess>().operations;
+        ref List<Operations> lst = ref BattleRecords.operatesOrder;
         for (int i = lst.Count - 1; i >= 0; i--)
         {
             if (lst[i].opt != 6)

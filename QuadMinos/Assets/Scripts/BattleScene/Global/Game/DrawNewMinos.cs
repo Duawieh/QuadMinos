@@ -174,7 +174,7 @@ public class DrawNewMinos : MonoBehaviour
         foreach (GameObject bar in dmgUI)
         {
             int _dmg = bar.GetComponent<S_UIDamage>().DMG;
-            int _ept = bar.GetComponent<S_UIDamage>().DMG;
+            int _ept = bar.GetComponent<S_UIDamage>().EPT;
             for (int i = 1; i <= _dmg; i++) emptyBlocks.Add(_ept);
         // 将伤害条队列清空
             Destroy(bar);

@@ -1,3 +1,7 @@
+**/Logs
+**/Temp
+**/temp
+
 /Pre_au
 /Pre_ps
 /Legacy
@@ -5,10 +9,9 @@
 /QuadMinos/Library
 /QuadMinos/obj
 /QuadMinos/UserSettings
-**/Logs
-**/Temp
-**/temp
 
 **/*.zip
 **/*.rar
 **/*.7z
+
+CopyRights.txt

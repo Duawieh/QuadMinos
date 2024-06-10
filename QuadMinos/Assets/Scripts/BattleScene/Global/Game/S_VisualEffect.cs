@@ -179,7 +179,7 @@ public class S_VisualEffect : MonoBehaviour
 
         if (AnimBegin)
         {
-            Operations opt = GetComponent<GameProcess>().operations[GetComponent<GameProcess>().operations.Count - 1];
+            Operations opt = BattleRecords.operatesOrder[^1];
             if (opt.opt == 4) rot_dir_1 = -1;
             if (opt.opt == 5) rot_dir_1 = +1;
 
@@ -213,7 +213,7 @@ public class S_VisualEffect : MonoBehaviour
 
         if (AnimBegin)
         {
-            Operations opt = GetComponent<GameProcess>().operations[GetComponent<GameProcess>().operations.Count - 1];
+            Operations opt = BattleRecords.operatesOrder[^1];
             if (opt.opt == 4) rot_dir_2 = -1;
             if (opt.opt == 5) rot_dir_2 = +1;
 
@@ -405,7 +405,7 @@ public class S_VisualEffect : MonoBehaviour
 
         if (AnimBegin)
         {
-            Operations opt = GetComponent<GameProcess>().operations[GetComponent<GameProcess>().operations.Count - 1];
+            Operations opt = BattleRecords.operatesOrder[^1];
             if (opt.opt == 4) rot_dir_3 = -1;
             if (opt.opt == 5) rot_dir_3 = +1;
 
@@ -459,6 +459,7 @@ public class S_VisualEffect : MonoBehaviour
 
         if (t > T)
         {
+            while (!GetComponent<GameProcess>().RecordSaved);
             animPlaying[8] = false;
             LoadInfo.SceneName = "MainMenu";
             SceneManager.LoadScene(1);
@@ -488,6 +489,7 @@ public class S_VisualEffect : MonoBehaviour
 
         if (t > T)
         {
+            while (!GetComponent<GameProcess>().RecordSaved);
             animPlaying[9] = false;
             SceneManager.LoadScene("ScoreScene");
         }

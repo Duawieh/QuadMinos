@@ -47,17 +47,19 @@ public class Mino_Active : MonoBehaviour
     private void AutoDrop()
     {
         T += G;
-        bool droped = false;
         while (T >= 1.0f)
         {
             if (!GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag)) {
+                // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+                // Spin_Check() 会用到
+                BattleRecords.operatesOrder.Add(new Operations
+                    (2, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+                    
                 P = P + new PosIndex(0, -1);
                 C = 0.0f;
-                droped = true;
             }
             T -= 1.0f;
         }
-        if (droped) field.GetComponent<GameProcess>().operations.Add(new Operations(2, Time.time));
         return;
     }
 
@@ -118,8 +120,13 @@ public class Mino_Active : MonoBehaviour
     // 锁定并绘制下一个 mino
     private void Lock()
     {
-        // 记录操作序列（操作 6-Lock）
-        field.GetComponent<GameProcess>().operations.Add(new Operations(6, Time.time));
+        if (!actFlg) return;
+
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (6, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+        
         // 获取和更新子块位置，执行子块锁定初始化函数
         PosIndex[] unitsP = srs.GetPos(MinoType, RotFlag);
         for (int i = 0; i < 4; i++)
@@ -292,7 +299,12 @@ public class Mino_Active : MonoBehaviour
     {
         if (!actFlg) return;
         if (GetComponent<Mino_Kick>().Kick_Left(MinoType, RotFlag)) return;
-        field.GetComponent<GameProcess>().operations.Add(new Operations(0, Time.time));
+
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (0, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+
         P += new PosIndex(-1, 0);
         RefreshPosition();
         LockReset();
@@ -304,7 +316,12 @@ public class Mino_Active : MonoBehaviour
     {
         if (!actFlg) return;
         if (GetComponent<Mino_Kick>().Kick_Right(MinoType, RotFlag)) return;
-        field.GetComponent<GameProcess>().operations.Add(new Operations(1, Time.time));
+
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (1, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+
         P += new PosIndex(+1, 0);
         RefreshPosition();
         LockReset();
@@ -316,7 +333,12 @@ public class Mino_Active : MonoBehaviour
     {
         if (!actFlg) return;
         if (GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag)) return;
-        field.GetComponent<GameProcess>().operations.Add(new Operations(2, Time.time));
+
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (2, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+
         P = P + new PosIndex(0, -1);
         RefreshPosition();
         T--; if (T < 0) T = 0;
@@ -328,7 +350,12 @@ public class Mino_Active : MonoBehaviour
     {
         if (!actFlg) return;
         if (!Holdable) return;
-        field.GetComponent<GameProcess>().operations.Add(new Operations(3, Time.time));
+
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (3, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+
         DestroyShadows();
         DestroyImmediate(gameObject);
         field.GetComponent<PlayfieldState>().OperateHold(MinoType);
@@ -340,7 +367,6 @@ public class Mino_Active : MonoBehaviour
     public void Operate_A()
     {
         if (!actFlg) return;
-        field.GetComponent<GameProcess>().operations.Add(new Operations(4, Time.time));
         int bgn = RotFlag;
         RotateAntiClockwise();
         int fns = RotFlag;
@@ -350,6 +376,13 @@ public class Mino_Active : MonoBehaviour
             RotateClockwise();
             return;
         }
+
+        // 若旋转成功 / 踢墙旋转成功，记录操作
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (4, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+
         P = p;
         RefreshPosition();
         if (GetComponent<Mino_Kick>().Spin_Check(MinoType, p)) SpinEffect(false);
@@ -368,7 +401,6 @@ public class Mino_Active : MonoBehaviour
     public void Operate_C()
     {
         if (!actFlg) return;
-        field.GetComponent<GameProcess>().operations.Add(new Operations(5, Time.time));
         int bgn = RotFlag;
         RotateClockwise();
         int fns = RotFlag;
@@ -378,6 +410,13 @@ public class Mino_Active : MonoBehaviour
             RotateAntiClockwise();
             return;
         }
+
+        // 若旋转成功 / 踢墙旋转成功，记录操作
+        // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+        // Spin_Check() 会用到
+        BattleRecords.operatesOrder.Add(new Operations
+            (5, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
+            
         P = p;
         RefreshPosition();
         if (GetComponent<Mino_Kick>().Spin_Check(MinoType, p)) SpinEffect(true);
@@ -396,13 +435,15 @@ public class Mino_Active : MonoBehaviour
     public void Operate_HD()
     {
         if (!actFlg) return;
-        bool droped = false;
         while (!GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag))
         {
             P += new PosIndex(0, -1);
-            droped = true;
+
+            // 需要注意，不论是否开启录制记录模式，都应记录操作表！
+            // Spin_Check() 会用到
+            BattleRecords.operatesOrder.Add(new Operations
+                (2, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
         }
-        if (droped) field.GetComponent<GameProcess>().operations.Add(new Operations(2, Time.time));
         RefreshPosition();
         Lock();
         return;

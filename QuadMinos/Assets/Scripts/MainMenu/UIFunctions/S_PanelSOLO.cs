@@ -53,4 +53,21 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.GarbageRatio = 0.0f;
         BattleScore.Init(4);
     }
+
+    // TODO：此代码仅用于测试使用，正式脚本不应包含 Start() 函数
+    private void Start() {
+        BattleRecords.operatesOrder = new();
+        BattleRecords.minosOrder = new();
+        BattleRecords.garbageOrder = new();
+        BattleRecords.reviewOperatesOrder = new();
+        BattleRecords.reviewMinosOrder = new();
+        BattleRecords.reviewGarbageOrder = new();
+        BattleRecords.GameMode = 1;
+        BattleRecords.Gravity = 0.0167f;
+        BattleRecords.LockTime = 1.0f;
+        BattleRecords.operatesIndex = 0;
+        BattleRecords.minosIndex = 0;
+        BattleRecords.garbageIndex = 0;
+        return;
+    }
 }

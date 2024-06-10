@@ -78,6 +78,7 @@ public class S_Battle : MonoBehaviour
     }
 
     // 发起攻击，传入攻击力和消行所用方块（用于控制效果）
+    // TODO：加入记录和读取功能
     public void Attack(int atk, GameObject mino)
     {
         // 按设定的概率发起攻击
