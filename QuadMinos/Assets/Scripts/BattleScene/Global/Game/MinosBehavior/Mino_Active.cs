@@ -46,6 +46,10 @@ public class Mino_Active : MonoBehaviour
 
     private void AutoDrop()
     {
+        // 自动下落也会被操作记录表录制为软降操作
+        // 因此自动下落也会在对应时间自动执行，不需要事实计算
+        if (field.GetComponent<GameProcess>().ReviewMode) return;
+
         T += G;
         while (T >= 1.0f)
         {
@@ -233,6 +237,9 @@ public class Mino_Active : MonoBehaviour
     // 锁定重置
     private void LockReset()
     {
+        // 若为播放录像模式，直接重置锁定即可，无需判断不合法情况
+        if (field.GetComponent<GameProcess>().ReviewMode) C = 0;
+
         if (C <= 0.00005f) return;
         if (cnt >= R) return;
         cnt++;

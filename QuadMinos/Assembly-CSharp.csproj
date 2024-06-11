@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_AttackStar.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_GameAlertUI.cs" />
     <Compile Include="Assets\Scripts\ScoreScene\S_ShowScore.cs" />
+    <Compile Include="Assets\Scripts\BattleScene\Recording\S_ReviewGenerateMinos.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_UIClearLines.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_ParticleStar.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\DebuggerConsole.cs" />
@@ -108,12 +109,11 @@
     <Compile Include="Assets\Scripts\MainMenu\UIEffects\Anim_Panels.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_GameStart.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\Game\DrawNewMinos.cs" />
+    <Compile Include="Assets\Scripts\BattleScene\Recording\S_ReviewRecordOperations.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_UITimeShower.cs" />
     <Compile Include="Assets\Scripts\MainMenu\UIEffects\Anim_MainButtons.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\Game\S_AudioEffect.cs" />
     <Compile Include="Assets\Scripts\BattleScene\Global\UI\S_UINote.cs" />
-    <Compile Include="Assets\Scripts\BattleScene\Recording\S_ReviewRecordOperations.cs" />
-    <Compile Include="Assets\Scripts\BattleScene\Recording\S_ReviewGenerateMinos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\BattleScene\Effects\sh_ScreenWave.shader" />

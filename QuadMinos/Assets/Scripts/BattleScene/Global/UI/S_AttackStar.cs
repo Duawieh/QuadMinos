@@ -12,7 +12,7 @@ public class S_AttackStar : MonoBehaviour
         float _t = 0.0f;
         float _x = _from.x;
         float _y = _from.y;
-        bool flg = Random.Range(0, 2) == 1;     // Ò»¸ö±ê¼Ç£¬ÓÃÓÚ¿ØÖÆÒÆ¶¯Â·¾¶ÊÇÉÏÍ¹»¹ÊÇÏÂ°¼
+        bool flg = Random.Range(0, 2) == 1;     // Ò»ï¿½ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¹ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½
         while (_t < 0.2f)
         {
             _t += Time.deltaTime;
@@ -32,12 +32,24 @@ public class S_AttackStar : MonoBehaviour
         yield break;
     }
 
-    public void Init(GameObject mino, Vector3 tgt)
+    // çŽ©å®¶äº§ç”Ÿä¼¤å®³æ—¶ä¸“ç”¨
+    public void Init(ref GameObject mino, Vector3 tgt)
     {
         field = GameObject.FindGameObjectWithTag("Field");
         ParticleSystem.MainModule m_main = GetComponent<ParticleSystem>().main;
         m_main.startColor = MinoColors.minoColor[mino.GetComponent<Mino_Active>().MinoType];
         StartCoroutine(Move(mino.transform.position, tgt));
+        field.GetComponent<S_AudioEffect>().PlayAudio(attackSound, 1.0f, 0.5f);
+        return;
+    }
+
+    // æ•Œäººäº§ç”Ÿä¼¤å®³æ—¶ä¸“ç”¨
+    public void Init(Vector3 frm, Vector3 tgt)
+    {
+        field = GameObject.FindGameObjectWithTag("Field");
+        ParticleSystem.MainModule m_main = GetComponent<ParticleSystem>().main;
+        m_main.startColor = Color.red;
+        StartCoroutine(Move(frm, tgt));
         field.GetComponent<S_AudioEffect>().PlayAudio(attackSound, 1.0f, 0.5f);
         return;
     }

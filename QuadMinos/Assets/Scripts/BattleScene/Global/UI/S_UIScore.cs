@@ -73,7 +73,7 @@ public class S_UIScore : MonoBehaviour
     }
 
     // 传入伤害量，实例化伤害条，并返回伤害条所在世界坐标
-    public Vector3 DamageBar(int _dmg)
+    public Vector3 DamageBar(int _dmg, int _ept)
     {
         GameObject _bar = Instantiate(UI_Damage, field.transform);
         _bar.transform.localScale= Vector3.one;
@@ -88,22 +88,8 @@ public class S_UIScore : MonoBehaviour
         }
         _bar.transform.localPosition += new Vector3(0, _h, 0);
 
-        if (field.GetComponent<GameProcess>().ReviewMode) {
-            _bar.GetComponent<S_UIDamage>().Init();
-        }
-        else {
-            // 调用初始化函数，将伤害条添加到伤害列表
-            int _ept = _bar.GetComponent<S_UIDamage>().Init(_dmg, 0);
-            // 若开启记录模式，保存伤害记录
-            if (field.GetComponent<GameProcess>().RecordMode) {
-                BattleRecords.garbageOrder.Add(new Vector3
-                    (BattleRecords.operatesOrder.Count - 1, _ept, _dmg));
-            }
-        }
-
-        if (field.GetComponent<GameProcess>().RecordMode) {
-
-        }
+        // 调用初始化函数，将伤害条添加到伤害列表
+        _bar.GetComponent<S_UIDamage>().Init(_dmg, _ept);
 
         dmgBars.Add(_bar);
         field.GetComponent<S_Battle>().DMG_Height += _dmg;

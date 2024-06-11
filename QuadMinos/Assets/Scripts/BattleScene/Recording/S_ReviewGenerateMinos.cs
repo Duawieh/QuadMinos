@@ -20,28 +20,45 @@ public class Operations
 
 
 /// <summary>
+/// 玩家产生的伤害的记录
+/// </summary>
+public class AttackRecord {
+    public int dmg;         // 产生的伤害量
+    public int ept;         // 垃圾行空列横坐标
+    public int tgt;         // 攻击目标索引
+    public int frm;         // 攻击来源索引
+
+    public AttackRecord(int dmg, int ept, int tgt) {
+        this.dmg = dmg;
+        this.ept = ept;
+        this.tgt = tgt;
+        this.frm = 0;
+    }
+
+    public AttackRecord(int dmg, int ept, int tgt, int frm) {
+        this.dmg = dmg;
+        this.ept = ept;
+        this.tgt = tgt;
+        this.frm = frm;
+    }
+}
+
+
+/// <summary>
 /// 游戏录像
 /// </summary>
 public static class BattleRecords {
     public static List<int> minosOrder;
     public static List<int> reviewMinosOrder;
-    public static List<Operations> operatesOrder;
+    public static List<Operations> operatesOrder;       // 操作记录表，无论录制状态如何都应在游戏内进行记录 
     public static List<Operations> reviewOperatesOrder;
-    /// <summary>
-    /// 伤害记录表
-    /// 第一维 i 表示伤害在第 i 次操作后被累计
-    /// 第二维 i 表示垃圾行在第 i 列空缺
-    /// 第三维 i 表示垃圾行共添加 i 行
-    /// </summary>
-    public static List<Vector3> garbageOrder;
-    public static List<Vector3> reviewGarbageOrder;
+    public static List<AttackRecord> attackOrder;
+    public static List<AttackRecord> reviewAttackOrder;
     public static int GameMode;
-    public static float Gravity;
-    public static float LockTime;
 
     public static int operatesIndex;    // 操作记录列表的当前读取索引
     public static int minosIndex;       // 块序记录列表的当前读取索引
-    public static int garbageIndex;     // 伤害记录列表的当前读取索引
+    public static int attackIndex;      // 攻击记录列表的当前读取索引
 }
 
 

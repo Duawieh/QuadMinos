@@ -21,6 +21,8 @@ public class S_playerOprate : MonoBehaviour
      * 4 - 逆时针转
      * 5 - 顺时针转
      * 6 - 硬降
+     *
+     * 7 - 受到攻击
      * 
      * *********************/
 

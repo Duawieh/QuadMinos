@@ -45,19 +45,16 @@ public class S_UIDamage : MonoBehaviour
     /// 初始化伤害条，包括播放伤害条积攒的动画，计算空缺列的位置
     /// </summary>
     /// <param name="_DMG">传入的伤害量行数</param>
-    /// <param name="_EPT">传入的列数，若有记录则传入记录，无记录则传入 0 表示随机生成</param>
-    /// <returns>返回空缺的列数用于记录</returns>
-    public int Init(int _DMG, int _EPT)
+    /// <param name="_EPT">传入的列数</param>
+    /// <returns>不返回任何值</returns>
+    public void Init(int _DMG, int _EPT)
     {
         transform.localScale = new Vector3(1, 0, 1);
         StopAllCoroutines();
         StartCoroutine(Anim_ChangeLength(0, _DMG));
-
         DMG = _DMG;
-        if (_EPT != 0) EPT = _EPT;
-        else EPT = Random.Range(1, 11);
-        
-        return EPT;
+        EPT = _EPT;
+        return;
     }
 
     public void ChangeLength(int _DMG)

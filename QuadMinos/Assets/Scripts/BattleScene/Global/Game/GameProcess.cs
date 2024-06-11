@@ -68,8 +68,6 @@ public class GameProcess : MonoBehaviour
     private void GetReviewInfo() {
         if (!ReviewMode) return;
         GameMode = BattleRecords.GameMode;
-        Gravity = BattleRecords.Gravity;
-        LockTime = BattleRecords.LockTime;
         GarbageProb = 0.0f;
         GarbageRatio = 0.0f;
     }

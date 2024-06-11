@@ -58,16 +58,14 @@ public class S_PanelSOLO : MonoBehaviour
     private void Start() {
         BattleRecords.operatesOrder = new();
         BattleRecords.minosOrder = new();
-        BattleRecords.garbageOrder = new();
+        BattleRecords.attackOrder = new();
         BattleRecords.reviewOperatesOrder = new();
         BattleRecords.reviewMinosOrder = new();
-        BattleRecords.reviewGarbageOrder = new();
+        BattleRecords.reviewAttackOrder = new();
         BattleRecords.GameMode = 1;
-        BattleRecords.Gravity = 0.0167f;
-        BattleRecords.LockTime = 1.0f;
         BattleRecords.operatesIndex = 0;
         BattleRecords.minosIndex = 0;
-        BattleRecords.garbageIndex = 0;
+        BattleRecords.attackIndex = 0;
         return;
     }
 }
