@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
 
 public class LoadInfo
 {
@@ -19,12 +20,40 @@ public class LoadScene : MonoBehaviour
         StartCoroutine(Anim_Loading());
     }
 
+    private void LoadRecord(string _sceneName)
+    {
+        BattleRecords.Clear();
+
+        if (_sceneName != "BattleScene") return;
+        if (!BattleInfo.ReviewMode) return;
+
+        RecordFileOperations.LoadRecords(BattleInfo.RecordName + ".json");
+        return;
+    }
+
+    private void SaveRecord(string _sceneName)
+    {
+        if (_sceneName == "BattleScene") return;
+        if (!BattleInfo.RecordMode) return;
+
+        RecordFileOperations.SaveRecords();
+        return;
+    }
+
     private IEnumerator LoadNewScene(string sceneName)
     {
         AsyncOperation loadState = SceneManager.LoadSceneAsync(sceneName);
         loadState.allowSceneActivation = false;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        SaveRecord(sceneName);
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        LoadRecord(sceneName);
+
+        yield return new WaitForSecondsRealtime(0.1f);
 
         loadState.allowSceneActivation = true;
 
@@ -48,7 +77,7 @@ public class LoadScene : MonoBehaviour
 
             minoIndex++;
             if (minoIndex >= 7) minoIndex = 0;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
     }
 }

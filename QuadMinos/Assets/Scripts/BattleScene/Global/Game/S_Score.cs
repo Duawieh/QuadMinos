@@ -44,9 +44,9 @@ public class BattleScore
     /// <summary>
     /// 初始化所有表现分（游戏开始时调用）
     /// </summary>
-    public static void Init(int _mode)
+    public static void Init()
     {
-        GameMode = _mode;
+        GameMode = BattleInfo.GameMode;
         _Score = 0;
         _Score_Max = 0;
         _Time = 0.0f;

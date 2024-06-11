@@ -127,6 +127,7 @@ public class S_Battle : MonoBehaviour
 
         // 读取记录
         if (GetComponent<GameProcess>().ReviewMode) {
+            if (BattleRecords.reviewAttackOrder.Count <= BattleRecords.attackIndex) return;
             _dmg = BattleRecords.reviewAttackOrder[BattleRecords.attackIndex].dmg;
             _ept = BattleRecords.reviewAttackOrder[BattleRecords.attackIndex].ept;
             _tgt = BattleRecords.reviewAttackOrder[BattleRecords.attackIndex].tgt;

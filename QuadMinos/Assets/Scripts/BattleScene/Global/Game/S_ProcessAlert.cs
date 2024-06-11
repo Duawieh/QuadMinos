@@ -69,9 +69,6 @@ public class S_ProcessAlert : MonoBehaviour
     private float[] levelGravity = new float[] { 0.0000f, 0.0167f, 0.0210f, 0.0270f, 0.0353f, 0.0469f, 0.0636f, 0.0879f, 0.1236f, 0.1775f, 0.2598f, 0.3880f, 0.5900f, 0.9200f, 1.4600f, 2.3600f, 3.9100f, 6.6100f, 11.430f, 20.000f , 20.000f};
     public IEnumerator Process_Marathon()
     {
-        // 下面这句被注释掉的语句想不起来是因为什么加在这里的了，暂时保留为注释
-        // GetComponent<GameProcess>().finished = true; 
-
         GameObject _title = Instantiate(Alert_Marathon);
         _title.GetComponent<S_GameAlertUI>().SetText("尽力达到更高目标！");
 

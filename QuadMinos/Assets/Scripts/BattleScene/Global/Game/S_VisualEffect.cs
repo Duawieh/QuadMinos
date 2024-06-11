@@ -455,11 +455,9 @@ public class S_VisualEffect : MonoBehaviour
         transform.localPosition = new Vector3(0, posY, 0);
         transform.localEulerAngles += new Vector3(0, 0, rot_Z_tilted * Time.deltaTime);
         screenMask.GetComponent<Image>().color += new Color(0, 0, 0, Time.deltaTime);
-        
 
         if (t > T)
         {
-            while (!GetComponent<GameProcess>().RecordSaved);
             animPlaying[8] = false;
             LoadInfo.SceneName = "MainMenu";
             SceneManager.LoadScene(1);
@@ -486,10 +484,8 @@ public class S_VisualEffect : MonoBehaviour
         t -= animBegin[9];
         screenMask.GetComponent<Image>().color += new Color(0, 0, 0, Time.deltaTime / 3.0f);
 
-
         if (t > T)
         {
-            while (!GetComponent<GameProcess>().RecordSaved);
             animPlaying[9] = false;
             SceneManager.LoadScene("ScoreScene");
         }

@@ -16,11 +16,12 @@ public class BattleInfo
     /// <summary>
     /// 是否观看录像模式
     /// </summary>
-    public static bool ReviewMode = false;
+    public static bool ReviewMode = true;
     /// <summary>
     /// 是否观看录像模式
     /// </summary>
-    public static bool RecordMode = true;
+    public static bool RecordMode = false;
+    public static string RecordName = "2024.6.11 19-30-58";
     public static float Gravity = 0.0156f;
     public static float LockTime = 1.0f;
     public static float GarbageProb = 0.0f;
@@ -35,8 +36,6 @@ public class GameProcess : MonoBehaviour
     public int LockReset;           // 最大锁定重置次数
     public bool ReviewMode;         // 是否观看录像模式
     public bool RecordMode;         // 是否记录录像模式
-    public bool RecordLoaded;       // 记录是否完成加载
-    public bool RecordSaved;        // 记录是否完成保存
     public float Gravity;           // 重力(G)
     public float LockTime;          // 锁定延迟(秒)
     public float GarbageRatio;      // 垃圾行攻击比率 [0, 1]（仅禅模式可用）
@@ -73,7 +72,8 @@ public class GameProcess : MonoBehaviour
     }
 
     public void GAME_START() {
-        BattleScore.Init(GameMode);
+        BattleScore.Init();
+        if (RecordMode) BattleRecords.GameMode = GameMode;
         GetComponent<S_Score>().BEGIN_TIME = Time.time;
         StartCoroutine(UI_Background.GetComponent<S_PlayfieldBackgroundMusic>().AudioPlay());
         NEXT_MINO(true);
@@ -110,18 +110,14 @@ public class GameProcess : MonoBehaviour
 
     public void GAME_OVER() {
         StopDrawMinos();
-        if (RecordMode) StartCoroutine(nameof(SaveRecords));
         if (finished) GetComponent<S_VisualEffect>().Anim_Finish(true);
         else GetComponent<S_VisualEffect>().Anim_Failed(true);
         StartCoroutine(UI_Background.GetComponent<S_PlayfieldBackgroundMusic>().AudioStop());
         return;
     }
 
-    private void GAME_PREPARE() {
-        GetBattleInfo();
-        GetReviewInfo();
-        GetComponent<S_ReviewRecordOperations>().enabled = ReviewMode;
-
+    private void GAME_PREPARE()
+    {
         if (GameMode == 2) StartCoroutine(GetComponent<S_ProcessAlert>().Process_40Line());
         if (GameMode == 3) StartCoroutine(GetComponent<S_ProcessAlert>().Process_Blitz());
         if (GameMode == 4) StartCoroutine(GetComponent<S_ProcessAlert>().Process_Marathon());
@@ -132,19 +128,22 @@ public class GameProcess : MonoBehaviour
         GameObject buttons = Instantiate(UI_PlayerButtons);
         buttons.transform.parent = transform.parent;
 
-        // 记录模式下将首先随机产生的四个 NEXT minos 存入记录表
-        int[] que = GetComponent<GenerateMinos>().GetOrder(4);
+        int[] que;
+        // 播放记录模式下将从记录中读取块序表，而不是随机生成
+        if (ReviewMode) {
+            que = GetComponent<S_ReviewGenerateMinos>().GetOrder(4, ref BattleRecords.reviewMinosOrder);
+        }
+        else que = GetComponent<GenerateMinos>().GetOrder(4);
+
+        // 录制记录模式下将首先随机产生的四个 NEXT minos 存入记录表
         if (RecordMode) {
             for (int i = 0; i < que.Length; i++) {
-                GetComponent<DrawNewMinos>().DrawNextMinos(que[i], i);
-                Debug.Log(BattleRecords.minosOrder.Count);
                 BattleRecords.minosOrder.Add(que[i]);
             }
         }
-        else {
-            for (int i = 0; i < que.Length; i++) {
-                GetComponent<DrawNewMinos>().DrawNextMinos(que[i], i);
-            }
+
+        for (int i = 0; i < que.Length; i++) {
+            GetComponent<DrawNewMinos>().DrawNextMinos(que[i], i);
         }
 
         Destroy(UI_prepareText);
@@ -153,7 +152,7 @@ public class GameProcess : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        BattleScore.Init(BattleInfo.GameMode);
+        BattleScore.Init();
         transform.localScale = new Vector3(0.0001f, 0.0001f, 0.0001f);
         UI_prepareText = GameObject.Find("Text_Prepare");
         StartCoroutine(WaitFor_GAME_PREPARE());
@@ -162,35 +161,18 @@ public class GameProcess : MonoBehaviour
     // 强制设定 60fps 帧率，帧率到达设定帧率后再开始游戏
     // 若为观看录像模式，加载录像，录像加载完成后再开始播放
     private IEnumerator WaitFor_GAME_PREPARE() {
-        RecordLoaded = true;
-        RecordSaved = true;
         Application.targetFrameRate = 60;   // 设定帧率为 60
+
+        GetBattleInfo();
+        GetReviewInfo();
+        GetComponent<S_ReviewRecordOperations>().enabled = ReviewMode;
+
         yield return null;
 
-        // 观看记录模式加载录像
-        // 该协程若启动，会首先将 RecordLoaded 重置为假
-        if (ReviewMode) StartCoroutine(nameof(LoadRecords));
-
         // 记录未加载好或帧率不超过 50 时不能开始游戏
-        while (Time.deltaTime * 50 >= 1.0f || !RecordLoaded) yield return null;
+        while (Time.deltaTime * 50 >= 1.0f) yield return null;
 
         GAME_PREPARE();
-        yield break;
-    }
-
-    // TODO part
-    private IEnumerator LoadRecords() {
-        RecordLoaded = false;
-        Debug.Log("记录未加载，加载协程尚未定义");
-        RecordLoaded = true;
-        yield break;
-    }
-
-    // TODO part
-    private IEnumerator SaveRecords() {
-        RecordSaved = false;
-        Debug.Log("记录未保存，保存协程尚未定义");
-        RecordSaved = true;
         yield break;
     }
 

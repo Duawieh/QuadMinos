@@ -14,7 +14,7 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = GameSettings.LockTime;
         BattleInfo.GarbageProb = GameSettings.GarbageProb;
         BattleInfo.GarbageRatio = GameSettings.GarbageRatio;
-        BattleScore.Init(1);
+        BattleScore.Init();
     }
 
     public void ClickButton_40LINE()
@@ -26,7 +26,7 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = 1.0f;
         BattleInfo.GarbageProb = 0.0f;
         BattleInfo.GarbageRatio = 0.0f;
-        BattleScore.Init(2);
+        BattleScore.Init();
     }
 
     public void ClickButton_BLITZ()
@@ -39,7 +39,7 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = 0.5f;
         BattleInfo.GarbageProb = 0.0f;
         BattleInfo.GarbageRatio= 0.0f;
-        BattleScore.Init(3);
+        BattleScore.Init();
     }
 
     public void ClickButton_MARATHON()
@@ -51,21 +51,6 @@ public class S_PanelSOLO : MonoBehaviour
         BattleInfo.LockTime = 1.0f;
         BattleInfo.GarbageProb = 0.0f;
         BattleInfo.GarbageRatio = 0.0f;
-        BattleScore.Init(4);
-    }
-
-    // TODO：此代码仅用于测试使用，正式脚本不应包含 Start() 函数
-    private void Start() {
-        BattleRecords.operatesOrder = new();
-        BattleRecords.minosOrder = new();
-        BattleRecords.attackOrder = new();
-        BattleRecords.reviewOperatesOrder = new();
-        BattleRecords.reviewMinosOrder = new();
-        BattleRecords.reviewAttackOrder = new();
-        BattleRecords.GameMode = 1;
-        BattleRecords.operatesIndex = 0;
-        BattleRecords.minosIndex = 0;
-        BattleRecords.attackIndex = 0;
-        return;
+        BattleScore.Init();
     }
 }

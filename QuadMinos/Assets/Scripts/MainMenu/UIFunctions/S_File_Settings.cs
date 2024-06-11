@@ -115,9 +115,9 @@ public class File_Settings {
     /// </summary>
     public static IEnumerator GetSettings()
     {
-        string pth = Application.persistentDataPath + "/Settings/";
+        string pth = Application.persistentDataPath + "/Settings";
         if (!Directory.Exists(pth)) Directory.CreateDirectory(pth);
-        pth += "settings.json";
+        pth += "/settings.json";
 
         if (!File.Exists(pth))
         {

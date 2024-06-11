@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S_ReviewRecordOperations : MonoBehaviour
-{
+
+public class S_ReviewRecordOperations : MonoBehaviour {
     private float T;        // 自 GAME_START 至今的时间
 
     private void Update() {
         if (GetComponent<S_Score>().BEGIN_TIME == -1) return;
         T = Time.time - GetComponent<S_Score>().BEGIN_TIME;
 
-        // 取出当前应当执行的操作编号
+        // 取出当前应当执行的操作编号，若队列不足，说明操作记录已经播放完毕，游戏已经结束
         int optInd = BattleRecords.operatesIndex;
+        if (BattleRecords.reviewOperatesOrder.Count <= optInd) return;
 
         // 将此时间前所有为执行的操作按表内顺序执行（可能有多个同时进行的操作，以表内顺序为准）
         while (T >= BattleRecords.reviewOperatesOrder[optInd]._t) {
