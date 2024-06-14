@@ -10,11 +10,12 @@ public class S_ReviewRecordOperations : MonoBehaviour {
         if (GetComponent<S_Score>().BEGIN_TIME == -1) return;
         T = Time.time - GetComponent<S_Score>().BEGIN_TIME;
 
-        // 取出当前应当执行的操作编号，若队列不足，说明操作记录已经播放完毕，游戏已经结束
+        // 取出当前应当执行的操作编号
         int optInd = BattleRecords.operatesIndex;
+        // 若队列长度不足，说明操作记录已经播放完毕，游戏已经结束
         if (BattleRecords.reviewOperatesOrder.Count <= optInd) return;
 
-        // 将此时间前所有为执行的操作按表内顺序执行（可能有多个同时进行的操作，以表内顺序为准）
+        // 将此时间前所有未执行的操作按表内顺序执行（可能有多个同时进行的操作，以表内顺序为准）
         while (T >= BattleRecords.reviewOperatesOrder[optInd]._t) {
             GameObject mino = GameObject.FindGameObjectWithTag("ActMino");
             if (mino != null) {
@@ -57,13 +58,20 @@ public class S_ReviewRecordOperations : MonoBehaviour {
                         break;
                 }
                 optInd++;
+                // 若队列长度不足，说明操作记录已经播放完毕，游戏已经结束
+                if (BattleRecords.reviewOperatesOrder.Count <= optInd) break;
+                // 若进行了 LOCK 操作，必须延迟到下一帧再沿操作列表继续执行
+                // 不然新的 mino 未生成，后续操作会给到被固定的 mino
+                // HOLD 操作同理
+                if (BattleRecords.reviewOperatesOrder[optInd - 1].opt == 6 ||
+                    BattleRecords.reviewOperatesOrder[optInd - 1].opt == 3) break;
             }
             else break;
         }
 
         // 同步顺序执序索引
         BattleRecords.operatesIndex = optInd;
-
+        
         return;
     }
 }

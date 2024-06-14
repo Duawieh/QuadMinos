@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -328,15 +328,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      T_Panel_SinglePlayer_8: -422814268
       T_Panel_SinglePlayer_0: -1517864841
+      T_Panel_SinglePlayer_1: -512007108
+      T_Panel_SinglePlayer_2: 611146635
+      T_Panel_SinglePlayer_3: 843059747
       T_Panel_SinglePlayer_4: 237807449
       T_Panel_SinglePlayer_5: 601235067
       T_Panel_SinglePlayer_6: 1281846342
-      T_Panel_SinglePlayer_3: 843059747
       T_Panel_SinglePlayer_7: 1535859654
-      T_Panel_SinglePlayer_2: 611146635
-      T_Panel_SinglePlayer_1: -512007108
+      T_Panel_SinglePlayer_8: -422814268
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

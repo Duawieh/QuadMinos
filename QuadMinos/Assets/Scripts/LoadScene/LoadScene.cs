@@ -27,7 +27,7 @@ public class LoadScene : MonoBehaviour
         if (_sceneName != "BattleScene") return;
         if (!BattleInfo.ReviewMode) return;
 
-        RecordFileOperations.LoadRecords(BattleInfo.RecordName + ".json");
+        RecordFileOperations.LoadRecords(BattleInfo.GameMode, BattleInfo.RecordName);
         return;
     }
 
@@ -36,7 +36,7 @@ public class LoadScene : MonoBehaviour
         if (_sceneName == "BattleScene") return;
         if (!BattleInfo.RecordMode) return;
 
-        RecordFileOperations.SaveRecords();
+        RecordFileOperations.SaveRecords(BattleInfo.GameMode);
         return;
     }
 

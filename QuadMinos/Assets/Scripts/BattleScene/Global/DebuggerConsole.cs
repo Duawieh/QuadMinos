@@ -6,7 +6,7 @@ using System;
 
 public class DebuggerConsole : MonoBehaviour
 {
-    Text txt;
+    private Text txt;
 
     // Start is called before the first frame update
     void Start()

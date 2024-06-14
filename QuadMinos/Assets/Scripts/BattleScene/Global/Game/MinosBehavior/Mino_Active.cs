@@ -322,13 +322,13 @@ public class Mino_Active : MonoBehaviour
     public void Operate_R()
     {
         if (!actFlg) return;
-        if (GetComponent<Mino_Kick>().Kick_Right(MinoType, RotFlag)) return;
+        if (GetComponent<Mino_Kick>().Kick_Right(MinoType, RotFlag)) { return; }
 
         // 需要注意，不论是否开启录制记录模式，都应记录操作表！
         // Spin_Check() 会用到
         BattleRecords.operatesOrder.Add(new Operations
             (1, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
-
+            
         P += new PosIndex(+1, 0);
         RefreshPosition();
         LockReset();
@@ -442,15 +442,26 @@ public class Mino_Active : MonoBehaviour
     public void Operate_HD()
     {
         if (!actFlg) return;
+
+        bool dropped = false;
         while (!GetComponent<Mino_Kick>().Kick_Ground(MinoType, RotFlag))
         {
             P += new PosIndex(0, -1);
+            dropped = true;
 
+        }
+
+        // 这里用一个旗帜来判断是否进行了软降，如果进行过软降，记录一次即可
+        // 因为对 Spin_Check() 产生影响的只有最后一次操作
+        // 而且录制的记录中，软降操作重复率非常高，硬降中附带的软降可以省略
+        // 因为在硬降操作进行的过程中会计算出需要进行的软降次数
+        if (dropped) {
             // 需要注意，不论是否开启录制记录模式，都应记录操作表！
             // Spin_Check() 会用到
             BattleRecords.operatesOrder.Add(new Operations
                 (2, Time.time - field.GetComponent<S_Score>().BEGIN_TIME));
         }
+
         RefreshPosition();
         Lock();
         return;

@@ -16,7 +16,7 @@ public class S_DestroyTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t += Time.deltaTime;
+        t += Time.deltaTime / Time.timeScale;
         if (t >= T) Destroy(gameObject);
     }
 }

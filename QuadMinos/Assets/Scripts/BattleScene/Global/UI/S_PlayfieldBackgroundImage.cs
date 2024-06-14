@@ -39,24 +39,22 @@ public class S_PlayfieldBackgroundImage : MonoBehaviour
 
     private IEnumerator GetBackgroundImage()
     {
-        List<string> filesPath = new List<string>();
-        while (filesPath.Count <= 0)
+        FolderFilesNameInfo files = new();
+
+        while (files.filesInfoList.Count <= 0)
         {
-            filesPath = StreamingAssetsToPersistenceData.getFilesNameInFolderByTypes
+            files = StreamingAssetsToPersistenceData.GetFilesNameInFolderByTypes
                 (Application.persistentDataPath + "/BackgroundImages", enabledFileTypes);
             yield return null;
         }
 
-        int tgt = Random.Range(0, filesPath.Count);
-        string fileFullName = Application.persistentDataPath + "/BackgroundImages/" + filesPath[tgt];
+        int tgt = Random.Range(0, files.filesInfoList.Count);
+        string fileFullName = "file://" + Application.persistentDataPath + "/BackgroundImages/" + files.filesInfoList[tgt].fileName;
 
-# if UNITY_EDITOR
         using(UnityWebRequest UWR_file = UnityWebRequestTexture.GetTexture(fileFullName))
-# elif UNITY_ANDROID
-        using(UnityWebRequest UWR_file = UnityWebRequestTexture.GetTexture("file://" + fileFullName))
-# endif
         {
             yield return UWR_file.SendWebRequest();
+
             if (UWR_file.result != UnityWebRequest.Result.Success) yield break;
             Texture2D image = ((DownloadHandlerTexture)UWR_file.downloadHandler).texture;
             backgroundImage = Sprite.Create(image, new Rect(0, 0, image.width, image.height), Vector2.zero);

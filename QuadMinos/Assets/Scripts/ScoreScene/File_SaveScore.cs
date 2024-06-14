@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 [System.Serializable]
 public class BattleDataInfo
 {
@@ -12,27 +13,27 @@ public class BattleDataInfo
     public float _grade;
 }
 
+
 class HistoryBattleData
 {
     /// <summary>
-    /// ±íÊ¾Õ½¶·Êı¾İµÄÀàĞÍ
-    /// 1 - ¼Æ·ÖĞÍ£¨·ÖÊıÔ½¸ßÅÅÃûÔ½¿¿Ç°£©(GameMode = 3 or 4)
-    /// 2 - ¼ÆÊ±ĞÍ£¨Ê±¼äÔ½¶ÌÅÅÃûÔ½¿¿Ç°£©(GameMode = 2)
-    /// 3 - ÄÍÁ¦ĞÍ£¨Ê±¼äÔ½³¤ÅÅÃûÔ½¿¿Ç°£©(GameMode = 5)
+    /// è¡¨ç¤ºæˆ˜æ–—æ•°æ®çš„ç±»å‹
+    /// 1 - è®¡åˆ†å‹ï¼ˆåˆ†æ•°è¶Šé«˜æ’åè¶Šé å‰ï¼‰(GameMode = 3 or 4)
+    /// 2 - è®¡æ—¶å‹ï¼ˆæ—¶é—´è¶ŠçŸ­æ’åè¶Šé å‰ï¼‰(GameMode = 2)
+    /// 3 - è€åŠ›å‹ï¼ˆæ—¶é—´è¶Šé•¿æ’åè¶Šé å‰ï¼‰(GameMode = 5)
     /// </summary>
     public int _type;
     public BattleDataInfo[] infos = null;
 }
 
 
-
 class BattleDataHeap
 {
     /// <summary>
-    /// ±íÊ¾Õ½¶·Êı¾İµÄÀàĞÍ
-    /// 1 - ¼Æ·ÖĞÍ£¨·ÖÊıÔ½¸ßÅÅÃûÔ½¿¿Ç°£©(GameMode = 3 / 4)
-    /// 2 - ¼ÆÊ±ĞÍ£¨Ê±¼äÔ½¶ÌÅÅÃûÔ½¿¿Ç°£©(GameMode = 2)
-    /// 3 - ÄÍÁ¦ĞÍ£¨Ê±¼äÔ½³¤ÅÅÃûÔ½¿¿Ç°£©(GameMode = 5)
+    /// è¡¨ç¤ºæˆ˜æ–—æ•°æ®çš„ç±»å‹
+    /// 1 - è®¡åˆ†å‹ï¼ˆåˆ†æ•°è¶Šé«˜æ’åè¶Šé å‰ï¼‰(GameMode = 3 / 4)
+    /// 2 - è®¡æ—¶å‹ï¼ˆæ—¶é—´è¶ŠçŸ­æ’åè¶Šé å‰ï¼‰(GameMode = 2)
+    /// 3 - è€åŠ›å‹ï¼ˆæ—¶é—´è¶Šé•¿æ’åè¶Šé å‰ï¼‰(GameMode = 5)
     /// </summary>
     public int _type;
     public int Count;
@@ -129,11 +130,11 @@ public class File_SaveScore : MonoBehaviour
 
     public IEnumerator SaveData(int gameMode)
     {
-        if (gameMode <= 1 || gameMode >= 5) yield break; // ìøÄ£Ê½ºÍ¶àÈËÄ£Ê½²»¼ÍÂ¼
+        if (gameMode <= 1 || gameMode >= 5) yield break;// ç¦…æ¨¡å¼å’Œå¤šäººæ¨¡å¼ä¸è®°å½•
 
-        RANK = -1;      // ¿ªÊ¼´æ´¢Êı¾İ£¬ÔÚÍê³ÉÇ°Áî RANK = -1
+        RANK = -1;      // å¼€å§‹å­˜å‚¨æ•°æ®ï¼Œåœ¨å®Œæˆå‰ä»¤ RANK = -1
 
-        // ¼ì²é´æµµÊı¾İÊÇ·ñ´æÔÚ£¬Èô²»´æÔÚ£¬ĞÂ½¨ĞÂ´æµµ
+        // æ£€æŸ¥å­˜æ¡£æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œè‹¥ä¸å­˜åœ¨ï¼Œæ–°å»ºæ–°å­˜æ¡£
         string dataPath = Application.persistentDataPath + "/BattleData/";
         if (!Directory.Exists(dataPath)) Directory.CreateDirectory(dataPath);
         string dataName = "Data" + gameMode + ".json";
@@ -141,11 +142,11 @@ public class File_SaveScore : MonoBehaviour
             InitNewHistoryData(dataPath + "/" + dataName, gameMode);
         yield return null;
 
-        // ´Ó´æµµ¶ÁÈ¡Êı¾İ£¬²¢¼ÓÈë¶ÑÖĞÓÃÓÚºóĞøÅÅÃû
+        // ä»å­˜æ¡£è¯»å–æ•°æ®ï¼Œå¹¶åŠ å…¥å †ä¸­ç”¨äºåç»­æ’å
         BattleDataHeap historyDatas = GetHistoryData(dataPath + "/" + dataName);
         yield return null;
 
-        // ½«±¾¾ÖÕ½¶·Êı¾İ¼ÓÈëÅÅÃû¶Ñ
+        // å°†æœ¬å±€æˆ˜æ–—æ•°æ®åŠ å…¥æ’åå †
         float cur_grade;
         if (gameMode == 2) cur_grade = BattleScore._Time;
         else cur_grade = BattleScore._Score;
@@ -154,7 +155,7 @@ public class File_SaveScore : MonoBehaviour
         cur_info._grade = cur_grade;
         historyDatas.Push(cur_info);
 
-        // »ñÈ¡±¾¾ÖÅÅÃû£¬²¢½«ĞÂµÄÊı¾İĞ´ÈëÓ²ÅÌ
+        // è·å–æœ¬å±€æ’åï¼Œå¹¶å°†æ–°çš„æ•°æ®å†™å…¥ç¡¬ç›˜
         HistoryBattleData newData = new HistoryBattleData();
         newData._type = historyDatas._type;
         newData.infos = new BattleDataInfo[10];
@@ -167,9 +168,13 @@ public class File_SaveScore : MonoBehaviour
             newData.infos[i] = historyDatas.Top();
             historyDatas.Pop();
         }
-        UpdateHistoryData(dataPath + "/" + dataName, newData);
 
-        // ÈôÍæ¼Ò³É¼¨³¬³öÇ° 10 Ãû£¬Ôò¸æÖªÍæ¼ÒÃû´ÎÎª 10+
+        // å›æ”¾æ¨¡å¼ä¸‹ä¸äº§ç”Ÿè®°å½•æ–‡ä»¶
+        if (!BattleInfo.ReviewMode) {
+            UpdateHistoryData(dataPath + "/" + dataName, newData);
+        }
+
+        // è‹¥ç©å®¶æˆç»©è¶…å‡ºå‰ 10 åï¼Œåˆ™å‘ŠçŸ¥ç©å®¶åæ¬¡ä¸º 10+
         if (RANK == -1) RANK = 11;
 
         yield break;

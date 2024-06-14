@@ -23,35 +23,30 @@ public class S_PlayfieldBackgroundMusic : MonoBehaviour
 
     private IEnumerator GetBackgroundMusic()
     {
-        // 闪电战模式播放闪电战专属音乐
+        // 若游戏模式为 BLITZ，音乐固定为 《神游行列间》
         if (BattleInfo.GameMode == 3) {
             backgroundMusic = backgroundMusic_BLITZ;
             yield break;
         }
 
-        List<string> filesPath = new List<string>();
-        while (filesPath.Count <= 0)
+        FolderFilesNameInfo files = new();
+        while (files.filesInfoList.Count <= 0)
         {
-            filesPath = StreamingAssetsToPersistenceData.getFilesNameInFolderByTypes
+            files = StreamingAssetsToPersistenceData.GetFilesNameInFolderByTypes
                 (Application.persistentDataPath + "/BattleMusic", enabledFileTypes);
             yield return null;
         }
 
         // 随机产生本局音乐
-        // 若游戏模式为 BLITZ，音乐固定为 《神游行列间》
         int tgt;
-        tgt = Random.Range(0, filesPath.Count);
-        string fileName = Application.persistentDataPath + "/BattleMusic/" + filesPath[tgt];
+        tgt = Random.Range(0, files.filesInfoList.Count);
+        string fileName = "file://" + Application.persistentDataPath + "/BattleMusic/" + files.filesInfoList[tgt].fileName;
         AudioType audioType = AudioType.MPEG;
-        if (fileName.EndsWith(".mp3")) audioType = AudioType.MPEG;
-        if (fileName.EndsWith(".wav")) audioType = AudioType.WAV;
-        if (fileName.EndsWith(".ogg")) audioType = AudioType.OGGVORBIS;
+        if (files.filesInfoList[tgt].fileType == ".mp3") audioType = AudioType.MPEG;
+        if (files.filesInfoList[tgt].fileType == ".wav") audioType = AudioType.WAV;
+        if (files.filesInfoList[tgt].fileType == ".ogg") audioType = AudioType.OGGVORBIS;
 
-# if UNITY_EDITOR
         using(UnityWebRequest UWR_file = UnityWebRequestMultimedia.GetAudioClip(fileName, audioType))
-# elif UNITY_ANDROID
-        using(UnityWebRequest UWR_file = UnityWebRequestMultimedia.GetAudioClip("file://" + fileName, audioType))
-# endif
         {
             yield return UWR_file.SendWebRequest();
             if (UWR_file.result != UnityWebRequest.Result.Success) yield break;

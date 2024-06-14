@@ -13,10 +13,10 @@ public class S_ShowScore : MonoBehaviour
     public GameObject scorBoard;
     public GameObject exitBoard;
 
-    public GameObject rankText; // Õ¹Ê¾ÅÅÃû£¨¶àÈËÄ£Ê½ÏÂÕ¹Ê¾¶àÈËÅÅÃû£¬·ñÔòÕ¹Ê¾¼ÍÂ¼ÅÅÃû£©
-    public GameObject scorText; // Õ¹Ê¾µÃ·Ö£¨¶àÈËÄ£Ê½ºÍ40ÐÐÕ¹Ê¾ÓÎÍæÊ±¼ä£¬·ñÔòÕ¹Ê¾×îÖÕµÃ·Ö£©
-    public GameObject scrmText; // Õ¹Ê¾×î¸ßµÃ·Ö£¨µÃ·ÖÕ¹Ê¾ÎªÊ±¼äÊ±´Ë´¦Õ¹Ê¾×îÖÕµÃ·Ö£¬·ñÔòÕ¹Ê¾×î¸ßµÃ·Ö£©
-    public GameObject perfText; // Õ¹Ê¾±íÏÖÆÀ·Ö£¨Õ¹Ê¾±íÏÖÆÀ·Ö£©
+    public GameObject rankText; // å±•ç¤ºæŽ’åï¼ˆå¤šäººæ¨¡å¼ä¸‹å±•ç¤ºå¤šäººæŽ’åï¼Œå¦åˆ™å±•ç¤ºçºªå½•æŽ’åï¼‰
+    public GameObject scorText; // å±•ç¤ºå¾—åˆ†ï¼ˆå¤šäººæ¨¡å¼å’Œ40è¡Œå±•ç¤ºæ¸¸çŽ©æ—¶é—´ï¼Œå¦åˆ™å±•ç¤ºæœ€ç»ˆå¾—åˆ†ï¼‰
+    public GameObject scrmText; // å±•ç¤ºæœ€é«˜å¾—åˆ†ï¼ˆå¾—åˆ†å±•ç¤ºä¸ºæ—¶é—´æ—¶æ­¤å¤„å±•ç¤ºæœ€ç»ˆå¾—åˆ†ï¼Œå¦åˆ™å±•ç¤ºæœ€é«˜å¾—åˆ†ï¼‰
+    public GameObject perfText; // å±•ç¤ºè¡¨çŽ°è¯„åˆ†ï¼ˆå±•ç¤ºè¡¨çŽ°è¯„åˆ†ï¼‰
 
     // Start is called before the first frame update
     void Start()
@@ -37,14 +37,14 @@ public class S_ShowScore : MonoBehaviour
     private string GetTimeFromSeconds(float _seconds)
     {
         int _H, _M;
-        // ¼ÆËãÐ¡Ê±Êý
+        // è®¡ç®—å°æ—¶æ•°
         if (_seconds >= 3600.0f)
         {
             _H = Mathf.FloorToInt(_seconds / 3600.0f);
             _seconds -= _H * 3600;
         }
         else _H = 0;
-        // ¼ÆËã·ÖÖÓÊý
+        // è®¡ç®—åˆ†é’Ÿæ•°
         if (_seconds >= 60.0f)
         {
             _M = Mathf.FloorToInt(_seconds / 60.0f);

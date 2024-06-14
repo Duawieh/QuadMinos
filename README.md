@@ -47,4 +47,4 @@ QuadMinos! 是一款运行在 Android 平台的局域网联机俄罗斯方块游
 ### 配乐
 
 - 澄净羽之颂
-- [Suno AI](suno.com)
+- [Suno AI](https://suno.com)

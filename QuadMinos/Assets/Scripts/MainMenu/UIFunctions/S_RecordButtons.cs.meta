@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7b299daebfe4e7e46b5f082203f20a75
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - panelSOLO: {instanceID: 0}
+  - icon_Delete: {fileID: 21300000, guid: 1c2821ad8cc6cc944a089cafe3cb0bba, type: 3}
+  - icon_Restore: {fileID: 21300000, guid: d23be444e28dfbd48afa200832d7280c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
