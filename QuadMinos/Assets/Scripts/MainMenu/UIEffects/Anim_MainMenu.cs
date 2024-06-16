@@ -30,7 +30,7 @@ public class Anim_MainMenu : MonoBehaviour
 
     private IEnumerator WaitForBegin()
     {
-        // ��Ϸ��ʼǰ���ȳ�ʼ��������Ϣ
+        // 游戏开始前首先初始化设置信息
         StartCoroutine(File_Settings.GetSettings());
 
         while (true)
@@ -93,10 +93,12 @@ public class Anim_MainMenu : MonoBehaviour
     private IEnumerator GenerateMinosRain()
     {
         int _velo = 64;
-        float _wait = 0.1f;
+        float _wait = 0.15f;
         while (true)
         {
             for (int i = 1; i <= _velo; i++) MinosRainGenerate();
+            // 如果帧率过低，加快生成量衰减的速率，减少 mino 的数量
+            if (Time.deltaTime * 30 > 1) _velo >>= 1;
             _velo >>= 1; if (_velo < 1) _velo = 1;
             _wait += Time.deltaTime;
             if (_wait > 0.5f) _wait = 0.5f;

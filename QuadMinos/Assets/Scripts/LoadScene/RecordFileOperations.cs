@@ -3,17 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using UnityEngine;
 
 
 /// <summary>
 /// 玩家进行的操作的记录
 /// </summary>
-[Serializable]
 public class Operations
 {
     public int opt;         // 操作的种类
     public float _t;        // 操作进行的时间
+
+    public Operations() {
+        this.opt = 0;
+        this._t = 0f;
+    }
 
     public Operations(int opt, float _t)
     {
@@ -88,31 +93,83 @@ public static class BattleRecords
 }
 
 
+[Serializable]
+public class JsonOperations {
+    public int o;
+    public string T;
+
+    public JsonOperations() {
+        this.o =  0;
+        this.T = "";
+    }
+
+    public JsonOperations(int o, string T) {
+        this.o = o;
+        this.T = T;
+    }
+
+    public float StringToFloat(object FloatString) {
+        float result;
+        if (FloatString != null) {
+            if (float.TryParse(FloatString.ToString(), out result)) return result;
+            else return 0.0f;
+        }
+        else return 0.0f;
+    }
+}
+
+
 // 用于存储记录的可序列化类，存取时与 Json 文件相互转化
 [Serializable]
 public class SerializedRecord
 {
     public List<int> minosOrder;
-    public List<Operations> operatesOrder;
+    public List<JsonOperations> operatesOrder;
     public List<AttackRecord> attackOrder;
     public int GameMode;
+
+    public SerializedRecord() {
+        this.minosOrder = new();
+        this.operatesOrder = new();
+        this.attackOrder = new();
+        this.GameMode = 0;
+    }
 }
 
 
 public class RecordFileOperations {
+    private static string[] gameModeFoldersName = { "/unkown", "/ZEN", "/40L", "/BLZ", "/MRT" };
+
+    /// <summary>
+    /// 获取归一化的时间字符串，使时间信息符合 19 字符长的文件名格式。
+    /// </summary>
+    /// <remarks>
+    /// 归一化后结果将使时间符合 yyyy.MM.dd HH-mm-ss的格式。
+    /// </remarks>
     private static string GetTime()
     {
-        string rst = DateTime.Now.ToString();
-        rst = rst.Replace('/', '.');
-        rst = rst.Replace(':', '-');
+        DateTime currentTime = DateTime.Now;
+        string rst = currentTime.ToString("yyyy.MM.dd HH-mm-ss");
         return rst;
     }
 
     private static void JsonInfoToClass(SerializedRecord _data) {
+        BattleRecords.reviewOperatesOrder = new();
+
+        // 由于压缩了浮点数精度，Json 中的 JsonOperations 类的时间以字符串形式存储
+        // 从 Json 中提取数据之前需要先解字符串，从 JsonOperations 类转为 Operations 类
+        foreach (JsonOperations i in _data.operatesOrder) {
+            if (i.T == "") continue;
+            Operations Opt = new();
+            Opt.opt = i.o;
+            Opt. _t = i.StringToFloat(i.T);
+            BattleRecords.reviewOperatesOrder.Add(Opt);
+        }
+
         BattleRecords.reviewMinosOrder = _data.minosOrder;
-        BattleRecords.reviewOperatesOrder = _data.operatesOrder;
         BattleRecords.reviewAttackOrder = _data.attackOrder;
         BattleRecords.GameMode = _data.GameMode;
+
         return;
     }
 
@@ -120,25 +177,30 @@ public class RecordFileOperations {
     {
         SerializedRecord rst = new();
         rst.minosOrder = BattleRecords.minosOrder;
-        rst.operatesOrder = BattleRecords.operatesOrder;
         rst.attackOrder = BattleRecords.attackOrder;
         rst.GameMode = BattleRecords.GameMode;
 
-        foreach (Operations i in rst.operatesOrder)
+        // 时间仅保留至小数点后第三位
+        // 因为帧率 60 的前提下，后面的位数没有意义
+        foreach (Operations i in BattleRecords.operatesOrder)
         {
-            i._t /= 5;
+            JsonOperations JOJO = new();
+            JOJO.o = i.opt;
+            JOJO.T = i._t.ToString("f3");
+            rst.operatesOrder.Add(JOJO);
         }
 
         return rst;
     }
 
     /// <summary>
-    /// 从 persistentDataPath 中读取设置文件并存入类内
+    /// 从 persistentDataPath 中读取记录文件并存入类内
     /// </summary>
-    public static void LoadRecords(string _fileName) {
-        string pth = Application.persistentDataPath + "/BattleRecords";
+    public static void LoadRecords(int _gameMode, string _fileName) {
+        string pth = Application.persistentDataPath 
+            + "/BattleRecords" + gameModeFoldersName[_gameMode];
         if (!Directory.Exists(pth)) Directory.CreateDirectory(pth);
-        pth += "/" + _fileName;
+        pth += "/" + _fileName + ".json";
 
         if (!File.Exists(pth))
         {
@@ -166,8 +228,9 @@ public class RecordFileOperations {
     /// <summary>
     /// 将本局游戏录制的记录存入 persistentDataPath 中
     /// </summary>
-    public static void SaveRecords() {
-        string _dataPathName = Application.persistentDataPath + "/BattleRecords";
+    public static void SaveRecords(int _gameMode) {
+        string _dataPathName = Application.persistentDataPath
+            + "/BattleRecords" + gameModeFoldersName[_gameMode];
         if (!Directory.Exists(_dataPathName)) Directory.CreateDirectory(_dataPathName);
         string currentTime = GetTime();
         string _filePathName = _dataPathName + "/" + currentTime + ".json";
@@ -185,5 +248,36 @@ public class RecordFileOperations {
 
         BattleRecords.saved = true;
         return;
+    }
+
+    /// <summary>
+    /// 从 persistentDataPath 中删除记录文件
+    /// </summary>
+    public static void DeleteRecords(int _gameMode, string _fileName) {
+        string _dataPathName = Application.persistentDataPath 
+            + "/BattleRecords" + gameModeFoldersName[_gameMode];
+        if (!Directory.Exists(_dataPathName)) {
+            Debug.Log("删除失败：路径不存在");
+        }
+        string _filePathName = _dataPathName + "/" + _fileName + ".json";
+        if (!File.Exists(_filePathName)) {
+            Debug.Log("删除失败：记录不存在");
+        }
+        File.Delete(_filePathName);
+        return;
+    }
+
+    public static List<string> GetAllRecords(int _gameMode) {
+        string recordsFolderPath = Application.persistentDataPath + "/BattleRecords" + gameModeFoldersName[_gameMode];
+        if (!Directory.Exists(recordsFolderPath)) return new();
+
+        string[] fileNames = Directory.GetFiles(recordsFolderPath, "*.json");
+        List<string> rst = new();
+        foreach (string fullname in fileNames) {
+            rst.Add(Path.GetFileNameWithoutExtension(fullname));
+        }
+        rst.Reverse();
+        
+        return rst;
     }
 }

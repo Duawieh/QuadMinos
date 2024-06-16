@@ -136,9 +136,6 @@ public class S_Battle : MonoBehaviour
         else {
             // 按设定的比率计算伤害
             float rat = GetComponent<GameProcess>().GarbageRatio;
-            // 按设定的概率发起攻击
-            float prob = Random.Range(0.0f, 1.0f);
-            if (prob > GetComponent<GameProcess>().GarbageProb) return;
             // 按玩家设定的攻击模式获取攻击目标
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
             int targetIndex = ChangeTarget();
@@ -148,11 +145,21 @@ public class S_Battle : MonoBehaviour
             _tgt = targetIndex;
         }
 
-        if (_dmg < 1) return;
-
-        // 录制伤害记录
+        // 仅在非回放模式下需要进行随机攻击，回放模式会按记录决定是否攻击
+        if (!GetComponent<GameProcess>().ReviewMode) {
+            // 按设定的概率发起攻击
+            float prob = Random.Range(0.0f, 1.0f);
+            if (prob > GetComponent<GameProcess>().GarbageProb) {
+                RecordAttackInfo(0, _ept, _tgt);
+                return;
+            }
+        }
+        // 若发起攻击，正常录制伤害记录
         RecordAttackInfo(_dmg, _ept, _tgt);
 
+        if (_dmg < 1) return;
+
+        // 实施攻击
         Vector3 tgt_pos;
         if (_tgt == 0) {
             tgt_pos = DamageGenerate(_dmg, _ept);
@@ -200,9 +207,6 @@ public class S_Battle : MonoBehaviour
         else {
             // 按设定的比率计算伤害
             float rat = GetComponent<GameProcess>().GarbageRatio;
-            // 按设定的概率发起攻击
-            float prob = Random.Range(0.0f, 1.0f);
-            if (prob > GetComponent<GameProcess>().GarbageProb) return;
             // 按玩家设定的攻击模式获取攻击目标
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -212,12 +216,21 @@ public class S_Battle : MonoBehaviour
             _frm = enemy - 1;
         }
 
-        if (_dmg < 1) return;
-
+        // 仅在非回放模式下需要进行随机攻击，回放模式会按记录决定是否攻击
+        if (!GetComponent<GameProcess>().ReviewMode) {
+            // 按设定的概率发起攻击
+            float prob = Random.Range(0.0f, 1.0f);
+            if (prob > GetComponent<GameProcess>().GarbageProb) {
+                RecordAttackInfo(0, _ept, _tgt, _frm);
+                return;
+            }
+        }
         // 录制伤害记录
         RecordAttackInfo(_dmg, _ept, _tgt, _frm);
 
-        // 播放受攻击效果
+        if (_dmg < 1) return;
+
+        // 实施攻击
         Vector3 tgt_pos = DamageGenerate(_dmg, _ept);
         Vector3 frm_pos = enemies[_frm].transform.position;
         GameObject _star = Instantiate(AttackStar);

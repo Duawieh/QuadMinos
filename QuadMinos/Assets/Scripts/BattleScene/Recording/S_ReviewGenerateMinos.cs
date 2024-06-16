@@ -22,7 +22,6 @@ public class S_ReviewGenerateMinos : MonoBehaviour
         {
             rst[i] = minosOrder[j];
             j++;
-            if (j >= 7) j = 0;
         }
         return rst;
     }

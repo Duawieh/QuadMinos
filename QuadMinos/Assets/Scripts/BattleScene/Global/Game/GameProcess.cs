@@ -16,12 +16,13 @@ public class BattleInfo
     /// <summary>
     /// 是否观看录像模式
     /// </summary>
-    public static bool ReviewMode = true;
+    public static bool ReviewMode = false;
     /// <summary>
     /// 是否观看录像模式
     /// </summary>
     public static bool RecordMode = false;
-    public static string RecordName = "2024.6.11 19-30-58";
+    public static string RecordName = "";
+    public static float ReviewPace = 1.0f;
     public static float Gravity = 0.0156f;
     public static float LockTime = 1.0f;
     public static float GarbageProb = 0.0f;
@@ -110,6 +111,7 @@ public class GameProcess : MonoBehaviour
 
     public void GAME_OVER() {
         StopDrawMinos();
+        Time.timeScale = 1.0f;
         if (finished) GetComponent<S_VisualEffect>().Anim_Finish(true);
         else GetComponent<S_VisualEffect>().Anim_Failed(true);
         StartCoroutine(UI_Background.GetComponent<S_PlayfieldBackgroundMusic>().AudioStop());
@@ -146,7 +148,7 @@ public class GameProcess : MonoBehaviour
             GetComponent<DrawNewMinos>().DrawNextMinos(que[i], i);
         }
 
-        Destroy(UI_prepareText);
+        DestroyImmediate(UI_prepareText);
         return;
     }
 

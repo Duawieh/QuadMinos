@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ×Ô¶¨×ø±êÏµÀà - Õ½³¡×ø±ê
-/// (±êÊ¶Õ½³¡ÉÏÃ¿Ò»¸ñµÄ×ø±ê£¬×óÏÂ½ÇÎª (1,1)£¬ÓÒÏÂ½ÇÎª (10,1))
+/// è‡ªå®šåæ ‡ç³»ç±» - æˆ˜åœºåæ ‡
+/// (æ ‡è¯†æˆ˜åœºä¸Šæ¯ä¸€æ ¼çš„åæ ‡ï¼Œå·¦ä¸‹è§’ä¸º (1,1)ï¼Œå³ä¸‹è§’ä¸º (10,1))
 /// </summary>
 public class PosIndex
 {
@@ -20,7 +20,7 @@ public class PosIndex
     public static PosIndex GetIndex(float _x, float _y)
     {
         int rst_x, rst_y;
-        _x += 1.76005f;         // ´Ë´¦¶à¼Ó 0.00005£¬·ÀÖ¹¸¡µã¾«¶ÈËğÊ§£¨ÏÂÍ¬£©
+        _x += 1.76005f;         // æ­¤å¤„å¤šåŠ  0.00005ï¼Œé˜²æ­¢æµ®ç‚¹ç²¾åº¦æŸå¤±ï¼ˆä¸‹åŒï¼‰
         _y += 3.36005f;
         rst_x = (int)(_x / 0.32f);
         rst_y = (int)(_y / 0.32f);
@@ -66,12 +66,12 @@ public class PosIndex
 
 public class PlayfieldState : MonoBehaviour
 {
-    public int holdMino = -1;                               // µ±Ç° HOLD µÄ mino µÄÀàĞÍ£¨-1 Îª¿Õ£©
-    public GameObject[][] takenBy = new GameObject[12][];   // µ±Ç°Î»ÖÃÉÏµÄ Mino (½öËø¶¨µÄ mino)
+    public int holdMino = -1;                               // å½“å‰ HOLD çš„ mino çš„ç±»å‹ï¼ˆ-1 ä¸ºç©ºï¼‰
+    public GameObject[][] takenBy = new GameObject[12][];   // å½“å‰ä½ç½®ä¸Šçš„ Mino (ä»…é”å®šçš„ mino)
 
     private GameObject emptyWall;
 
-    // ³õÊ¼»¯Õ½³¡×´Ì¬£¬ÌîÈë±ß½ç×©¿é
+    // åˆå§‹åŒ–æˆ˜åœºçŠ¶æ€ï¼Œå¡«å…¥è¾¹ç•Œç –å—
     private void FieldInit()
     {
         emptyWall = new GameObject();
@@ -122,13 +122,13 @@ public class PlayfieldState : MonoBehaviour
         GetComponent<DrawNewMinos>().DrawHoldMino(holdMino);
     }
 
-    // µİ¹é¼ì²é²¢ Clear ±»ÌîÂúµÄĞĞ£¬Í¬Ê±ÏÂÂä±£ÁôµÄĞĞ£¬·µ»ØÏûĞĞÊı
+    // é€’å½’æ£€æŸ¥å¹¶ Clear è¢«å¡«æ»¡çš„è¡Œï¼ŒåŒæ—¶ä¸‹è½ä¿ç•™çš„è¡Œï¼Œè¿”å›æ¶ˆè¡Œæ•°
     public int Clear(int l, int drp)
     {
-        // ´ïµ½ĞĞÊıÉÏÏŞ£¬·µ»Ø£¨Õı³£Çé¿öÏÂ´ËÓï¾ä²»Ó¦±»Ö´ĞĞ£©
+        // è¾¾åˆ°è¡Œæ•°ä¸Šé™ï¼Œè¿”å›ï¼ˆæ­£å¸¸æƒ…å†µä¸‹æ­¤è¯­å¥ä¸åº”è¢«æ‰§è¡Œï¼‰
         if (l > 50) return 0;
 
-        // ¼ÇÂ¼µ±Ç°¶ÑµşµÄ×î´ó¸ß¶È
+        // è®°å½•å½“å‰å †å çš„æœ€å¤§é«˜åº¦
         GetComponent<GameProcess>().blockHeight = l - drp - 1;
 
         int blocks = 0;
@@ -136,13 +136,13 @@ public class PlayfieldState : MonoBehaviour
         bool cleared = true;
         for (int i = 1; i <= 10; i++)
         {
-            // ¼ì²âÕâÒ»ĞĞÊÇ·ñÓĞ¿Õ¸ñ£¬Èç¹ûÓĞ£¬²»Ïû³ı
+            // æ£€æµ‹è¿™ä¸€è¡Œæ˜¯å¦æœ‰ç©ºæ ¼ï¼Œå¦‚æœæœ‰ï¼Œä¸æ¶ˆé™¤
             if (takenBy[i][l] == null)
             {
                 cleared = false;
                 if (i == 1)
                 {
-                    // Èç¹ûÕâÒ»ĞĞµÄµÚÒ»¸öÎ»ÖÃ¾ÍÊÇ¿Õ¸ñ£¬¼ì²âÕâÒ»ĞĞÊÇ·ñÈ«Îª¿Õ
+                    // å¦‚æœè¿™ä¸€è¡Œçš„ç¬¬ä¸€ä¸ªä½ç½®å°±æ˜¯ç©ºæ ¼ï¼Œæ£€æµ‹è¿™ä¸€è¡Œæ˜¯å¦å…¨ä¸ºç©º
                     for (int j = 2; j <= 10; j++)
                     {
                         if (takenBy[j][l] != null)
@@ -155,12 +155,12 @@ public class PlayfieldState : MonoBehaviour
                 break;
             } else blocks++;
         }
-        // Èç¹û¸ÃĞĞÎª¿ÕĞĞ£¬ÆäÉÏ²»¿ÉÄÜÓĞ×©¿é£¬»ØËİ
+        // å¦‚æœè¯¥è¡Œä¸ºç©ºè¡Œï¼Œå…¶ä¸Šä¸å¯èƒ½æœ‰ç –å—ï¼Œå›æº¯
         if (blocks == 0) return 0;
 
         if (cleared)
         {
-            // Èç¹ûÔì³ÉÁËÏû³ı£¬Ïû³ı¸ÃĞĞ
+            // å¦‚æœé€ æˆäº†æ¶ˆé™¤ï¼Œæ¶ˆé™¤è¯¥è¡Œ
             drp++;
             clear_lines++;
             for (int i = 1; i <= 10; i++)
@@ -170,7 +170,7 @@ public class PlayfieldState : MonoBehaviour
             }
         } 
         else if (drp != 0) { 
-            // Èç¹ûÎ´Ôì³ÉÏû³ı£¬ÇÒÆäÏÂÓĞÏû³ı¹ıµÄĞĞ£¬ÏÂÒÆ´ËĞĞ
+            // å¦‚æœæœªé€ æˆæ¶ˆé™¤ï¼Œä¸”å…¶ä¸‹æœ‰æ¶ˆé™¤è¿‡çš„è¡Œï¼Œä¸‹ç§»æ­¤è¡Œ
             for (int i = 1; i <= 10; i++)
             {
                 if (takenBy[i][l] == null)
@@ -186,15 +186,15 @@ public class PlayfieldState : MonoBehaviour
             }
         }
 
-        // µİ¹é·µ»ØÏûĞĞÊı
+        // é€’å½’è¿”å›æ¶ˆè¡Œæ•°
         return clear_lines + Clear(l + 1, drp);
     }
 
-    // µİ¹é½«¶ÑµşÉÏÒÆ£¬ÎªÏÂ·½²åÈëÀ¬»øĞĞÌÚ³ö¿Õ¼ä
+    // é€’å½’å°†å †å ä¸Šç§»ï¼Œä¸ºä¸‹æ–¹æ’å…¥åƒåœ¾è¡Œè…¾å‡ºç©ºé—´
     public void Add(int l, int drp)
     {
         if (l > 50) return;
-        // ¼ìÑéÊÇ·ñµ½´ï¶Ñµş×îÉÏ·½£¬Èç¹ûÊÇ£¬·µ»Ø²¢´Ó×îÉÏ·½ĞĞ¿ªÊ¼ÉÏÒÆ
+        // æ£€éªŒæ˜¯å¦åˆ°è¾¾å †å æœ€ä¸Šæ–¹ï¼Œå¦‚æœæ˜¯ï¼Œè¿”å›å¹¶ä»æœ€ä¸Šæ–¹è¡Œå¼€å§‹ä¸Šç§»
         bool _empty = true;
         for (int i = 1; i <= 10; i++)
             if (takenBy[i][l] != null)
@@ -216,14 +216,14 @@ public class PlayfieldState : MonoBehaviour
         return;
     }
 
-    // ¼ì²éÈ«Çå£¬Èç¹ûÏû³ıÔì³ÉÈ«Çå£¬µÃ·ÖÖÁÉÙÎª 10 ·Ö
+    // æ£€æŸ¥å…¨æ¸…ï¼Œå¦‚æœæ¶ˆé™¤é€ æˆå…¨æ¸…ï¼Œå¾—åˆ†è‡³å°‘ä¸º 10 åˆ†
     public float AllClear()
     {
         for (int i = 1; i <= 10; i++)
         {
             if (takenBy[i][1] != null) return 0.0f;
         }
-        // ÅĞ¶ÏÍê³É£¬ÎªÍêÃÀÏû³ı£¬Ö´ĞĞ¶ÔÓ¦Ğ§¹û£¬·µ»ØÏàÓ¦µÃ·Ö
+        // åˆ¤æ–­å®Œæˆï¼Œä¸ºå®Œç¾æ¶ˆé™¤ï¼Œæ‰§è¡Œå¯¹åº”æ•ˆæœï¼Œè¿”å›ç›¸åº”å¾—åˆ†
         GetComponent<S_VisualEffect>().Anim_AllClear(true);
         return 10.0f;
     }

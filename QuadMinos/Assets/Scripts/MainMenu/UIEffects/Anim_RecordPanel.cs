@@ -1,0 +1,123 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine;
+
+public class Anim_RecordPanel : MonoBehaviour
+{
+    private int GameMode = 0;               // 选择回放目录的游戏模式，0 表示未进入选择目录
+    private List<string> recordsFile;       // 回放文件列表
+    private List<GameObject> recordButtons; // 已实例化的按钮列表
+    public Sprite[] panelBackgrounds = new Sprite[4];
+    public GameObject recordSelectPanel;    // 用于摆放按钮的区域
+    public GameObject recordUnitButton;     // 用于实例化的按钮单元
+
+    public void ChangeMode(int _changeTo) {
+        if (_changeTo == GameMode) return;
+        StartCoroutine(Anim_ChangeMode(_changeTo));
+        GameMode = _changeTo;
+        return;
+    }
+
+    // 确认删除所选回放文件
+    public void ConfirmToDelete() {
+        foreach (GameObject button in recordButtons) {
+            S_RecordButtons rb = button.GetComponent<S_RecordButtons>();
+            if (rb.isDeleted) {
+                RecordFileOperations.DeleteRecords(rb.recordGameMode, rb.recordName);
+            }
+        }
+        return;
+    }
+
+    private IEnumerator Anim_ChangeMode(int _changeTo) {
+
+        float t = 0.0f;
+        while (transform.localScale.x > 0) {
+            t += Time.deltaTime;
+            float scaleX = Functions.F_paraFadeout(t, 0.15f, 1, -0.05f);
+            transform.localScale = new Vector3(scaleX, 1, 1);
+            yield return null;
+        }
+        transform.localScale = new Vector3(0, 1, 1);
+
+        // 在面板展开的同时获取记录文件并展开列表
+        // 由于每次收起面板都要清空列表，因此要在 yield break 之前开启协程
+        StopCoroutine(nameof(Anim_RecordsButton));
+        StartCoroutine(Anim_RecordsButton(_changeTo));
+
+        if (_changeTo == 0) yield break;
+        GetComponent<Image>().sprite = panelBackgrounds[_changeTo - 1];
+
+        t = 0.0f;
+        while (transform.localScale.x < 1) {
+            t += Time.deltaTime;
+            float scaleX = Functions.F_paraFadeout(t, 0.15f, 0, 1.05f);
+            transform.localScale = new Vector3(scaleX, 1, 1);
+            yield return null;
+        }
+        transform.localScale = new Vector3(1, 1, 1);
+
+        yield break;
+    }
+
+    /// <summary>
+    /// 回放列表列出动画，为每个回放创建一个按钮，逐个拉下
+    /// </summary>
+    /// <remarks>
+    /// 此协程会首先获取回放记录，然后再播放动画，因此记录较多时会进入等待
+    /// </remarks>
+    private IEnumerator Anim_RecordsButton(int _gameMode) {
+        // 清空记录列表
+        recordSelectPanel.GetComponent<RectTransform>().sizeDelta *= new Vector2(1, 0);
+        // 确认删除记录
+        ConfirmToDelete();
+        foreach (GameObject button in recordButtons) Destroy(button);
+        recordButtons.Clear();
+
+        if (_gameMode == 0) yield break;
+
+        // 获取对应模式下的所有记录
+        List<string> recordFiles = RecordFileOperations.GetAllRecords(_gameMode);
+
+        yield return new WaitForSecondsRealtime(0.025f);
+
+        foreach (string record in recordFiles) {
+            // 延长绘制区域 为每条记录分配绘制长度
+            Vector2 panelSizeDelta = recordSelectPanel.GetComponent<RectTransform>().sizeDelta;
+            panelSizeDelta += new Vector2(0, 144);
+            recordSelectPanel.GetComponent<RectTransform>().sizeDelta = panelSizeDelta;
+
+            // 实例化按钮，设定按钮对应的记录信息
+            GameObject recordButton = Instantiate(recordUnitButton);
+            recordButton.transform.parent = recordSelectPanel.transform;
+            recordButton.transform.GetChild(0).GetComponent<Text>().text = record;
+            recordButton.GetComponent<S_RecordButtons>().recordGameMode = _gameMode;
+            recordButton.GetComponent<S_RecordButtons>().recordName = record;
+            recordButton.GetComponent<S_RecordButtons>().panelSOLO = transform.parent.gameObject;
+            recordButton.transform.localScale = Vector3.one;
+            
+            // 设定按钮位置
+            int posY = recordButtons.Count * 144 + 000;
+            RectTransform rectTransform = recordButton.GetComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(0, 1);
+            rectTransform.anchorMax = new Vector2(1, 1);
+            rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, posY, 128);
+            rectTransform.offsetMin = new Vector2(+8, rectTransform.offsetMin.y);
+            rectTransform.offsetMax = new Vector2(-8, rectTransform.offsetMax.y);
+
+            recordButtons.Add(recordButton);
+
+            yield return new WaitForSecondsRealtime(0.025f);
+        }
+
+        yield break;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        transform.localScale = new Vector3(0, 1, 1);
+        recordButtons = new();
+    }
+}
