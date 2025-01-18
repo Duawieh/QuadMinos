@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 玩家在 Setting Panel 设置的信息
 /// </summary>
-public class GameSettings
+public static class GameSettings
 {
     public static float Gravity;
     public static float LockTime;
@@ -51,6 +51,9 @@ public class GameSettings
 }
 
 
+/// <summary>
+/// 要保存的设置信息（可序列化）
+/// </summary>
 [Serializable]
 class SettingsData
 {
@@ -71,6 +74,19 @@ class SettingsData
     public float OperationHARR;
     public float OperationRAS;
 
+    //--------------------------------
+
+    public string Multi_RoomName;
+
+    public int Multi_Port;
+    public int Multi_PlayerSize;
+    public int Multi_ServerTick;
+
+    public float Multi_Gravity;
+    public float Multi_GravRate;
+    public float Multi_LockTime;
+
+
     public SettingsData()
     {
         Gravity = GameSettings.Gravity;
@@ -86,6 +102,14 @@ class SettingsData
         OperationVARR = GameSettings.OperationVARR;
         OperationHARR = GameSettings.OperationHARR;
         OperationRAS = GameSettings.OperationRAS;
+
+        Multi_RoomName = MultipleGameSettings.roomName;
+        Multi_Port = MultipleGameSettings.port;
+        Multi_PlayerSize = MultipleGameSettings.maxPlayers;
+        Multi_ServerTick = MultipleGameSettings.serverTick;
+        Multi_Gravity = MultipleGameSettings.Gravity;
+        Multi_GravRate = MultipleGameSettings.GravRate;
+        Multi_LockTime = MultipleGameSettings.LockTime;
         return;
     }
 
@@ -104,12 +128,20 @@ class SettingsData
         GameSettings.OperationVARR = OperationVARR;
         GameSettings.OperationHARR = OperationHARR;
         GameSettings.OperationRAS = OperationRAS;
+
+        MultipleGameSettings.roomName = Multi_RoomName;
+        MultipleGameSettings.serverTick = Multi_ServerTick;
+        MultipleGameSettings.maxPlayers = Multi_PlayerSize;
+        MultipleGameSettings.port = Multi_Port;
+        MultipleGameSettings.Gravity = Multi_Gravity;
+        MultipleGameSettings.GravRate = Multi_GravRate;
+        MultipleGameSettings.LockTime = Multi_LockTime;
         return;
     }
 }
 
 
-public class File_Settings {
+public static class File_Settings {
     /// <summary>
     /// 从 persistentDataPath 中读取设置文件并存入类内
     /// </summary>
@@ -122,6 +154,7 @@ public class File_Settings {
         if (!File.Exists(pth))
         {
             GameSettings.Init();    // 在迭代器首次退出前就要完成初始化，以防止调用到空信息
+            MultipleGameSettings.Init();
             SaveSettings();
             yield return null;
         }
