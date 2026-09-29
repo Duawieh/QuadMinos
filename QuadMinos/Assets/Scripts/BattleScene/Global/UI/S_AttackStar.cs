@@ -12,7 +12,7 @@ public class S_AttackStar : MonoBehaviour
         float _t = 0.0f;
         float _x = _from.x;
         float _y = _from.y;
-        bool flg = Random.Range(0, 2) == 1;     // һ����ǣ����ڿ����ƶ�·������͹�����°�
+        bool flg = Random.Range(0, 2) == 1;     // 一个标记，用于控制移动路径是上凸还是下凹
         while (_t < 0.2f)
         {
             _t += Time.deltaTime;

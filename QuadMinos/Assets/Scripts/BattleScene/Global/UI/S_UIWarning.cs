@@ -26,15 +26,15 @@ public class S_UIWarning : MonoBehaviour
         return;
     }
 
-    // ¾¯¸æ×´Ì¬½â³ı£¬Í£Ö¹¾¯¸æĞ§¹û²¢ÔÚÒ»¶¨Ê±¼äºóÉ¾³ı×ÔÉí
+    // è­¦å‘ŠçŠ¶æ€è§£é™¤ï¼Œåœæ­¢è­¦å‘Šæ•ˆæœå¹¶åœ¨ä¸€å®šæ—¶é—´ååˆ é™¤è‡ªèº«
     public void Relive() {
         _enabled = false;
         t = 0.0f;
 
-        // Í£Ö¹¾¯±¨Éù
+        // åœæ­¢è­¦æŠ¥å£°
         GetComponent<AudioSource>().enabled = false;
 
-        // Í£Ö¹»ğÑæÅçÉäĞ§¹û
+        // åœæ­¢ç«ç„°å–·å°„æ•ˆæœ
         int i = -1;
         while (++i < transform.childCount)
         {

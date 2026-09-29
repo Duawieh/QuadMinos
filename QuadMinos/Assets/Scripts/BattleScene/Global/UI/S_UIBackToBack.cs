@@ -8,7 +8,7 @@ public class S_UIBackToBack : MonoBehaviour
     private float t;
     private Text T;
 
-    private bool B2B;               // ÊÇ·ñÏÔÊ¾ B2B
+    private bool B2B;               // æ˜¯å¦æ˜¾ç¤º B2B
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +55,9 @@ public class S_UIBackToBack : MonoBehaviour
     public void Init(int B2B_times)
     {
         if (B2B_times <= 1) return;
-        // ÉèÖÃÏÔÊ¾×Ö·û´®
+        // è®¾ç½®æ˜¾ç¤ºå­—ç¬¦ä¸²
         if (B2B_times == 2) T.text = "B2B";
-        else T.text = "B2B ¡Á " + (B2B_times - 1);
+        else T.text = "B2B Ã— " + (B2B_times - 1);
 
         transform.localScale = new Vector3(2, 0, 1);
         T.color = new Color(1, 0.8039216f, 0, 0);
@@ -69,7 +69,7 @@ public class S_UIBackToBack : MonoBehaviour
     public void Finish()
     {
         if (!B2B) return;
-        T.text = "B2B ¡Á 0";
+        T.text = "B2B Ã— 0";
 
         transform.localScale = Vector3.one;
         T.color = new Color(1, 0, 0, 1);

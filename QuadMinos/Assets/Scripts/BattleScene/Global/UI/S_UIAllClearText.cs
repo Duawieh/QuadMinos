@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class S_UIAllClearText : MonoBehaviour
 {
-    public GameObject txt;         // 文字特效
-    public GameObject flr;         // 背光特效
+    public GameObject txt;         // 鏂囧瓧鐗规晥
+    public GameObject flr;         // 鑳屽厜鐗规晥
 
     float t;
 
